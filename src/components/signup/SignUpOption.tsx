@@ -12,31 +12,39 @@ type Props = {
 };
 
 const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPage, handleNextPage }) => {
-  const [gender, setGender] = useState<string>(useSelector((state: RootState) => state.signUp?.gender ?? ''));
-  const [weight, setWeight] = useState<number>(useSelector((state: RootState) => state.signUp?.weight ?? 0));
-  const [height, setHeight] = useState<number>(useSelector((state: RootState) => state.signUp?.height ?? 0));
-  const [likeCore, setLikeCore] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeCore));
-  const [likeLeg, setLikeLeg] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeLeg));
-  const [likeBack, setLikeBack] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeBack));
-  const [likeStand, setLikeStand] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeStand));
-  const [likeSit, setLikeSit] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeSit));
-  const [likeBalance, setLikeBalance] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeBalance));
+  const [gender, setGender] = useState<string | null>(
+    useSelector((state: RootState) => state.signUp?.option.gender ?? null),
+  );
+  const [weight, setWeight] = useState<number>(useSelector((state: RootState) => state.signUp?.option.weight ?? 0));
+  const [height, setHeight] = useState<number>(useSelector((state: RootState) => state.signUp?.option.height ?? 0));
+  const [core, setLikeCore] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.core));
+  const [leg, setLeg] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.leg));
+  const [back, setBack] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.back));
+  const [stand, setStand] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.stand));
+  const [sit, setSit] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.sit));
+  const [balance, setBalance] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.balance));
   const dispatch = useDispatch();
-  const handleSaveOption = (event: React.FormEvent) => {
-    event.preventDefault();
+  const signUp = useSelector((state: RootState) => state.signUp);
+  const handleSaveOption = () => {
     const option: Option = {
       gender: gender,
       weight: weight,
       height: height,
-      likeCore: likeCore,
-      likeLeg: likeLeg,
-      likeBack: likeBack,
-      likeStand: likeStand,
-      likeSit: likeSit,
-      likeBalance: likeBalance,
+      core: core,
+      leg: leg,
+      back: back,
+      stand: stand,
+      sit: sit,
+      balance: balance,
     };
     dispatch(saveOption(option));
-    handleNextPage();
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSaveOption();
+
+    console.log(signUp);
   };
   return (
     <Div>
@@ -44,7 +52,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
         최적의 운동을 추천해드릴 수 있는
         <br /> 선택 입력 사항이에요.
       </h3>
-      <form onSubmit={handleSaveOption}>
+      <form onSubmit={handleSubmit}>
         <InputDiv>
           <span>
             <br />
@@ -101,28 +109,35 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             <small>(선택 최대 2개)</small>
           </span>
           <ExersizeSelect>
-            <LikeOption checked={likeCore} setChecked={setLikeCore}>
+            <LikeOption checked={core} setChecked={setLikeCore}>
               코어
             </LikeOption>
-            <LikeOption checked={likeLeg} setChecked={setLikeLeg}>
+            <LikeOption checked={leg} setChecked={setLeg}>
               다리
             </LikeOption>
-            <LikeOption checked={likeBack} setChecked={setLikeBack}>
+            <LikeOption checked={back} setChecked={setBack}>
               등
             </LikeOption>
-            <LikeOption checked={likeStand} setChecked={setLikeStand}>
+            <LikeOption checked={stand} setChecked={setStand}>
               서서
             </LikeOption>
-            <LikeOption checked={likeSit} setChecked={setLikeSit}>
+            <LikeOption checked={sit} setChecked={setSit}>
               앉아서
             </LikeOption>
-            <LikeOption checked={likeBalance} setChecked={setLikeBalance}>
+            <LikeOption checked={balance} setChecked={setBalance}>
               밸런스
             </LikeOption>
           </ExersizeSelect>
         </InputDiv>
         <ButtonDiv>
-          <MoveButton onClick={handlePrevPage} pageNumber={pageNumber} finish={false}>
+          <MoveButton
+            onClick={() => {
+              handleSaveOption();
+              handlePrevPage();
+            }}
+            pageNumber={pageNumber}
+            finish={false}
+          >
             이전으로
           </MoveButton>
           <MoveButton type="submit" pageNumber={pageNumber} finish={true}>
@@ -236,7 +251,7 @@ const MoveButton = styled.button<{ pageNumber: number; finish: boolean }>`
   border-radius: 10px;
 `;
 
-const GenderButton = styled.button<{ gender: string; genderId: string }>`
+const GenderButton = styled.button<{ gender: string | null; genderId: string }>`
   border: ${(props) => (props.gender === props.genderId ? props.theme.main : '1px solid' + props.theme.defaultText)};
   color: ${(props) => (props.gender === props.genderId ? props.theme.sub : '1px solid' + props.theme.defaultText)};
   background-color: ${(props) => (props.gender === props.genderId ? props.theme.main : '1px solid' + props.theme.sub)};

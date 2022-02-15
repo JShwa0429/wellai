@@ -1,16 +1,17 @@
 // eslint-disable-next-line
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Option } from 'rc-select';
 
 export type Option = {
-  gender?: string;
+  gender: string | null;
   height?: number;
   weight?: number;
-  likeCore: boolean;
-  likeLeg: boolean;
-  likeBack: boolean;
-  likeSit: boolean;
-  likeStand: boolean;
-  likeBalance: boolean;
+  core: boolean;
+  leg: boolean;
+  back: boolean;
+  sit: boolean;
+  stand: boolean;
+  balance: boolean;
 };
 
 export type Essential = {
@@ -20,19 +21,26 @@ export type Essential = {
   passwordCheck: string;
 };
 
-export type SignUpState = Essential & Option;
+export type SignUpState = Essential & {
+  option: Option;
+};
 
 const initialState: SignUpState = {
   email: '',
   nickname: '',
   password: '',
   passwordCheck: '',
-  likeCore: false,
-  likeLeg: false,
-  likeBack: false,
-  likeSit: false,
-  likeStand: false,
-  likeBalance: false,
+  option: {
+    gender: null,
+    height: 0,
+    weight: 0,
+    core: false,
+    leg: false,
+    back: false,
+    sit: false,
+    stand: false,
+    balance: false,
+  },
 };
 
 export const signUpSlice = createSlice({
@@ -60,15 +68,15 @@ export const signUpSlice = createSlice({
     },
 
     saveOption: (state, action: PayloadAction<Option>) => {
-      state.gender = action.payload?.gender;
-      state.height = action.payload?.height;
-      state.weight = action.payload?.weight;
-      state.likeBack = action.payload.likeBack;
-      state.likeCore = action.payload.likeCore;
-      state.likeLeg = action.payload.likeLeg;
-      state.likeBalance = action.payload.likeBalance;
-      state.likeStand = action.payload.likeStand;
-      state.likeSit = action.payload.likeSit;
+      state.option.gender = action.payload?.gender;
+      state.option.height = action.payload?.height;
+      state.option.weight = action.payload?.weight;
+      state.option.back = action.payload.back;
+      state.option.core = action.payload.core;
+      state.option.leg = action.payload.leg;
+      state.option.balance = action.payload.balance;
+      state.option.stand = action.payload.stand;
+      state.option.sit = action.payload.sit;
     },
   },
 });
