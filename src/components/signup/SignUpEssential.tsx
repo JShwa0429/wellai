@@ -1,6 +1,6 @@
 import Input from 'components/atom/input';
 import { Button } from './Signup';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import { Essential, saveEssential } from 'features/signupSlice';
@@ -13,7 +13,8 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   const [password, setPassword] = useState(useSelector((state: RootState) => state.signUp.password));
   const [passwordCheck, setPasswordCheck] = useState(useSelector((state: RootState) => state.signUp.passwordCheck));
   const dispatch = useDispatch();
-  const handleSaveEssential = () => {
+  const handleSaveEssential = (event: React.FormEvent) => {
+    event.preventDefault();
     const essential: Essential = {
       email: email,
       nickname: nickname,

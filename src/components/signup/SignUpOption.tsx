@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import LikeOption from './LikeOption';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Option, saveOption } from 'features/signupSlice';
@@ -22,7 +22,8 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
   const [likeSit, setLikeSit] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeSit));
   const [likeBalance, setLikeBalance] = useState<boolean>(useSelector((state: RootState) => state.signUp.likeBalance));
   const dispatch = useDispatch();
-  const handleSaveOption = () => {
+  const handleSaveOption = (event: React.FormEvent) => {
+    event.preventDefault();
     const option: Option = {
       gender: gender,
       weight: weight,
@@ -43,7 +44,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
         최적의 운동을 추천해드릴 수 있는
         <br /> 선택 입력 사항이에요.
       </h3>
-      <form>
+      <form onSubmit={handleSaveOption}>
         <InputDiv>
           <span>
             <br />
@@ -52,10 +53,10 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             <small>(선택)</small>
           </span>
           <ButtonDiv>
-            <GenderButton type="button" gender={gender} genderId={'남자'} onClick={() => setGender('남자')}>
+            <GenderButton type="button" gender={gender} genderId={'M'} onClick={() => setGender('M')}>
               남자
             </GenderButton>
-            <GenderButton type="button" gender={gender} genderId={'여자'} onClick={() => setGender('여자')}>
+            <GenderButton type="button" gender={gender} genderId={'F'} onClick={() => setGender('F')}>
               여자
             </GenderButton>
           </ButtonDiv>
@@ -124,7 +125,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
           <MoveButton onClick={handlePrevPage} pageNumber={pageNumber} finish={false}>
             이전으로
           </MoveButton>
-          <MoveButton type="submit" onClick={handleSaveOption} pageNumber={pageNumber} finish={true}>
+          <MoveButton type="submit" pageNumber={pageNumber} finish={true}>
             완료
           </MoveButton>
         </ButtonDiv>
