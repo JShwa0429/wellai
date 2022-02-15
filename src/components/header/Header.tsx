@@ -23,12 +23,12 @@ const Div = styled.div`
   background-color: white;
   align-items: center;
 
-  font-size: 1.5vh;
+  font-size: 1em;
   color: ${(props) => props.theme.defaultText};
   h1 {
     margin: auto;
   }
   width: 100vw;
   height: 5vh;
-  min-height: 4em;
+  min-height: 45px;
 `;

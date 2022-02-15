@@ -19,14 +19,13 @@ const ButtonDiv = styled.div`
   display: flex;
   justify-content: space-between;
   margin-left: auto;
-  padding: 0 3em;
-  width: 50%;
-  min-width: 200px;
+  padding-right: 3em;
+  width: 250px;
   button {
-    font-size: 1.2em;
+    font-size: 1em;
     height: 2em;
     width: 5em;
-    border-radius: 15px;
+    border-radius: 10px;
     background-color: ${(props) => props.theme.main};
     color: ${(props) => props.theme.buttonText};
   }

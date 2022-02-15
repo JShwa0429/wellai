@@ -23,9 +23,11 @@ const Div = styled.div`
   justify-content: space-between;
   width: 50%;
   max-width: 400px;
+  margin-top: 5vh;
 `;
 
 const Info = styled.div<{ number: number; infoId: number }>`
+  visibility: ${(props) => (props.number === 3 ? 'hidden' : 'visible')};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,9 +43,9 @@ const Info = styled.div<{ number: number; infoId: number }>`
     align-items: center;
 
     margin: 1vh 0;
-    font-size: 1vw;
-    width: 3vw;
-    height: 3vw;
+    font-size: 1em;
+    width: 5vh;
+    height: 5vh;
     border-radius: 50%;
     color: ${(props) => (props.number === props.infoId ? props.theme.buttonText : props.theme.defaultText)};
     background-color: ${(props) => (props.number === props.infoId ? props.theme.main : '#ACACAC')};
