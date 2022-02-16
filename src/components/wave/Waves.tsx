@@ -55,7 +55,7 @@ const Waves = () => {
 
   return (
     <Div>
-      <p>{time}</p>
+      {/* <p>{time}</p> */}
       <canvas ref={canvasRef} />
     </Div>
   );

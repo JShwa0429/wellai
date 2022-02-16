@@ -49,7 +49,7 @@ const Div = styled.div`
   margin-bottom: auto;
   align-items: center;
   border: 1px solid #888;
-  border-radius: 15px;
+  border-radius: 16px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
   padding-bottom: 2vh;
   z-index: 98;
@@ -106,7 +106,7 @@ export const Button = styled.button<{ pageNumber: number }>`
   min-height: 3em;
   font-weight: bold;
   margin-top: auto;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.defaultText)};
 
   :disabled {

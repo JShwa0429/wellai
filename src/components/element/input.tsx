@@ -9,7 +9,7 @@ type Props = {
   setValue: (arg: string) => void;
 };
 
-const Input: React.FunctionComponent<Props> = ({ type, children, name, placeholder, value, setValue }) => {
+export const Input: React.FunctionComponent<Props> = ({ type, children, name, placeholder, value, setValue }) => {
   const [withFocus, setWithFocus] = useState<boolean>(false);
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
@@ -21,8 +21,6 @@ const Input: React.FunctionComponent<Props> = ({ type, children, name, placehold
     </Label>
   );
 };
-
-export default Input;
 
 const Label = styled.label<{ withFocus: boolean }>`
   font-weight: bold;

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Option, saveOption } from 'features/signupSlice';
+import axios from 'axios';
 
 type Props = {
   pageNumber: number;
@@ -45,6 +46,16 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
     handleSaveOption();
 
     console.log(signUp);
+    axios
+      .post('/users/register/', {
+        user_id: signUp.email,
+        nickname: signUp.nickname,
+        password: signUp.password,
+        options: signUp.option,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    //handleNextPage();
   };
   return (
     <Div>

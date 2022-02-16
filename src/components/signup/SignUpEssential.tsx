@@ -1,4 +1,4 @@
-import Input from 'components/atom/input';
+import { Input } from 'components/element/input';
 import { Button } from './Signup';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +13,8 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   const [password, setPassword] = useState(useSelector((state: RootState) => state.signUp.password));
   const [passwordCheck, setPasswordCheck] = useState(useSelector((state: RootState) => state.signUp.passwordCheck));
   const dispatch = useDispatch();
+
+  const validateEmailRegex = /^\S+@\S+\.\S+$/;
   const handleSaveEssential = (event: React.FormEvent) => {
     event.preventDefault();
     const essential: Essential = {
@@ -24,6 +26,7 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
     dispatch(saveEssential(essential));
     handleNextPage();
   };
+
   return (
     <>
       <h2>반갑습니다!</h2>

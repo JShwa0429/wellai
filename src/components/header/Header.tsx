@@ -30,5 +30,5 @@ const Div = styled.div`
   }
   width: 100vw;
   height: 5vh;
-  min-height: 45px;
+  min-height: 70px;
 `;

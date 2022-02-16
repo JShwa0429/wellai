@@ -25,7 +25,7 @@ const ButtonDiv = styled.div`
     font-size: 1em;
     height: 2em;
     width: 5em;
-    border-radius: 10px;
+    border-radius: 4px;
     background-color: ${(props) => props.theme.main};
     color: ${(props) => props.theme.buttonText};
   }
