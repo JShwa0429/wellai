@@ -5,7 +5,7 @@ import { WaveGroup } from './waveGroup';
 const Waves = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
-  const [time, setTime] = useState(0);
+  // const [time, setTime] = useState(0);
   const requestRef = useRef<number>(0);
 
   const waveGroup = new WaveGroup();
@@ -42,13 +42,14 @@ const Waves = () => {
   };
 
   // 파도를 움직이는 함수
-  const animate = (t: DOMHighResTimeStamp) => {
+  //t: DOMHighResTimeStamp
+  const animate = () => {
     if (canvasRef.current instanceof HTMLCanvasElement) {
       if (ctx instanceof CanvasRenderingContext2D) {
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         waveGroup.draw(ctx);
       }
-      setTime(t);
+
       requestRef.current = requestAnimationFrame(animate);
     }
   };

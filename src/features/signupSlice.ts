@@ -15,7 +15,7 @@ export type Option = {
 };
 
 export type Essential = {
-  email: string;
+  userId: string;
   nickname: string;
   password: string;
   passwordCheck: string;
@@ -26,7 +26,7 @@ export type SignUpState = Essential & {
 };
 
 const initialState: SignUpState = {
-  email: '',
+  userId: '',
   nickname: '',
   password: '',
   passwordCheck: '',
@@ -48,7 +48,7 @@ export const signUpSlice = createSlice({
   initialState,
   reducers: {
     emailChange: (state, action: PayloadAction<string>) => {
-      state.email = action.payload;
+      state.userId = action.payload;
     },
     nicknameChange: (state, action: PayloadAction<string>) => {
       state.nickname = action.payload;
@@ -61,7 +61,7 @@ export const signUpSlice = createSlice({
     },
 
     saveEssential: (state, action: PayloadAction<Essential>) => {
-      state.email = action.payload.email;
+      state.userId = action.payload.userId;
       state.nickname = action.payload.nickname;
       state.password = action.payload.password;
       state.passwordCheck = action.payload.passwordCheck;

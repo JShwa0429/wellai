@@ -41,6 +41,10 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
     dispatch(saveOption(option));
   };
 
+  const genderArray = [
+    { id: 'M', text: '남자' },
+    { id: 'F', text: '여자' },
+  ];
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     handleSaveOption();
@@ -48,12 +52,14 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
     console.log(signUp);
     axios
       .post('/users/register/', {
-        user_id: signUp.email,
+        user_id: signUp.userId,
         nickname: signUp.nickname,
         password: signUp.password,
         options: signUp.option,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        if (res.statusText === 'Created') handleNextPage();
+      })
       .catch((err) => console.log(err));
     //handleNextPage();
   };
@@ -72,12 +78,17 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             <small>(선택)</small>
           </span>
           <ButtonDiv>
-            <GenderButton type="button" gender={gender} genderId={'M'} onClick={() => setGender('M')}>
-              남자
-            </GenderButton>
-            <GenderButton type="button" gender={gender} genderId={'F'} onClick={() => setGender('F')}>
-              여자
-            </GenderButton>
+            {genderArray.map((genderElem) => (
+              <GenderButton
+                key={genderElem.id}
+                type="button"
+                gender={gender}
+                id={genderElem.id}
+                onClick={() => setGender(genderElem.id)}
+              >
+                {genderElem.text}
+              </GenderButton>
+            ))}
           </ButtonDiv>
         </InputDiv>
         <InputDiv>
@@ -119,7 +130,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             <br />
             <small>(선택 최대 2개)</small>
           </span>
-          <ExersizeSelect>
+          <LikeSelect>
             <LikeOption checked={core} setChecked={setLikeCore}>
               코어
             </LikeOption>
@@ -138,7 +149,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             <LikeOption checked={balance} setChecked={setBalance}>
               밸런스
             </LikeOption>
-          </ExersizeSelect>
+          </LikeSelect>
         </InputDiv>
         <ButtonDiv>
           <MoveButton
@@ -199,9 +210,9 @@ const InputDiv = styled.div`
     padding: 0.5em;
     line-height: 1.47;
     font-size: 1em;
-    outline: 1px solid ${(props) => props.theme.defaultText};
+    outline: 1px solid ${({ theme }) => theme.defaultText};
     letter-spacing: -0.3px;
-    border-radius: 10px;
+    border-radius: 4px;
     font-weight: bold;
     margin-right: 5%;
   }
@@ -223,7 +234,7 @@ const OptionDiv = styled.div`
   }
 `;
 
-const ExersizeSelect = styled.div`
+const LikeSelect = styled.div`
   width: 100%;
   margin-left: auto;
   display: grid;
@@ -233,7 +244,7 @@ const ExersizeSelect = styled.div`
   button {
     height: 2em;
     width: 5em;
-    border-radius: 5px;
+    border-radius: 4px;
     font-weight: bold;
   }
   padding: 0 1vw 0 0;
@@ -249,9 +260,9 @@ const ButtonDiv = styled.div`
 `;
 
 const MoveButton = styled.button<{ pageNumber: number; finish: boolean }>`
-  background-color: ${(props) => (props.finish ? props.theme.main : props.theme.sub)};
-  color: ${(props) => (props.finish ? props.theme.buttonText : props.theme.defaultText)};
-  border: ${(props) => (props.finish ? '0px' : '1px solid' + props.theme.defaultText)};
+  color: ${({ finish, theme }) => (finish ? theme.buttonText : theme.defaultText)};
+  border: ${({ finish, theme }) => (finish ? '0px' : '1px solid' + theme.defaultText)};
+  background-color: ${({ finish, theme }) => (finish ? theme.main : theme.sub)};
   width: 40%;
   min-height: 2em;
   height: 8vh;
@@ -259,16 +270,16 @@ const MoveButton = styled.button<{ pageNumber: number; finish: boolean }>`
   font-weight: bold;
   margin-top: auto;
   margin: 2vh;
-  border-radius: 10px;
+  border-radius: 4px;
 `;
 
-const GenderButton = styled.button<{ gender: string | null; genderId: string }>`
-  border: ${(props) => (props.gender === props.genderId ? props.theme.main : '1px solid' + props.theme.defaultText)};
-  color: ${(props) => (props.gender === props.genderId ? props.theme.sub : '1px solid' + props.theme.defaultText)};
-  background-color: ${(props) => (props.gender === props.genderId ? props.theme.main : '1px solid' + props.theme.sub)};
+const GenderButton = styled.button<{ gender: string | null; id: string }>`
+  color: ${({ gender, id, theme }) => (gender === id ? theme.sub : theme.defaultText)};
+  background-color: ${({ gender, id, theme }) => (gender === id ? theme.main : theme.sub)};
+  border: 1px solid ${({ gender, id, theme }) => (gender === id ? 'none' : theme.defaultText)};
   width: 40%;
   margin: 0 5%;
   height: 2.5em;
-  border-radius: 10px;
+  border-radius: 4px;
   font-weight: bold;
 `;

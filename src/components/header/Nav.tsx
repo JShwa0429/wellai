@@ -1,34 +1,38 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+type link = {
+  to: string;
+  text: string;
+};
 const Nav = () => {
+  const links: link[] = [
+    { to: 'home', text: '홈' },
+    { to: 'course', text: '코스듣기' },
+  ];
+
   return (
     <nav>
-      <Ul>
-        <li>
-          <Link to="home">홈</Link>
-        </li>
-        <li>
-          <Link to="course">코스듣기</Link>
-        </li>
-        <li>
-          <Link to="menu1">메뉴</Link>
-        </li>
-        <li>
-          <Link to="menu2">메뉴</Link>
-        </li>
-      </Ul>
+      <UlNav>
+        {links.map((link) => (
+          <li key={link.text}>
+            <Link to={link.to}>{link.text}</Link>
+          </li>
+        ))}
+      </UlNav>
     </nav>
   );
 };
 
-const Ul = styled.ul`
+const UlNav = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 60%;
+  width: 30%;
   min-width: 200px;
   font-size: 1.2em;
-  margin: auto;
+  margin-right; auto;
+  margin-left:5em;
   a {
     text-decoration: none;
     color: ${(props) => props.theme.defaultText};

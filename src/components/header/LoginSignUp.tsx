@@ -26,7 +26,7 @@ const ButtonDiv = styled.div`
     height: 2em;
     width: 5em;
     border-radius: 4px;
-    background-color: ${(props) => props.theme.main};
-    color: ${(props) => props.theme.buttonText};
+    background-color: ${({ theme }) => theme.main};
+    color: ${({ theme }) => theme.buttonText};
   }
 `;

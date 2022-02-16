@@ -4,31 +4,33 @@ import LoginSignUp from './LoginSignUp';
 const Header = () => {
   const logoName = 'WellAi.';
   return (
-    <Div>
+    <DivHeader>
       <Nav />
       <h1>{logoName}</h1>
       <LoginSignUp />
-    </Div>
+    </DivHeader>
   );
 };
 
 export default Header;
 
-const Div = styled.div`
-  position: absolute;
-  z-index: 99;
-  display: grid;
-  border-bottom: 1px solid ${(props) => props.theme.defaultText};
-  grid-template-columns: 4fr 2fr 4fr;
-  background-color: white;
-  align-items: center;
-
-  font-size: 1em;
-  color: ${(props) => props.theme.defaultText};
-  h1 {
-    margin: auto;
-  }
+export const DivHeader = styled.div`
   width: 100vw;
   height: 5vh;
   min-height: 70px;
+  position: absolute;
+  z-index: 99;
+  display: grid;
+
+  grid-template-columns: 4fr 2fr 4fr;
+
+  align-items: center;
+  font-size: 1em;
+  color: ${({ theme }) => theme.defaultText};
+  border-bottom: 1px solid ${({ theme }) => theme.defaultText};
+  background-color: white;
+
+  h1 {
+    margin: auto;
+  }
 `;

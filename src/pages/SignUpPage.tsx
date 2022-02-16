@@ -1,14 +1,18 @@
 import { SignUp } from 'components';
 import Waves from 'components/wave/Waves';
 import styled from 'styled-components';
+import { SignUpHeader } from 'components/signup';
 const SignUpPage = () => {
   return (
-    <Div>
-      <Section>
-        <SignUp />
-        <Waves />
-      </Section>
-    </Div>
+    <>
+      <SignUpHeader />
+      <Div>
+        <Section>
+          <SignUp />
+          <Waves />
+        </Section>
+      </Div>
+    </>
   );
 };
 

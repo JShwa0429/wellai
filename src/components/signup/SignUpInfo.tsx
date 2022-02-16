@@ -23,6 +23,7 @@ const Div = styled.div`
   justify-content: space-between;
   width: 50%;
   max-width: 400px;
+  min-width: 250px;
   margin-top: 5vh;
 `;
 
