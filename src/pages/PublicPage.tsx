@@ -1,24 +1,20 @@
-import { useState } from 'react';
-import { Count } from 'components';
 import { shallowEqual } from 'react-redux';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../hooks/storeHooks';
 import * as testActions from '../store/modules/test';
 import { Button } from 'antd';
 
-const CountPage = () => {
-  const [count, setCount] = useState(0);
+const PublicPage = () => {
   const dispatch = useAppDispatch();
 
   const { value } = useAppSelector((state) => state.test, shallowEqual);
 
   return (
     <Div>
-      <Count count={count} setCount={setCount} />
       <Button type="primary" onClick={() => dispatch(testActions.increment())}>
         +
       </Button>
-      {value}ㅁㄴㅇ
+      {value}
       <Button type="primary" onClick={() => dispatch(testActions.decrement())}>
         -
       </Button>
@@ -26,7 +22,7 @@ const CountPage = () => {
   );
 };
 
-export default CountPage;
+export default PublicPage;
 
 const Div = styled.div`
   border: 3px solid red;
