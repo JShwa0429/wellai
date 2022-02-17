@@ -66,16 +66,13 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
   return (
     <Div>
       <h3>
-        최적의 운동을 추천해드릴 수 있는
+        최적의 운동을 추천해 드리기 위한
         <br /> 선택 입력 사항이에요.
       </h3>
       <form onSubmit={handleSubmit}>
         <InputDiv>
           <span>
-            <br />
-            성별
-            <br />
-            <small>(선택)</small>
+            <p style={{ textDecoration: 'square' }}>• 성별(선택)</p>
           </span>
           <ButtonDiv>
             {genderArray.map((genderElem) => (
@@ -91,45 +88,33 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             ))}
           </ButtonDiv>
         </InputDiv>
+        <div style={{ flexDirection: 'row' }}>
+          <InputDiv>
+            <span>• 체형(선택)</span>
+            <InputDiv style={{ flexDirection: 'row' }}>
+              <OptionDiv>
+                <input
+                  type="number"
+                  value={height}
+                  step="0.1"
+                  onChange={(event) => setHeight(parseFloat(event.target.value))}
+                />
+                <b>cm</b>
+              </OptionDiv>
+              <OptionDiv>
+                <input
+                  type="number"
+                  value={weight}
+                  step="0.1"
+                  onChange={(event) => setWeight(parseFloat(event.target.value))}
+                ></input>
+                <b>kg</b>
+              </OptionDiv>
+            </InputDiv>
+          </InputDiv>
+        </div>
         <InputDiv>
-          <span>
-            <br />
-            키<br />
-            <small>(선택)</small>
-          </span>
-          <OptionDiv>
-            <input
-              type="number"
-              value={height}
-              step="0.1"
-              onChange={(event) => setHeight(parseFloat(event.target.value))}
-            />
-            <span>cm</span>
-          </OptionDiv>
-        </InputDiv>
-        <InputDiv>
-          <span>
-            <br />
-            몸무게
-            <br />
-            <small>(선택)</small>
-          </span>
-          <OptionDiv>
-            <input
-              type="number"
-              value={weight}
-              step="0.1"
-              onChange={(event) => setWeight(parseFloat(event.target.value))}
-            ></input>
-            <span>kg</span>
-          </OptionDiv>
-        </InputDiv>
-        <InputDiv>
-          <span>
-            선호하는 운동
-            <br />
-            <small>(선택 최대 2개)</small>
-          </span>
+          <span>• 선호하는 운동 (최대 2개)</span>
           <LikeSelect>
             <LikeOption checked={core} setChecked={setLikeCore}>
               코어
@@ -152,7 +137,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
           </LikeSelect>
         </InputDiv>
         <ButtonDiv>
-          <MoveButton
+          {/* <MoveButton
             onClick={() => {
               handleSaveOption();
               handlePrevPage();
@@ -161,9 +146,9 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPa
             finish={false}
           >
             이전으로
-          </MoveButton>
+          </MoveButton> */}
           <MoveButton type="submit" pageNumber={pageNumber} finish={true}>
-            완료
+            완료!
           </MoveButton>
         </ButtonDiv>
       </form>
@@ -175,6 +160,8 @@ export default SignUpOption;
 const Div = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
   padding: 0px;
@@ -182,16 +169,12 @@ const Div = styled.div`
     margin-top: 5vh;
     margin-bottom: auto;
   }
-  form {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
 `;
 const InputDiv = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 7fr;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  justify-content: center;
   align-items: center;
 
   [type='radio'] {
@@ -201,20 +184,19 @@ const InputDiv = styled.div`
   span {
     text-align: center;
     font-weight: bold;
+    margin-right: auto;
   }
   label {
     width: 100%;
   }
   input {
-    margin-left: auto;
     padding: 0.5em;
     line-height: 1.47;
     font-size: 1em;
     outline: 1px solid ${({ theme }) => theme.defaultText};
     letter-spacing: -0.3px;
-    border-radius: 4px;
+
     font-weight: bold;
-    margin-right: 5%;
   }
 `;
 
@@ -231,6 +213,7 @@ const OptionDiv = styled.div`
   input {
     width: 40%;
     margin: 0 1em;
+    border-radius: 4px;
   }
 `;
 
@@ -256,20 +239,19 @@ const ButtonDiv = styled.div`
   heigt: 100%;
   display: flex;
   padding: 0;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const MoveButton = styled.button<{ pageNumber: number; finish: boolean }>`
   color: ${({ finish, theme }) => (finish ? theme.buttonText : theme.defaultText)};
   border: ${({ finish, theme }) => (finish ? '0px' : '1px solid' + theme.defaultText)};
   background-color: ${({ finish, theme }) => (finish ? theme.main : theme.sub)};
-  width: 40%;
+  width: 100%;
   min-height: 2em;
   height: 8vh;
   max-height: 3em;
   font-weight: bold;
-  margin-top: auto;
-  margin: 2vh;
+  margin: auto;
   border-radius: 4px;
 `;
 

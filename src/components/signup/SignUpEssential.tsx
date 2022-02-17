@@ -20,13 +20,17 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   }, [userId]);
 
   const nicknameError = useMemo(() => {
+    const regex = /^[가-힣|a-z|A-Z]+$/;
+    if (!regex.test(nickname)) {
+      return '한글 영어만 사용해주세요';
+    }
     return '';
   }, [nickname]);
 
   const passwordError = useMemo(() => {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
     if (!password) {
-      return '영문 대소문자/숫자/특수문자 8글자 이상';
+      return '영문/숫자/특수문자 8글자 이상';
     } else if (password.length < 8) {
       return '비밀번호는 8자리 이상이어야합니다';
     } else if (!regex.test(password)) {

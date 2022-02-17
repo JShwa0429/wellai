@@ -17,7 +17,8 @@ export default Header;
 export const DivHeader = styled.div`
   width: 100vw;
   height: 5vh;
-  min-height: 70px;
+  min-height: 45px;
+  max-height: 70px;
   position: absolute;
   z-index: 99;
   display: grid;

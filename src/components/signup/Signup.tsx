@@ -39,8 +39,7 @@ const SignUp = () => {
 export default SignUp;
 
 const Div = styled.div`
-  width: 426.8px;
-  max-height: 680px;
+  width: 400px;
   height: 60vh;
   min-height: 400px;
   color: ${(props) => props.theme.defaultText};
@@ -71,7 +70,7 @@ const Div = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 80%;
     height: 100%;
     margin 0;
     input {
@@ -102,10 +101,9 @@ const Div = styled.div`
 export const Button = styled.button<{ pageNumber: number }>`
   color: ${(props) => (props.pageNumber === 1 ? props.theme.buttonText : props.theme.defaultText)};
   background: ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.sub)};
-  width: 40%;
+  width: 100%;
   min-height: 3em;
-  font-weight: bold;
-  margin-top: auto;
+  margin: auto;
   border-radius: 8px;
   border: 1px solid ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.defaultText)};
 
