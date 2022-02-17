@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Count } from 'components';
 import { shallowEqual } from 'react-redux';
 import styled from 'styled-components';
-import { useAppSelector, useAppDispatch } from '../hooks/storeHooks';
-import * as testActions from '../store/modules/test';
+import { useAppSelector, useAppDispatch } from '../hooks/useStoreHooks';
+import * as testActions from '../features/test';
 import { Button } from 'antd';
 
 const CountPage = () => {

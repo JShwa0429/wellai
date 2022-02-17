@@ -12,7 +12,7 @@ type Props = {
   handleNextPage: () => void;
 };
 
-const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handlePrevPage, handleNextPage }) => {
+const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPage }) => {
   const [gender, setGender] = useState<string | null>(
     useSelector((state: RootState) => state.signUp?.option.gender ?? null),
   );
