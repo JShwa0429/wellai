@@ -2,7 +2,7 @@ import { Input } from 'components/element/input';
 import { Button } from './Signup';
 import React, { useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store';
+import { RootState } from 'store/store';
 import { Essential, saveEssential } from 'features/signupSlice';
 import styled from 'styled-components';
 

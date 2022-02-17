@@ -14,7 +14,7 @@ export const Input: React.FunctionComponent<Props> = ({ type, children, name, pl
       )}
       {type === 'password' && passwordHidden && (
         <>
-          <input type={'password'} name={name} placeholder={placeholder} value={value} onChange={onChange}></input>
+          <input type="password" name={name} placeholder={placeholder} value={value} onChange={onChange}></input>
           <div className="svgDiv">
             <IoEye size="1.5em" fill="black" onClick={() => setPasswordHidden((current) => !current)} />
           </div>
@@ -22,7 +22,7 @@ export const Input: React.FunctionComponent<Props> = ({ type, children, name, pl
       )}
       {type === 'password' && !passwordHidden && (
         <>
-          <input type={'text'} name={name} placeholder={placeholder} value={value} onChange={onChange}></input>
+          <input type="text" name={name} placeholder={placeholder} value={value} onChange={onChange}></input>
           <div className="svgDiv">
             <IoEyeOff size="1.5em" fill="black" onClick={() => setPasswordHidden((current) => !current)} />
           </div>

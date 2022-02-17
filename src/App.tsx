@@ -1,6 +1,9 @@
-import { Page, SignUpPage } from './pages';
+import { Page, SignUpPage, AuthPage, PublicPage, TestPage } from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
+import { AuthRoute, PublicRoute } from './components';
+import './styles/antd.css';
+
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +16,9 @@ function App() {
           <Route path="/menu2" element={<SignUpPage />} />
         </Route>
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/private" element={<AuthRoute element={AuthPage} />} />
+        <Route path="/public" element={<PublicRoute element={PublicPage} />} />
+        <Route path="/test" element={<PublicRoute element={TestPage} />} />
       </Routes>
     </BrowserRouter>
   );

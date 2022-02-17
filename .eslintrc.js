@@ -9,8 +9,8 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:jsx-a11y/recommended',
-    'plugin:import/errors', // 설치한 경우
-    'plugin:import/warnings', // 설치한 경우
+    // 'plugin:import/errors', // 설치한 경우
+    // 'plugin:import/warnings', // 설치한 경우
     'plugin:prettier/recommended',
   ],
 
@@ -34,7 +34,6 @@ module.exports = {
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
-    'import/named': 'error',
   },
   settings: {
     'import/resolver': {
