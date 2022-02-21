@@ -4,12 +4,12 @@ const SignUpInfo: React.FunctionComponent<{ pageNumber: number }> = ({ pageNumbe
     <Div>
       <Info number={pageNumber} infoId={1}>
         <div className="circle">1</div>
-        기본정보
+        <h3>기본정보</h3>
       </Info>
-
+      <hr />
       <Info number={pageNumber} infoId={2}>
         <div className="circle">2</div>
-        추가정보
+        <h3>추가정보</h3>
       </Info>
     </Div>
   );
@@ -21,10 +21,23 @@ const Div = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 50%;
   max-width: 400px;
   min-width: 250px;
   margin-top: 5vh;
+
+  hr {
+    position: absolute;
+    left: 30%;
+    top: 40%;
+    width: 40%;
+    color: black;
+    border-top: 0.5px solid #acacac;
+    margin: 0;
+    padding: 0;
+    z-index: -1;
+  }
 `;
 
 const Info = styled.div<{ number: number; infoId: number }>`
@@ -50,5 +63,6 @@ const Info = styled.div<{ number: number; infoId: number }>`
     border-radius: 50%;
     color: ${(props) => (props.number === props.infoId ? props.theme.buttonText : props.theme.defaultText)};
     background-color: ${(props) => (props.number === props.infoId ? props.theme.main : '#ACACAC')};
+    font-family: 'Noto Sans KR';
   }
 `;

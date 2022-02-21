@@ -1,6 +1,6 @@
-import { Input } from 'components/Input/input';
+import { Input } from 'components/Input';
 import { Button } from './Signup';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store';
 import { Essential, saveEssential } from 'features/signupSlice';
@@ -9,10 +9,10 @@ import styled from 'styled-components';
 type Props = { pageNumber: number; handleNextPage: () => void };
 
 const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNextPage }) => {
-  const [userId, setUserId] = useState(useSelector((state: RootState) => state.signUp.userId));
-  const [nickname, setNickname] = useState(useSelector((state: RootState) => state.signUp.nickname));
-  const [password, setPassword] = useState(useSelector((state: RootState) => state.signUp.password));
-  const [passwordCheck, setPasswordCheck] = useState(useSelector((state: RootState) => state.signUp.passwordCheck));
+  const [userId, setUserId] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
   const dispatch = useDispatch();
 
   const userIdError = useMemo(() => {
@@ -20,9 +20,9 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   }, [userId]);
 
   const nicknameError = useMemo(() => {
-    const regex = /^[가-힣|a-z|A-Z]+$/;
+    const regex = /^[가-힣|a-z|A-Z]{2,8}$/;
     if (!regex.test(nickname)) {
-      return '한글 영어만 사용해주세요';
+      return '한글/영어 2글자 이상 8글자 이하';
     }
     return '';
   }, [nickname]);
@@ -69,13 +69,24 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
       passwordCheck: passwordCheck,
     };
     dispatch(saveEssential(essential));
+
+    // axios
+    //   .post('/users/check/', {
+    //     user_id: signUp.userId,
+    //     nickname: signUp.nickname,
+    //     password: signUp.password,
+    //   })
+    //   .then((res) => {
+    //     if (res.statusText === 'Created') handleNextPage();
+    //   })
+    //   .catch((err) => console.log(err));
+
     handleNextPage();
   };
-
   return (
     <>
-      <h2>반갑습니다!</h2>
       <form onSubmit={handleSaveEssential}>
+        <h2>반갑습니다!</h2>
         <Input
           type="email"
           placeholder="example@email.com"

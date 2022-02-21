@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import Nav from './Nav';
 import LoginSignUp from './LoginSignUp';
+import { Link } from 'react-router-dom';
 const Header = () => {
   const logoName = 'WellAi.';
   return (
     <DivHeader>
+      <Link to="home">
+        <h1>{logoName}</h1>
+      </Link>
       <Nav />
-      <h1>{logoName}</h1>
       <LoginSignUp />
     </DivHeader>
   );
@@ -17,8 +20,8 @@ export default Header;
 export const DivHeader = styled.div`
   width: 100vw;
   height: 5vh;
-  min-height: 45px;
-  max-height: 70px;
+  min-height: 60px;
+  max-height: 80px;
   position: absolute;
   z-index: 99;
   display: grid;
@@ -26,6 +29,7 @@ export const DivHeader = styled.div`
   grid-template-columns: 4fr 2fr 4fr;
 
   align-items: center;
+
   font-size: 1em;
   color: ${({ theme }) => theme.defaultText};
   border-bottom: 1px solid ${({ theme }) => theme.defaultText};
@@ -33,5 +37,12 @@ export const DivHeader = styled.div`
 
   h1 {
     margin: auto;
+    font-weight: bold;
+    padding-left: 3em;
+  }
+
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.defaultText};
   }
 `;

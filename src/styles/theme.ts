@@ -7,6 +7,7 @@ const theme: StyledComponent.DefaultTheme = {
   text: '#888888',
   defaultText: '#574240 ',
   buttonText: '#FFEAEE',
+  border: '#C4C4C4',
 };
 
 export default theme;

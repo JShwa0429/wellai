@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         word-wrap: break-word;
+        font-family:"Noto Sans KR";
     }
     button {
         border: 0;
@@ -31,46 +32,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     @font-face { 
-        font-family: "Noto Sans KR"
+        font-family: "Noto Sans KR";
         font-style: normal;
-        font-weight:100;
-        src: url('./fonts/NotoSansKr/NotoSansKR-Thin.woff2') format('woff2');
+        src: local('./fonts'),
+            url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
     }
 
-    @font-face { 
-        font-family: "Noto Sans KR"
-        font-style: normal;
-        font-weight:300;
-        src: url('./fonts/NotoSansKr/NotoSansKR-Light.woff2') format('woff2');
-    }
-    
-    @font-face { 
-        font-family: "Noto Sans KR"
-        font-style: normal;
-        font-weight:400;
-        src: url('./fonts/NotoSansKr/NotoSansKR-Regular.woff2') format('woff2');
-    }
-
-    @font-face { 
-        font-family: "Noto Sans KR"
-        font-style: normal;
-        font-weight:500;
-        src: url('./fonts/NotoSansKr/NotoSansKR-Medium.woff2') format('woff2');
-    }
-
-    @font-face { 
-        font-family: "Noto Sans KR"
-        font-style: normal;
-        font-weight:700;
-        src: url('./fonts/NotoSansKr/NotoSansKR-Bold.woff2') format('woff2');
-    }
-
-    @font-face { 
-        font-family: "Noto Sans KR"
-        font-style: normal;
-        font-weight:900;
-        src: url('./fonts/NotoSansKr/NotoSansKR-Black.woff2') format('woff2');
-    }
 `;
 
 export default GlobalStyle;

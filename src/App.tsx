@@ -2,7 +2,6 @@ import { Page, SignUpPage, AuthPage, PublicPage, TestPage } from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
 import { AuthRoute, PublicRoute } from './components';
-import './styles/antd.css';
 
 function App() {
   return (
