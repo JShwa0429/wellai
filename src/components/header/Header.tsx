@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Nav from './Nav';
 import LoginSignUp from './LoginSignUp';
 import { Link } from 'react-router-dom';
+import { SearchInput } from 'components/Input/header';
 const Header = () => {
   const logoName = 'WellAi.';
   return (
@@ -10,6 +11,7 @@ const Header = () => {
         <h1>{logoName}</h1>
       </Link>
       <Nav />
+      <SearchInput />
       <LoginSignUp />
     </DivHeader>
   );
@@ -26,8 +28,8 @@ export const DivHeader = styled.div`
   z-index: 99;
   display: grid;
 
-  grid-template-columns: 4fr 2fr 4fr;
-
+  grid-template-columns: 3fr 2fr 2fr 2fr;
+  grid-gap: 5%;
   align-items: center;
 
   font-size: 1em;

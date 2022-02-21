@@ -16,6 +16,11 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   const dispatch = useDispatch();
 
   const userIdError = useMemo(() => {
+    const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (!userId) return '';
+    else if (!regex.test(userId)) {
+      return '이메일 형식을 지켜주세요';
+    }
     return '';
   }, [userId]);
 

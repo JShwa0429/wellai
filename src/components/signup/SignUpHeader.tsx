@@ -22,4 +22,8 @@ const DivSignUpHeader = styled(DivHeader)`
     text-decoration: none;
     color: ${({ theme }) => theme.defaultText};
   }
+
+  h1 {
+    padding: 0;
+  }
 `;
