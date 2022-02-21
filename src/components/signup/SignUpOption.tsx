@@ -257,6 +257,10 @@ const BodyDiv = styled.div`
   width: 120%;
   padding: 0 0 0 10%;
   grid-gap: 10%;
+
+  input:focus {
+    outline: 3px solid ${(props) => props.theme.main};
+  }
 `;
 
 const OptionDiv = styled.div`
