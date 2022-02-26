@@ -1,5 +1,5 @@
 import { Input } from 'components/Input';
-import { Button } from './Signup';
+import { Button } from './SignUp';
 import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveEssential } from 'features/signupSlice';

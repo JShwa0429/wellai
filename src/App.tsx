@@ -8,6 +8,7 @@ import {
   CoursePage,
   MainRenderPage,
   CourseDetailPage,
+  SignUpPage,
 } from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
@@ -26,7 +27,7 @@ function App() {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/community" element={<p>커뮤니티 페이지</p>} />
         </Route>
-        <Route path="/signup" element={<p>Sign Up 페이지</p>} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/private" element={<AuthRoute element={AuthPage} />} />
         <Route path="/public" element={<PublicRoute element={PublicPage} />} />
         <Route path="/test" element={<PublicRoute element={TestPage} />} />
