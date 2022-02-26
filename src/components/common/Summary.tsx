@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+
 export type SummaryProps = {
+  id: string;
   title: string;
   duration: string[];
   hashTags: string[];
@@ -32,40 +34,15 @@ const Summary: React.FunctionComponent<SummaryProps> = ({ title, duration, hashT
 export default Summary;
 
 const Div = styled.div`
-width:320px;
-display: flex;
-flex-direction: column;
-border 1px solid #BDBDBD;
-overflow: hidden;
-margin:4%;
-font-size:1rem;
-font-weight:bold;
-.image {
-    background-color:#F5F5F5;
-    img {
-      width:100%;
-      object-fit:cover;
-    }
-}
+  font-weight: bold;
+  .title {
+    color: ${(props) => props.theme.defaultText};
+  }
+  .duration {
+    color: ${(props) => props.theme.main};
+  }
 
-.explain {
-    display:flex;
-    flex-direction:column;
-    padding : 1%;
-    padding-left:3%;
-    text-align:left;
-    background-color:white;
-    div{
-        margin:0.5%;
-    }
-    float:bottom;
-}
-.duration{
-  color:${(props) => props.theme.main};
-}
-
-.hashTag{
-  color:${(props) => props.theme.defaultText};
-  
-}
+  .hashTag {
+    color: #988d8d;
+  }
 `;
