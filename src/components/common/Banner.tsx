@@ -3,7 +3,7 @@ import { Summary } from '.';
 const Banner: React.FunctionComponent = ({ children }) => {
   const data = {
     id: '0',
-    title: '차차',
+    title: '절대 빠진다, 하루 1시간! 복부 군살 제거 홈트',
     duration: ['3주', '3주차', '60분'],
     hashTags: ['#초중급', '#군살', '#다이어트'],
   };
@@ -45,8 +45,8 @@ const Div = styled.div`
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    border: 1px solid black;
-    width: 50%;
+
+    width: 80%;
     padding: 0 5vw;
   }
 `;
@@ -54,15 +54,29 @@ const Div = styled.div`
 const DivSummary = styled.div`
   font-size: 2em;
   display: flex;
-
   img {
-    height: 25vh;
+    height: 30vh;
   }
 
   .explain {
+    margin-left: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 50%;
+    text-align: center;
+  }
+
+  font-weight: bold;
+  .title {
+    color: ${(props) => props.theme.defaultText};
+  }
+  .duration {
+    color: ${(props) => props.theme.main};
+  }
+
+  .hashTag {
+    color: #988d8d;
   }
 `;

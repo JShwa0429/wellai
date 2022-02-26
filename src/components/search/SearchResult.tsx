@@ -106,4 +106,16 @@ a{
     float:bottom;
     
   }
+
+  font-weight: bold;
+  .title {
+    color: ${(props) => props.theme.defaultText};
+  }
+  .duration {
+    color: ${(props) => props.theme.main};
+  }
+
+  .hashTag {
+    color: #988d8d;
+  }
 `;

@@ -8,7 +8,7 @@ export type SummaryProps = {
 };
 const Summary: React.FunctionComponent<SummaryProps> = ({ title, duration, hashTags }) => {
   return (
-    <Div>
+    <>
       <div className="image">
         <img src={`${process.env.PUBLIC_URL}/image/yoga.svg`} alt="요가" />
       </div>
@@ -27,22 +27,8 @@ const Summary: React.FunctionComponent<SummaryProps> = ({ title, duration, hashT
           <p>{hashTags.join(' ')}</p>
         </div>
       </div>
-    </Div>
+    </>
   );
 };
 
 export default Summary;
-
-const Div = styled.div`
-  font-weight: bold;
-  .title {
-    color: ${(props) => props.theme.defaultText};
-  }
-  .duration {
-    color: ${(props) => props.theme.main};
-  }
-
-  .hashTag {
-    color: #988d8d;
-  }
-`;
