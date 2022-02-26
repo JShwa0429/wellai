@@ -1,6 +1,8 @@
 import { WebCam } from 'components';
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player';
+
 const ListenPage = () => {
   // const opts = {
   //   playerVars: {
@@ -29,7 +31,13 @@ const ListenPage = () => {
         유사하여 붙여진 이름입니다.
       </p>
       <VideoDiv>
-        <YouTube videoId="2g811Eo7K8U" onReady={_onReady} />;
+        <iframe
+          src="https://www.youtube.com/embed/hEnr6Ewpu_U?autoplay=1&mute=1&modestbranding=1&playlist=hEnr6Ewpu_U&loop=1"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title="video"
+        />
         <WebCam />
       </VideoDiv>
     </DivCourse>
@@ -67,8 +75,12 @@ const TitleDiv = styled.div`
 const VideoDiv = styled.div`
   margin-top: 3vw;
   display: flex;
+  width: 100%;
 
   video {
+    width: 50%;
+  }
+  iframe {
     width: 50%;
   }
 `;
