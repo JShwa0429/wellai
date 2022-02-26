@@ -1,15 +1,8 @@
-import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, Menu } from 'antd';
 
 import { LikeOutlined, CommentOutlined, PieChartOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-
-interface AntdIconProps {
-  className?: string;
-  onClick?: React.MouseEventHandler<SVGSVGElement>;
-  style?: React.CSSProperties;
-}
 type menu = {
   name: string;
   menuKey: string;

@@ -85,7 +85,7 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
                   console.log(result);
                   setIsModalVisible(false);
                 }}
-                onFail={(err) => {
+                onFail={() => {
                   console.log('로그인실패');
                 }}
                 onLogout={() => {
