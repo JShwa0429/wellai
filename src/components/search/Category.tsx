@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
-const Category = (props: any) => {
+type Props = {
+  keyword: string;
+};
+const Category: React.FunctionComponent<Props> = ({ keyword }) => {
   return (
     <Div>
-      <h2>카테고리</h2>
-      <h1>서서 #앉아서 #밸런스 등 해쉬태그 등등등</h1>
+      <h3>카테고리</h3>
+      <h1>{keyword}</h1>
     </Div>
   );
 };
@@ -12,10 +15,16 @@ export default Category;
 
 const Div = styled.div`
   margin-right: auto;
-  h2 {
+  padding: 10vh 0 0 5vw;
+  h3 {
     color: ${(props) => props.theme.defaultText};
   }
+  background: linear-gradient(rgba(255, 114, 114, 0.6), rgba(255, 114, 114, 0.2));
   font-size: 1.5em;
-  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justity-content: center;
+
+  height: 30vh;
   width: 100%;
 `;

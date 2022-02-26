@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 const SearchInput = () => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -9,10 +10,13 @@ const SearchInput = () => {
       formRef.current?.onsubmit;
     }
   };
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    alert(searchRef.current?.value);
+    const keyword = searchRef.current?.value;
+    if (keyword) navigate('/search', { state: keyword });
+    else alert('검색어를 입력해주세요');
   };
   return (
     <Form onSubmit={handleSubmit} name="form" ref={formRef}>
@@ -33,9 +37,12 @@ const Form = styled.form`
   border: 1px solid #888;
   border-radius: 4px;
   overflow: hidden;
+
   input {
+    padding-left: 1em;
     height: 2em;
     width: 100%;
+    font-weight: bold;
   }
 `;
 

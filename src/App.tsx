@@ -1,4 +1,14 @@
-import { Page, SignUpPage, AuthPage, PublicPage, TestPage, CoursePage, CourseSearchPage } from './pages';
+import {
+  Page,
+  AuthPage,
+  PublicPage,
+  TestPage,
+  ListenPage,
+  SearchPage,
+  CoursePage,
+  MainRenderPage,
+  CourseDetailPage,
+} from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
 import { AuthRoute, PublicRoute } from './components';
@@ -9,13 +19,14 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Page />}>
-          <Route path="/home" element={<SignUpPage />} />
+          <Route path="" element={<MainRenderPage />} />
           <Route path="/course" element={<CoursePage />} />
-          <Route path="/course/:id" element={<CoursePage />} />
-          <Route path="/search" element={<CourseSearchPage />} />
-          <Route path="/community" element={<SignUpPage />} />
+          <Route path="/course/:id" element={<CourseDetailPage />} />
+          <Route path="/listen/:id" element={<ListenPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/community" element={<p>커뮤니티 페이지</p>} />
         </Route>
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/signup" element={<p>Sign Up 페이지</p>} />
         <Route path="/private" element={<AuthRoute element={AuthPage} />} />
         <Route path="/public" element={<PublicRoute element={PublicPage} />} />
         <Route path="/test" element={<PublicRoute element={TestPage} />} />

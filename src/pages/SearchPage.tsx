@@ -6,7 +6,7 @@ const SearchPage = () => {
   return (
     <Div>
       <Category keyword={state as string} />
-      <SearchResult />
+      <SearchResult searchTitle="검색결과" />
     </Div>
   );
 };
@@ -14,7 +14,6 @@ const SearchPage = () => {
 export default SearchPage;
 
 const Div = styled.div`
-  padding: 0 5vw;
   width: 100%;
   height: 100%;
   display: flex;

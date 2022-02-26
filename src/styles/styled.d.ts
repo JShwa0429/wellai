@@ -9,5 +9,6 @@ declare module 'styled-components' {
     defaultText: string;
     buttonText: string;
     border: string;
+    light: string;
   }
 }
