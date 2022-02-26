@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import LikeOption from './LikeOption';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { Option, saveOption } from 'features/signupSlice';
@@ -12,18 +11,24 @@ type Props = {
   handleNextPage: () => void;
 };
 
+type Preference = {
+  id: string;
+  text: string;
+  checked: boolean;
+};
+
 const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPage }) => {
-  const [gender, setGender] = useState<string | null>(
-    useSelector((state: RootState) => state.signUp?.option.gender ?? null),
-  );
-  const [weight, setWeight] = useState<number>(useSelector((state: RootState) => state.signUp?.option.weight ?? 0));
-  const [height, setHeight] = useState<number>(useSelector((state: RootState) => state.signUp?.option.height ?? 0));
-  const [core, setLikeCore] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.core));
-  const [leg, setLeg] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.leg));
-  const [back, setBack] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.back));
-  const [stand, setStand] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.stand));
-  const [sit, setSit] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.sit));
-  const [balance, setBalance] = useState<boolean>(useSelector((state: RootState) => state.signUp.option.balance));
+  const [gender, setGender] = useState<string | null>(null);
+  const [weight, setWeight] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+  const [preferenceList, setPreferenceList] = useState<Preference[]>([
+    { id: '0', text: '코어', checked: false },
+    { id: '1', text: '다리', checked: false },
+    { id: '2', text: '등', checked: false },
+    { id: '3', text: '서서', checked: false },
+    { id: '4', text: '앉아서', checked: false },
+    { id: '5', text: '밸런스', checked: false },
+  ]);
   const dispatch = useDispatch();
   const signUp = useSelector((state: RootState) => state.signUp);
   const handleSaveOption = () => {
@@ -31,19 +36,30 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
       gender: gender,
       weight: weight,
       height: height,
-      core: core,
-      leg: leg,
-      back: back,
-      stand: stand,
-      sit: sit,
-      balance: balance,
+      core: preferenceList[0].checked,
+      leg: preferenceList[1].checked,
+      back: preferenceList[2].checked,
+      stand: preferenceList[3].checked,
+      sit: preferenceList[4].checked,
+      balance: preferenceList[5].checked,
     };
     dispatch(saveOption(option));
   };
 
+  const handleCheckPreference = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.id;
+    setPreferenceList((current) => {
+      const newPreferenceList = [...current];
+      for (let i = 0; i < newPreferenceList.length; i++) {
+        if (id === newPreferenceList[i].id) newPreferenceList[i].checked = !newPreferenceList[i].checked;
+      }
+      return newPreferenceList;
+    });
+  };
+
   const genderArray = [
-    { id: 'M', text: '남자' },
-    { id: 'F', text: '여자' },
+    { id: 'M', text: '남' },
+    { id: 'F', text: '여' },
   ];
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -58,23 +74,32 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
         options: signUp.option,
       })
       .then((res) => {
-        if (res.statusText === 'Created') handleNextPage();
+        console.log(res);
+        if (res.status === 201) handleNextPage();
+        else alert('회원가입 실패');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        alert('회원가입 실패');
+      });
     //handleNextPage();
   };
+
+  const checkboxDisable = useMemo(() => {
+    return preferenceList.filter((preference) => preference.checked === true).length > 1 ? true : false;
+  }, [preferenceList]);
   return (
     <Div>
-      <h3>
-        최적의 운동을 추천해 드리기 위한
-        <br /> 선택 입력 사항이에요.
-      </h3>
       <form onSubmit={handleSubmit}>
+        <h2>
+          최적의 운동을 추천해 드리기 위한
+          <br /> 선택 입력 사항이에요.
+        </h2>
         <InputDiv>
           <span>
             <p style={{ textDecoration: 'square' }}>• 성별(선택)</p>
           </span>
-          <ButtonDiv>
+          <GenderDiv>
             {genderArray.map((genderElem) => (
               <GenderButton
                 key={genderElem.id}
@@ -86,12 +111,12 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
                 {genderElem.text}
               </GenderButton>
             ))}
-          </ButtonDiv>
+          </GenderDiv>
         </InputDiv>
         <div style={{ flexDirection: 'row' }}>
           <InputDiv>
             <span>• 체형(선택)</span>
-            <InputDiv style={{ flexDirection: 'row' }}>
+            <BodyDiv>
               <OptionDiv>
                 <input
                   type="number"
@@ -99,7 +124,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
                   step="0.1"
                   onChange={(event) => setHeight(parseFloat(event.target.value))}
                 />
-                <b>cm</b>
+                <span>cm</span>
               </OptionDiv>
               <OptionDiv>
                 <input
@@ -108,45 +133,32 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
                   step="0.1"
                   onChange={(event) => setWeight(parseFloat(event.target.value))}
                 ></input>
-                <b>kg</b>
+                <span>kg</span>
               </OptionDiv>
-            </InputDiv>
+            </BodyDiv>
           </InputDiv>
         </div>
         <InputDiv>
           <span>• 선호하는 운동 (최대 2개)</span>
-          <LikeSelect>
-            <LikeOption checked={core} setChecked={setLikeCore}>
-              코어
-            </LikeOption>
-            <LikeOption checked={leg} setChecked={setLeg}>
-              다리
-            </LikeOption>
-            <LikeOption checked={back} setChecked={setBack}>
-              등
-            </LikeOption>
-            <LikeOption checked={stand} setChecked={setStand}>
-              서서
-            </LikeOption>
-            <LikeOption checked={sit} setChecked={setSit}>
-              앉아서
-            </LikeOption>
-            <LikeOption checked={balance} setChecked={setBalance}>
-              밸런스
-            </LikeOption>
-          </LikeSelect>
+          <PreferenceDiv>
+            {preferenceList.map((preference, idx) => {
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  name={preference.text}
+                  className={preference.checked ? 'active' : ''}
+                  id={preference.id}
+                  onClick={handleCheckPreference}
+                  disabled={preference.checked ? false : checkboxDisable}
+                >
+                  {preference.text}
+                </button>
+              );
+            })}
+          </PreferenceDiv>
         </InputDiv>
         <ButtonDiv>
-          {/* <MoveButton
-            onClick={() => {
-              handleSaveOption();
-              handlePrevPage();
-            }}
-            pageNumber={pageNumber}
-            finish={false}
-          >
-            이전으로
-          </MoveButton> */}
           <MoveButton type="submit" pageNumber={pageNumber} finish={true}>
             완료!
           </MoveButton>
@@ -165,11 +177,8 @@ const Div = styled.div`
   height: 100%;
   width: 100%;
   padding: 0px;
-  h3 {
-    margin-top: 5vh;
-    margin-bottom: auto;
-  }
 `;
+
 const InputDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -193,44 +202,11 @@ const InputDiv = styled.div`
     padding: 0.5em;
     line-height: 1.47;
     font-size: 1em;
-    outline: 1px solid ${({ theme }) => theme.defaultText};
+    outline: 1px solid ${({ theme }) => theme.text};
     letter-spacing: -0.3px;
-
+    width: 100%;
     font-weight: bold;
   }
-`;
-
-const OptionDiv = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  span {
-    margin-right: auto;
-  }
-
-  input {
-    width: 40%;
-    margin: 0 1em;
-    border-radius: 4px;
-  }
-`;
-
-const LikeSelect = styled.div`
-  width: 100%;
-  margin-left: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1vh 1vw;
-  font-weight: bold;
-  button {
-    height: 2em;
-    width: 5em;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  padding: 0 1vw 0 0;
 `;
 
 const ButtonDiv = styled.div`
@@ -243,8 +219,8 @@ const ButtonDiv = styled.div`
 `;
 
 const MoveButton = styled.button<{ pageNumber: number; finish: boolean }>`
-  color: ${({ finish, theme }) => (finish ? theme.buttonText : theme.defaultText)};
-  border: ${({ finish, theme }) => (finish ? '0px' : '1px solid' + theme.defaultText)};
+  color: ${({ finish, theme }) => (finish ? theme.buttonText : theme.text)};
+  border: ${({ finish, theme }) => (finish ? '0px' : '1px solid' + theme.text)};
   background-color: ${({ finish, theme }) => (finish ? theme.main : theme.sub)};
   width: 100%;
   min-height: 2em;
@@ -256,12 +232,72 @@ const MoveButton = styled.button<{ pageNumber: number; finish: boolean }>`
 `;
 
 const GenderButton = styled.button<{ gender: string | null; id: string }>`
-  color: ${({ gender, id, theme }) => (gender === id ? theme.sub : theme.defaultText)};
+  color: ${({ gender, id, theme }) => (gender === id ? theme.sub : theme.text)};
   background-color: ${({ gender, id, theme }) => (gender === id ? theme.main : theme.sub)};
-  border: 1px solid ${({ gender, id, theme }) => (gender === id ? 'none' : theme.defaultText)};
-  width: 40%;
-  margin: 0 5%;
+  border: 2px solid ${({ gender, id, theme }) => (gender === id ? 'none' : theme.border)};
+  width: 100%;
   height: 2.5em;
   border-radius: 4px;
   font-weight: bold;
+`;
+
+const GenderDiv = styled.div`
+  margin-top: 5%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  grid-gap: 20%;
+`;
+
+const BodyDiv = styled.div`
+  margin-top: 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 120%;
+  padding: 0 0 0 10%;
+  grid-gap: 10%;
+
+  input:focus {
+    outline: 3px solid ${(props) => props.theme.main};
+  }
+`;
+
+const OptionDiv = styled.div`
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: ${(props) => props.theme.defaultText};
+  input {
+    outline: 2px solid ${(props) => props.theme.border};
+    width: 80%;
+  }
+  span {
+    position: absolute;
+    right: 5%;
+    top: 30%;
+  }
+`;
+
+const PreferenceDiv = styled.div`
+  margin-top: 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
+  width: 100%;
+  button {
+    border: 1px solid ${(props) => props.theme.border};
+    width: 100%;
+    height: 2.5em;
+    border-radius: 4px;
+    font-weight: 700;
+    color: ${(props) => props.theme.text};
+  }
+  .active {
+    color: ${(props) => props.theme.sub};
+    border: 0px;
+    background-color: ${(props) => props.theme.main};
+  }
 `;

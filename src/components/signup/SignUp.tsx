@@ -39,40 +39,39 @@ const SignUp = () => {
 export default SignUp;
 
 const Div = styled.div`
-  width: 400px;
-  height: 60vh;
-  min-height: 400px;
-  color: ${(props) => props.theme.defaultText};
+  width: 480px;
+  height: 500px;
+  color: ${(props) => props.theme.text};
   display: flex;
-  justify-content: center;
   margin-bottom: auto;
+  justify-content: center;
   align-items: center;
-  border: 1px solid #888;
-  border-radius: 16px;
+  border: 2px solid ${(props) => props.theme.border};
+  border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
   padding-bottom: 2vh;
   z-index: 98;
   background-color: rgba(255, 255, 255, 0.8);
   overflow: hidden;
   flex-direction: column;
-
+  
   h2 {
-    margin: 3vh 0;
+    margin: 10% 0 5% 0;
+    font-weight:bold;
+    text-align: center;
+    color: ${(props) => props.theme.defaultText};
   }
 
-  h3 {
-    text-align: center;
-    margin: 3vh 0;
-  }
 
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     height: 100%;
     margin 0;
+    padding: 0 10% 5% 10%;
     input {
       max-height: 2.5em;
       height: 5vh;
@@ -99,13 +98,13 @@ const Div = styled.div`
 `;
 
 export const Button = styled.button<{ pageNumber: number }>`
-  color: ${(props) => (props.pageNumber === 1 ? props.theme.buttonText : props.theme.defaultText)};
+  color: ${(props) => (props.pageNumber === 1 ? props.theme.buttonText : props.theme.text)};
   background: ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.sub)};
   width: 100%;
   min-height: 3em;
-  margin: auto;
+  margin-top: auto;
   border-radius: 8px;
-  border: 1px solid ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.defaultText)};
+  border: 1px solid ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.text)};
 
   :disabled {
     background-color: #acacac;

@@ -1,4 +1,15 @@
-import { Page, SignUpPage, AuthPage, PublicPage, TestPage } from './pages';
+import {
+  Page,
+  AuthPage,
+  PublicPage,
+  TestPage,
+  ListenPage,
+  SearchPage,
+  CoursePage,
+  MainRenderPage,
+  CourseDetailPage,
+  SignUpPage,
+} from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
 import { AuthRoute, PublicRoute } from './routes';
@@ -10,10 +21,12 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Page />}>
-          <Route path="/home" element={<SignUpPage />} />
-          <Route path="/course" element={<SignUpPage />} />
-          <Route path="/menu1" element={<SignUpPage />} />
-          <Route path="/menu2" element={<SignUpPage />} />
+          <Route path="" element={<MainRenderPage />} />
+          <Route path="/course" element={<CoursePage />} />
+          <Route path="/course/:id" element={<CourseDetailPage />} />
+          <Route path="/listen/:id" element={<ListenPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/community" element={<p>커뮤니티 페이지</p>} />
         </Route>
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/private" element={<AuthRoute element={AuthPage} />} />

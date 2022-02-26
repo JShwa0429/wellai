@@ -20,11 +20,11 @@ const ButtonDiv = styled.div`
   justify-content: space-between;
   margin-left: auto;
   padding-right: 3em;
-  width: 250px;
+  width: 300px;
   button {
     font-size: 1em;
     height: 2em;
-    width: 5em;
+    width: 7em;
     border-radius: 4px;
     background-color: ${({ theme }) => theme.main};
     color: ${({ theme }) => theme.buttonText};

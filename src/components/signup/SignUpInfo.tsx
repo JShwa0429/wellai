@@ -4,12 +4,12 @@ const SignUpInfo: React.FunctionComponent<{ pageNumber: number }> = ({ pageNumbe
     <Div>
       <Info number={pageNumber} infoId={1}>
         <div className="circle">1</div>
-        기본정보
+        <h3>기본정보</h3>
       </Info>
-
+      <Hr number={pageNumber} />
       <Info number={pageNumber} infoId={2}>
         <div className="circle">2</div>
-        추가정보
+        <h3>추가정보</h3>
       </Info>
     </Div>
   );
@@ -21,10 +21,23 @@ const Div = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-  width: 50%;
-  max-width: 400px;
-  min-width: 250px;
-  margin-top: 5vh;
+  align-items: center;
+
+  width: 400px;
+  margin-top: 28px;
+`;
+
+const Hr = styled.hr<{ number: number }>`
+  position: absolute;
+  left: 30%;
+  top: 42%;
+  width: 40%;
+  color: black;
+  border-top: 1px solid #acacac;
+  margin: 0;
+  padding: 0;
+  z-index: -1;
+  visibility: ${(props) => (props.number === 3 ? 'hidden' : 'visible')};
 `;
 
 const Info = styled.div<{ number: number; infoId: number }>`
@@ -43,12 +56,13 @@ const Info = styled.div<{ number: number; infoId: number }>`
     justify-content: center;
     align-items: center;
 
-    margin: 1vh 0;
+    margin: 15px 0;
     font-size: 1em;
-    width: 5vh;
-    height: 5vh;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     color: ${(props) => (props.number === props.infoId ? props.theme.buttonText : props.theme.defaultText)};
     background-color: ${(props) => (props.number === props.infoId ? props.theme.main : '#ACACAC')};
+    font-family: 'Noto Sans KR';
   }
 `;

@@ -8,5 +8,7 @@ declare module 'styled-components' {
     text: string;
     defaultText: string;
     buttonText: string;
+    border: string;
+    light: string;
   }
 }
