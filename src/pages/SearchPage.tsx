@@ -1,22 +1,25 @@
 import { Category, SearchResult } from 'components/search';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-const CourseSearchPage = () => {
+const SearchPage = () => {
+  const { state } = useLocation();
   return (
     <Div>
-      <Category />
+      <Category keyword={state as string} />
       <SearchResult />
     </Div>
   );
 };
 
-export default CourseSearchPage;
+export default SearchPage;
 
 const Div = styled.div`
-  padding: 10%;
-  width: 100vw;
-  height: 100vh;
+  padding: 0 5vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;

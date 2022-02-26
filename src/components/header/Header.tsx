@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Nav from './Nav';
 import LoginSignUp from './LoginSignUp';
 import { Link } from 'react-router-dom';
-import { SearchInput } from 'components/Input/header';
+import { SearchInput } from 'components/Input/search';
 const Header = () => {
   const logoName = 'WellAi.';
   return (
@@ -34,7 +34,7 @@ export const DivHeader = styled.div`
 
   font-size: 1em;
   color: ${({ theme }) => theme.defaultText};
-  border-bottom: 1px solid ${({ theme }) => theme.defaultText};
+  border-bottom: 1px solid ${({ theme }) => theme.border};
   background-color: white;
 
   h1 {

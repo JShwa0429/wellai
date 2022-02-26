@@ -15,6 +15,11 @@ const Div = styled.div`
   font-family: 'Noto Sans KR', 'sans-serif';
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 export default Page;
