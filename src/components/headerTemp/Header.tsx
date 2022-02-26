@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, Input } from 'antd';
-const { Search } = Input;
 import { SearchOutlined } from '@ant-design/icons';
 
 import { Link } from 'react-router-dom';
@@ -13,15 +12,11 @@ type link = {
 };
 
 const links: link[] = [
-  { to: 'home', text: '코스탐색' },
-  { to: 'course', text: '커뮤니티' },
+  { to: '/home', text: '코스탐색' },
+  { to: '/course', text: '커뮤니티' },
 ];
 
 const logoName = 'WellAi.';
-
-const SearchIcon = () => {
-  return;
-};
 
 const Header = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,7 +33,7 @@ const Header = () => {
             fontWeight: 'bold',
           }}
         >
-          {logoName}
+          <Link to="/">{logoName}</Link>
         </Col>
         <Col>
           <Row>

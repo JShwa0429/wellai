@@ -17,7 +17,6 @@
     "noEmit": true,
     "noImplicitAny": true,
     "jsx": "react-jsx"
-    //"setupMiddlewares": true
   },
   "include": ["src"]
 }

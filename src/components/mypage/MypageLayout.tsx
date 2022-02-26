@@ -1,48 +1,80 @@
-import React, { useState } from 'react';
-import { Row, Col, Modal, Form, Button, Input, Divider, Image, Menu } from 'antd';
-const { SubMenu } = Menu;
-import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Row, Col, Menu } from 'antd';
+
+import { LikeOutlined, CommentOutlined, PieChartOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-// interface Props {}
-const MypageLayout = () => {
-  return (
-    <Wrapper style={{ width: 256 }}>
-      <Menu defaultSelectedKeys={['1']} mode="vertical">
-        <Row>
-          <Col>차차님</Col>
-        </Row>
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
-          Option 1
-        </Menu.Item>
-        <Menu.Item key="2" icon={<DesktopOutlined />}>
-          Option 2
-        </Menu.Item>
-        <Menu.Item key="3" icon={<ContainerOutlined />}>
-          Option 3
-        </Menu.Item>
+interface AntdIconProps {
+  className?: string;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
+  style?: React.CSSProperties;
+}
+type menu = {
+  name: string;
+  menuKey: string;
+  icon: any;
+};
 
-        <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
-          <Menu.Item key="9">Option 9</Menu.Item>
-          <Menu.Item key="10">Option 10</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
-        </SubMenu>
+const MenuList: menu[] = [
+  { name: '운동리포트', menuKey: '/mypage/report', icon: <PieChartOutlined /> },
+  { name: '좋아요', menuKey: '/mypage/like', icon: <LikeOutlined /> },
+  { name: '내 댓글', menuKey: '/mypage/comment', icon: <CommentOutlined /> },
+  { name: '내 정보 변경', menuKey: '/mypage/edit', icon: <EditOutlined /> },
+];
+
+const MyPageLayout = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return (
+    <Wrapper style={{ width: 332, height: 'max-content', backgroundColor: '#ff7273' }}>
+      <Row
+        style={{
+          height: '100px',
+          fontSize: '30px',
+          // color: '#574240',
+          color: 'white',
+          fontWeight: 'bold',
+          paddingLeft: '30px',
+        }}
+        justify="start"
+        align="middle"
+      >
+        <Col style={{ marginRight: '5px' }}>🧘‍♀️</Col>
+        <Col style={{ letterSpacing: '1.5px' }}>{'강경욱'} 님</Col>
+      </Row>
+      <Menu
+        defaultSelectedKeys={[location.pathname]}
+        mode="vertical"
+        style={{
+          minHeight: '100vh',
+        }}
+        onSelect={({ key }) => navigate(key)}
+      >
+        {MenuList.map((item) => (
+          <Menu.Item
+            key={item.menuKey}
+            icon={item.icon}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '50px',
+              fontSize: '18px',
+              fontWeight: 'bold',
+            }}
+          >
+            <Row>{item.name}</Row>
+          </Menu.Item>
+        ))}
       </Menu>
     </Wrapper>
   );
 };
 
-export default MypageLayout;
+export default MyPageLayout;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  li.ant-menu-item {
+    padding-left: 60px;
+  }
+`;
