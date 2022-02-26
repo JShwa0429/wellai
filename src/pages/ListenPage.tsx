@@ -1,7 +1,5 @@
 import { WebCam } from 'components';
 import styled from 'styled-components';
-import YouTube from 'react-youtube';
-import ReactPlayer from 'react-player';
 
 const ListenPage = () => {
   // const opts = {
@@ -11,11 +9,6 @@ const ListenPage = () => {
   //   },
   // };
 
-  const _onReady = (event: any) => {
-    // access to player in all event handlers via event.target
-    console.log(event);
-    event.target.pauseVideo();
-  };
   return (
     <DivCourse>
       <TitleDiv>

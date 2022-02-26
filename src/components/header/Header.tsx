@@ -7,7 +7,7 @@ const Header = () => {
   const logoName = 'WellAi.';
   return (
     <DivHeader>
-      <Link to="home">
+      <Link to="/">
         <h1>{logoName}</h1>
       </Link>
       <Nav />
