@@ -1,6 +1,5 @@
 export { default as TestPage } from './TestPage';
 export { default as Page } from './Page';
-export { default as SignUpPage } from './SignUpPage';
 export { default as AuthPage } from './AuthPage';
 export { default as PublicPage } from './PublicPage';
 export { default as ListenPage } from './ListenPage';
