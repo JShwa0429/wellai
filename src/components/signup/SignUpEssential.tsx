@@ -2,45 +2,64 @@ import { Input } from 'components/Input';
 import { Button } from './Signup';
 import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Essential, saveEssential } from 'features/signupSlice';
+import { saveEssential } from 'features/signupSlice';
 import styled from 'styled-components';
 import axios from 'axios';
 
+type RegisterUserForm = {
+  userId: string;
+  nickname: string;
+  password: string;
+  passwordCheck: string;
+};
 type Props = { pageNumber: number; handleNextPage: () => void };
 
 const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNextPage }) => {
-  const [userId, setUserId] = useState<string>('');
-  const [nickname, setNickname] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [passwordCheck, setPasswordCheck] = useState<string>('');
-  const dispatch = useDispatch();
+  const [userAccountInfo, setUserAccountInfo] = useState<RegisterUserForm>({
+    userId: '',
+    nickname: '',
+    password: '',
+    passwordCheck: '',
+  });
 
   // 서버측의 validation을 통해 중복 메세지를 담는 state
-  const [userIdMessage, setUserIdMessage] = useState<string>('');
-  const [nicknameMessage, setNicknameMessage] = useState<string>('');
-  const [passwordMessage, setPasswordMessage] = useState<string>('');
-  const [passwordCheckMessage, setPasswordCheckMessage] = useState<string>('');
+  const [userAccountMessage, setUserAccountMessage] = useState<RegisterUserForm>({
+    userId: '',
+    nickname: '',
+    password: '',
+    passwordCheck: '',
+  });
+
+  const dispatch = useDispatch();
 
   const userIdError = useMemo(() => {
-    const regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    if (!userId) return '';
-    else if (userIdMessage) return userIdMessage;
-    else if (!regex.test(userId)) {
+    const userId = userAccountInfo.userId;
+    const userIdMessage = userAccountMessage.userId;
+
+    const userIdRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (userIdMessage) return userIdMessage;
+    else if (!userId) return '';
+    else if (!userIdRegex.test(userId)) {
       return '이메일 형식을 지켜주세요';
     }
     return '';
-  }, [userId, userIdMessage]);
+  }, [userAccountInfo, userAccountMessage]);
 
   const nicknameError = useMemo(() => {
-    const regex = /^[가-힣|a-z|A-Z]{2,8}$/;
+    const nickname = userAccountInfo.nickname;
+    const nicknameMessage = userAccountMessage.nickname;
+    const nicknameRegex = /^[가-힣|a-z|A-Z]{2,8}$/;
     if (nicknameMessage) return nicknameMessage;
-    else if (!regex.test(nickname)) {
+    else if (!nicknameRegex.test(nickname)) {
       return '한글/영어 2글자 이상 8글자 이하';
     }
     return '';
-  }, [nickname, nicknameMessage]);
+  }, [userAccountInfo, userAccountMessage]);
 
   const passwordError = useMemo(() => {
+    const password = userAccountInfo.password;
+    const passwordMessage = userAccountMessage.password;
     const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
     if (!password) {
       return '영문/숫자/특수문자 8글자 이상';
@@ -50,9 +69,12 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
       return '영문 숫자 특수문자를 포함시켜주세요';
     } else if (passwordMessage) return passwordMessage;
     return '';
-  }, [password, passwordMessage]);
+  }, [userAccountInfo, userAccountMessage]);
 
   const passwordCheckError = useMemo(() => {
+    const password = userAccountInfo.password;
+    const passwordCheck = userAccountInfo.passwordCheck;
+    const passwordCheckMessage = userAccountMessage.passwordCheck;
     if (passwordCheckMessage) return passwordCheckMessage;
     else if (!passwordCheck) {
       return '';
@@ -60,35 +82,29 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
     if (password !== passwordCheck) {
       return '비밀번호가 일치하지 않습니다';
     }
-  }, [password, passwordCheck, passwordCheckMessage]);
+  }, [userAccountInfo, userAccountMessage]);
 
   const isError = useMemo(() => {
     if (
-      userId &&
-      nickname &&
-      password &&
-      passwordCheck &&
+      userAccountInfo.userId &&
+      userAccountInfo.nickname &&
+      userAccountInfo.password &&
+      userAccountInfo.passwordCheck &&
       !(userIdError || nicknameError || passwordError || passwordCheckError)
     )
       return false;
     else return true;
-  }, [userId, nickname, password, passwordCheck, userIdError, nicknameError, passwordError, passwordCheckError]);
+  }, [userAccountInfo, userIdError, nicknameError, passwordError, passwordCheckError]);
 
   const handleSaveEssential = (event: React.FormEvent) => {
     event.preventDefault();
-    const essential: Essential = {
-      userId: userId,
-      nickname: nickname,
-      password: password,
-      passwordCheck: passwordCheck,
-    };
-    dispatch(saveEssential(essential));
+    dispatch(saveEssential(userAccountInfo));
     axios
       .post('/users/check/', {
-        user_id: userId,
-        nickname: nickname,
-        password: password,
-        password2: passwordCheck,
+        user_id: userAccountInfo.userId,
+        nickname: userAccountInfo.nickname,
+        password: userAccountInfo.password,
+        password2: userAccountInfo.passwordCheck,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -97,10 +113,12 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          setUserIdMessage(err.response.data.user_id);
-          setNicknameMessage(err.response.data.nickname);
-          setPasswordMessage(err.response.data.password);
-          setPasswordMessage(err.response.data.password2);
+          setUserAccountMessage({
+            userId: err.response.data.user_id,
+            nickname: err.response.data.nickname,
+            password: err.response.data.password,
+            passwordCheck: err.response.data.password2,
+          });
         }
       });
     // axios
@@ -122,10 +140,18 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         <Input
           type="email"
           placeholder="example@email.com"
-          value={userId}
+          value={userAccountInfo.userId}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setUserId(event.target.value);
-            setUserIdMessage('');
+            setUserAccountInfo((current) => {
+              const newUserAccountInfo = { ...current };
+              newUserAccountInfo.userId = event.target.value;
+              return newUserAccountInfo;
+            });
+            setUserAccountMessage((current) => {
+              const newUserAccountMessage = { ...current };
+              newUserAccountMessage.userId = '';
+              return newUserAccountMessage;
+            });
           }}
         >
           <DivInput>
@@ -136,10 +162,18 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         <Input
           type="text"
           placeholder="닉네임"
-          value={nickname}
+          value={userAccountInfo.nickname}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setNickname(event.target.value);
-            setNicknameMessage('');
+            setUserAccountInfo((current) => {
+              const newUserAccountInfo = { ...current };
+              newUserAccountInfo.nickname = event.target.value;
+              return newUserAccountInfo;
+            });
+            setUserAccountMessage((current) => {
+              const newUserAccountMessage = { ...current };
+              newUserAccountMessage.nickname = '';
+              return newUserAccountMessage;
+            });
           }}
         >
           <DivInput>
@@ -150,10 +184,18 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         <Input
           type="password"
           placeholder="********"
-          value={password}
+          value={userAccountInfo.password}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setPassword(event.target.value);
-            setPasswordMessage('');
+            setUserAccountInfo((current) => {
+              const newUserAccountInfo = { ...current };
+              newUserAccountInfo.password = event.target.value;
+              return newUserAccountInfo;
+            });
+            setUserAccountMessage((current) => {
+              const newUserAccountMessage = { ...current };
+              newUserAccountMessage.password = '';
+              return newUserAccountMessage;
+            });
           }}
         >
           <DivInput>
@@ -164,10 +206,18 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         <Input
           type="password"
           placeholder="********"
-          value={passwordCheck}
+          value={userAccountInfo.passwordCheck}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setPasswordCheck(event.target.value);
-            setPasswordCheckMessage('');
+            setUserAccountInfo((current) => {
+              const newUserAccountInfo = { ...current };
+              newUserAccountInfo.passwordCheck = event.target.value;
+              return newUserAccountInfo;
+            });
+            setUserAccountMessage((current) => {
+              const newUserAccountMessage = { ...current };
+              newUserAccountMessage.passwordCheck = '';
+              return newUserAccountMessage;
+            });
           }}
         >
           <DivInput>

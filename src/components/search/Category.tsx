@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Category = () => {
+const Category = (props: any) => {
   return (
     <Div>
       <h2>카테고리</h2>
