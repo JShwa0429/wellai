@@ -26,8 +26,11 @@ const DivCourse = styled.div`
   display: flex;
   flex-direction: column;
 
+  p {
+    text-align: center;
+  }
   .summary {
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
   }
