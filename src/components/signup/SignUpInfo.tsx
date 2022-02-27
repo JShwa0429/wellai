@@ -22,9 +22,8 @@ const Div = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  margin-top: 8vh;
   width: 400px;
-  margin-top: 28px;
 `;
 
 const Hr = styled.hr<{ number: number }>`
@@ -58,8 +57,8 @@ const Info = styled.div<{ number: number; infoId: number }>`
 
     margin: 15px 0;
     font-size: 1em;
-    width: 50px;
-    height: 50px;
+    width: 6vh;
+    height: 6vh;
     border-radius: 50%;
     color: ${(props) => (props.number === props.infoId ? props.theme.buttonText : props.theme.defaultText)};
     background-color: ${(props) => (props.number === props.infoId ? props.theme.main : '#ACACAC')};

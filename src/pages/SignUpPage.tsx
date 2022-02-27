@@ -32,14 +32,13 @@ const DivSignUp = styled.div`
 
 const Div = styled.div`
   position: relative;
-  width: 50%;
+  width: 60vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 const Section = styled.section`
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +47,8 @@ const Section = styled.section`
 
 const DivImage = styled.div`
   img {
-    width: 100%;
+    width: 40vw;
     height: 100%;
+    object-fit: cover;
   }
 `;
