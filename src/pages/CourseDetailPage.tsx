@@ -1,7 +1,6 @@
 import { Rate } from 'antd';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 const CourseDetailPage = () => {
   const id = useParams();
 
@@ -22,13 +21,16 @@ const CourseDetailPage = () => {
           </div>
           <div className="explain">{data.explain}</div>
         </div>
+        <Button>
+          <Link to={`/listen/${id.id}`}>수업 시작하기</Link>
+        </Button>
       </DivCourseDetail>
+
       <div className="hr-sect">
         <h1>코스 후기</h1>
       </div>
-      <Link to={`/listen/${id.id}`}>
-        <Button>수업 시작하기</Button>
-      </Link>
+
+      <Rate allowHalf defaultValue={2.5} />
     </Div>
   );
 };
@@ -39,6 +41,7 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 50vh;
   .hr-sect {
     width: 80%;
     display: flex;
@@ -73,4 +76,6 @@ const Button = styled.button`
   height: 3em;
   color: white;
   background-color: ${(props) => props.theme.main};
+
+  margin-top: auto;
 `;

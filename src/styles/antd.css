@@ -1867,6 +1867,7 @@ html {
   /* stylelint-disable property-no-vendor-prefix */
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   /* stylelint-enable property-no-vendor-prefix */
 }
 .ant-scroll-number-only > p.ant-scroll-number-only-unit {
@@ -1874,7 +1875,9 @@ html {
   margin: 0;
   /* stylelint-disable property-no-vendor-prefix */
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   /* stylelint-enable property-no-vendor-prefix */
 }
 .ant-scroll-number-symbol {
@@ -7791,10 +7794,6 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   .ant-form-rtl.ant-col-xl-24.ant-form-item-label {
     text-align: right;
   }
-}
-.ant-form-item {
-  /* Some non-status related component style is in `components.less` */
-  /* To support leave along ErrorList. We add additional className to handle explain style */
 }
 .ant-form-item-explain-error {
   color: #ff4d4f;
@@ -18412,9 +18411,6 @@ textarea.ant-pagination-options-quick-jumper input {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.15) \9;
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .ant-popover {
-    /* IE10+ */
-  }
   .ant-popover-inner {
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   }
@@ -21474,10 +21470,7 @@ span.ant-radio + * {
   margin-right: 67px;
   margin-left: 0;
 }
-.ant-steps-dot .ant-steps-item-icon .ant-steps-icon-dot,
-.ant-steps-dot.ant-steps-small .ant-steps-item-icon .ant-steps-icon-dot {
-  /* expand hover area */
-}
+
 .ant-steps-rtl.ant-steps-dot .ant-steps-item-icon .ant-steps-icon-dot,
 .ant-steps-rtl.ant-steps-dot.ant-steps-small .ant-steps-item-icon .ant-steps-icon-dot {
   float: right;

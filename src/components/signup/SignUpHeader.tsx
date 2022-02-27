@@ -5,9 +5,7 @@ const SignUpHeader = () => {
   const logoName = 'WellAi.';
   return (
     <DivSignUpHeader>
-      <Link to="/">
-        <h1>{logoName}</h1>
-      </Link>
+      <Link to="/">{logoName}</Link>
     </DivSignUpHeader>
   );
 };
@@ -15,6 +13,7 @@ const SignUpHeader = () => {
 export default SignUpHeader;
 
 const DivSignUpHeader = styled(DivHeader)`
+  width: 50vw;
   display: flex;
   justify-content: center;
 
@@ -23,7 +22,8 @@ const DivSignUpHeader = styled(DivHeader)`
     color: ${({ theme }) => theme.defaultText};
   }
 
-  h1 {
+  a {
     padding: 0;
+    font-size: 40px;
   }
 `;
