@@ -34,7 +34,6 @@ export const DivHeader = styled.div`
 
   font-size: 1em;
   color: ${({ theme }) => theme.defaultText};
-  border-bottom: 1px solid ${({ theme }) => theme.border};
   background-color: white;
 
   h1 {

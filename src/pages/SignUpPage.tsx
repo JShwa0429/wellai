@@ -4,23 +4,35 @@ import styled from 'styled-components';
 import { SignUpHeader } from 'components/signup';
 const SignUpPage = () => {
   return (
-    <>
-      <SignUpHeader />
-      <Div>
-        <Section>
-          <SignUp />
-          <Waves />
-        </Section>
-      </Div>
-    </>
+    <DivSignUp>
+      <>
+        <SignUpHeader />
+        <Div>
+          <Section>
+            <SignUp />
+            {/* <Waves /> */}
+          </Section>
+        </Div>
+      </>
+      <DivImage>
+        <img alt="사진" src="/image/signup.jpg" />
+      </DivImage>
+    </DivSignUp>
   );
 };
 
 export default SignUpPage;
 
-const Div = styled.div`
+const DivSignUp = styled.div`
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: row;
+`;
+
+const Div = styled.div`
+  position: relative;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,4 +44,11 @@ const Section = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const DivImage = styled.div`
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
