@@ -49,7 +49,7 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
                   marginBottom: '10px',
                 }}
               >
-                <Input size="large" />
+                <Input placeholder="example@gmail.com" size="large" />
               </Form.Item>
 
               <Form.Item
@@ -57,7 +57,7 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
                 label="비밀번호"
                 rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
               >
-                <Input.Password size="large" />
+                <Input.Password placeholder="************" size="large" />
               </Form.Item>
 
               <Form.Item wrapperCol={{ span: 24 }}>

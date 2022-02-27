@@ -74,8 +74,8 @@ const GlobalStyle = createGlobalStyle`
         font-weight:900;
         src: url('./fonts/NotoSansKr/NotoSansKR-Black.woff2') format('woff2');
     }
-
-        font-family: "Noto Sans KR";
+    @font-face{
+        font-family: "Noto Sans KR" !important;
         font-style: normal;
         font-weight:400;
         src: local('./fonts/NotoSansKR-Regular.woff') format('woff'),

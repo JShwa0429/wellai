@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginModal from './LoginModal';
 
@@ -12,17 +12,18 @@ type link = {
 };
 
 const links: link[] = [
-  { to: '/home', text: '코스탐색' },
-  { to: '/course', text: '커뮤니티' },
+  { to: '/course', text: '코스탐색' },
+  { to: '/community', text: '커뮤니티' },
 ];
 
 const logoName = 'WellAi.';
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const onSearch = () => {
-    console.log('검색');
+  const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
+    navigate('/search', { state: e.currentTarget.value });
   };
   return (
     <Wrapper>
@@ -49,9 +50,7 @@ const Header = () => {
                   alignItems: 'center',
                 }}
               >
-                <Link style={{}} to={link.to}>
-                  {link.text}
-                </Link>
+                <Link to={link.to}>{link.text}</Link>
               </Col>
             ))}
             <Col>
@@ -90,6 +89,7 @@ const Header = () => {
                   width: '100px',
                   borderRadius: '5px',
                 }}
+                onClick={() => navigate('/signup')}
               >
                 회원가입
               </Button>
@@ -102,12 +102,13 @@ const Header = () => {
   );
 };
 const Wrapper = styled.div`
-  padding: 20px 60px;
+  padding: 10px 60px;
   width: 100vw;
   min-width: 1000px;
   height: max-content;
   color: #574240;
   border-bottom: 1px solid lightgray;
+  text-deco
 `;
 
 export default Header;

@@ -1,5 +1,7 @@
-export { Header } from './header';
+export { Header } from './headerTemp';
+// export { HeaderTemp } from './headerTemp';
 export { WebCam } from './course';
+
 export { Waves } from './wave';
 export { Banner, Summary } from './common';
 

@@ -20,15 +20,15 @@ const MyPageLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <Wrapper style={{ width: 332, height: 'max-content', backgroundColor: '#ff7273' }}>
+    <Wrapper style={{ width: 332, height: 'max-content' }}>
       <Row
         style={{
           height: '100px',
           fontSize: '30px',
-          // color: '#574240',
-          color: 'white',
+          color: '#574240',
           fontWeight: 'bold',
           paddingLeft: '30px',
+          borderRight: '1px solid #f0f0f0',
         }}
         justify="start"
         align="middle"
