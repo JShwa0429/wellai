@@ -13,7 +13,6 @@ const MyPageEdit = () => {
 
   return (
     <Wrapper>
-      <Header />
       <MypageLayout />
     </Wrapper>
   );

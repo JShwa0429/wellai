@@ -1,7 +1,6 @@
 import {
   Page,
   AuthPage,
-  PublicPage,
   TestPage,
   ListenPage,
   SearchPage,
@@ -9,6 +8,10 @@ import {
   MainRenderPage,
   CourseDetailPage,
   SignUpPage,
+  MyPageLike,
+  MyPageReport,
+  MyPageEdit,
+  MyPageComment,
 } from './pages';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
@@ -30,10 +33,12 @@ function App() {
         </Route>
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/private" element={<AuthRoute element={AuthPage} />} />
-        <Route path="/mypage/report" element={<PublicRoute element={PublicPage} />} />
-        <Route path="/mypage/like" element={<PublicRoute element={PublicPage} />} />
-        <Route path="/mypage/comment" element={<PublicRoute element={PublicPage} />} />
-        <Route path="/mypage/edit" element={<PublicRoute element={PublicPage} />} />
+        <Route path="/" element={<Page />}>
+          <Route path="/mypage/report" element={<PublicRoute element={MyPageReport} />} />
+          <Route path="/mypage/like" element={<PublicRoute element={MyPageLike} />} />
+          <Route path="/mypage/comment" element={<PublicRoute element={MyPageComment} />} />
+          <Route path="/mypage/edit" element={<PublicRoute element={MyPageEdit} />} />
+        </Route>
         <Route path="/test" element={<PublicRoute element={TestPage} />} />
       </Routes>
     </BrowserRouter>

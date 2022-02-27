@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Header } from 'components/headerTemp';
+import { Row, Col, Button, Input } from 'antd';
 
 import MypageLayout from 'components/mypage/MyPageLayout';
 
@@ -9,7 +9,12 @@ const MyPageReport = () => {
 
   return (
     <Wrapper>
-      <MypageLayout />
+      <Row>
+        <Col>
+          <MypageLayout />
+        </Col>
+        <Col>dasdas</Col>
+      </Row>
     </Wrapper>
   );
 };

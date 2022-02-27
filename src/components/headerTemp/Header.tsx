@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -14,6 +14,7 @@ type link = {
 const links: link[] = [
   { to: '/course', text: '코스탐색' },
   { to: '/community', text: '커뮤니티' },
+  { to: '/mypage/report', text: '마이페이지' },
 ];
 
 const logoName = 'WellAi.';
@@ -25,8 +26,16 @@ const Header = () => {
   const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
     navigate('/search', { state: e.currentTarget.value });
   };
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', updateScroll);
+  });
   return (
-    <Wrapper>
+    <Wrapper scrollLocation={scrollPosition}>
       <Row justify="space-between" align="middle">
         <Col
           style={{
@@ -101,14 +110,21 @@ const Header = () => {
     </Wrapper>
   );
 };
-const Wrapper = styled.div`
+
+type WrapperProps = {
+  scrollLocation: number;
+};
+const Wrapper = styled.div<WrapperProps>`
   padding: 10px 60px;
   width: 100vw;
   min-width: 1000px;
-  height: max-content;
+  height: 80px;
   color: #574240;
-  border-bottom: 1px solid lightgray;
-  text-deco
+  border-bottom: ${({ scrollLocation }) => (scrollLocation > 1 ? '1px solid lightgray' : '')};
+  position: fixed;
+  background-color: ${({ scrollLocation }) => (scrollLocation > 1 ? 'white' : 'transparent')};
+  transition: background 0.5s, border 0.5s;
+  z-index: 999;
 `;
 
 export default Header;
