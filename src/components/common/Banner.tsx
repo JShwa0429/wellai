@@ -23,7 +23,7 @@ export default Banner;
 
 const Div = styled.div`
   width: 100vw;
-  height: 50vh;
+  height: 40vh;
   padding-top: 5vh;
   display: flex;
   justify-content: space-between;
@@ -36,8 +36,9 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
 
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: bold;
+    line-height: 120%;
   }
 
   .summary {
@@ -66,6 +67,7 @@ const DivSummary = styled.div`
     align-items: center;
     width: 50%;
     text-align: center;
+    margin-bottom: 0;
   }
 
   font-weight: bold;

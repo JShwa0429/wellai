@@ -23,7 +23,9 @@ const CourseDetailPage = () => {
           <div className="explain">{data.explain}</div>
         </div>
       </DivCourseDetail>
-      <div className="hr-sect">코스 후기</div>
+      <div className="hr-sect">
+        <h1>코스 후기</h1>
+      </div>
       <Link to={`/listen/${id.id}`}>
         <Button>수업 시작하기</Button>
       </Link>
@@ -33,12 +35,16 @@ const CourseDetailPage = () => {
 
 export default CourseDetailPage;
 const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .hr-sect {
+    width: 80%;
     display: flex;
     flex-basis: 100%;
     align-items: center;
     color: rgba(0, 0, 0, 0.35);
-    font-size: 12px;
     margin: 8px 0px;
   }
   .hr-sect::before,
@@ -53,10 +59,13 @@ const Div = styled.div`
   }
 `;
 const DivCourseDetail = styled.div`
+  width: 100vw;
   background: linear-gradient(to right, rgba(255, 114, 114, 0.5), rgba(255, 114, 114, 0.2));
   display: flex;
   flex-direction: column;
-  padding-top: 10vh;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh 0;
 `;
 
 const Button = styled.button`
