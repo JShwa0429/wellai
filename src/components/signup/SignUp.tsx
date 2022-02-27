@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { SignUpInfo } from '.';
 import SignUpEssential from './SignUpEssential';
 import SignUpOption from './SignUpOption';
+import SignUpLogin from './SignUpLogin';
 const SignUp = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -22,15 +23,7 @@ const SignUp = () => {
         {pageNumber === 2 && (
           <SignUpOption pageNumber={pageNumber} handlePrevPage={handlePrevPage} handleNextPage={handleNextPage} />
         )}
-        {pageNumber === 3 && (
-          <div className="finish">
-            <h2>
-              가입이 완료되었어요! <br />
-              바로 운동을 시작 해볼까요?
-            </h2>
-            <Button pageNumber={pageNumber}>로그인</Button>
-          </div>
-        )}
+        {pageNumber === 3 && <SignUpLogin />}
       </Div>
     </>
   );

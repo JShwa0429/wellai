@@ -23,7 +23,9 @@ const CourseDetailPage = () => {
           <div className="explain">{data.explain}</div>
         </div>
       </DivCourseDetail>
-      <div className="hr-sect">코스 후기</div>
+      <div className="hr-sect">
+        <h1>코스 후기</h1>
+      </div>
       <Link to={`/listen/${id.id}`}>
         <Button>수업 시작하기</Button>
       </Link>
@@ -33,12 +35,12 @@ const CourseDetailPage = () => {
 
 export default CourseDetailPage;
 const Div = styled.div`
+  width: 80%;
   .hr-sect {
     display: flex;
     flex-basis: 100%;
     align-items: center;
     color: rgba(0, 0, 0, 0.35);
-    font-size: 12px;
     margin: 8px 0px;
   }
   .hr-sect::before,

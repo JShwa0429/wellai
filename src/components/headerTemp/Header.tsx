@@ -102,6 +102,7 @@ const Header = () => {
   );
 };
 const Wrapper = styled.div`
+  
   padding: 10px 60px;
   width: 100vw;
   min-width: 1000px;
