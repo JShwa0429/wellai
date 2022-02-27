@@ -36,7 +36,7 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
 
-    font-size: 3em;
+    font-size: 3vw;
     font-weight: bold;
   }
 
@@ -52,7 +52,7 @@ const Div = styled.div`
 `;
 
 const DivSummary = styled.div`
-  font-size: 2em;
+  font-size: 1.8vw;
   display: flex;
   img {
     height: 30vh;

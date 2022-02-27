@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         word-wrap: break-word;
-        font-family:"Noto Sans KR";
+        
     }
     button {
         border: 0;
@@ -34,7 +34,8 @@ const GlobalStyle = createGlobalStyle`
     @font-face { 
         font-family: "Noto Sans KR";
         font-style: normal;
-        src: local('./fonts'),
+        font-weight:400;
+        src: local('./fonts/NotoSansKR-Regular.woff') format('woff'),
             url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
     }
 
