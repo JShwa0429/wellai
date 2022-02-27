@@ -7,7 +7,7 @@ import { Header } from 'components/headerTemp';
 
 import MypageLayout from 'components/mypage/MyPageLayout';
 
-const PublicPage = () => {
+const MyPageEdit = () => {
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
 
@@ -19,6 +19,6 @@ const PublicPage = () => {
   );
 };
 
-export default PublicPage;
+export default MyPageEdit;
 
 const Wrapper = styled.div``;
