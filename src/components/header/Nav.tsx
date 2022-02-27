@@ -28,13 +28,13 @@ const UlNav = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
   width: 30%;
   min-width: 200px;
   font-size: 1.2em;
-  margin-right; auto;
-  margin-left:5em;
-  margin-bottom:0;
+  margin-right: auto;
+  margin-left: 5em;
+  margin-bottom: 0;
   a {
     text-decoration: none;
     color: ${(props) => props.theme.defaultText};

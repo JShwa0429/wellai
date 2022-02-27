@@ -9,7 +9,6 @@ const MyPageLike = () => {
 
   return (
     <Wrapper>
-      <Header />
       <MypageLayout />
     </Wrapper>
   );

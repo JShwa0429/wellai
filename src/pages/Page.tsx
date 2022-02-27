@@ -14,12 +14,15 @@ const Page = () => {
 const Div = styled.div`
   /* font-family: 'Noto Sans KR', 'sans-serif'; */
   width: 100vw;
-  height: 100vh;
+  height: max-content;
   overflow: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
     display: none;
+  }
+  section {
+    padding-top: 80px;
   }
 `;
 export default Page;

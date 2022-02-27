@@ -4,7 +4,7 @@ export { default as AuthPage } from './AuthPage';
 export { default as MyPageEdit } from './MyPageEdit';
 export { default as MyPageLike } from './MyPageLike';
 export { default as MyPageReport } from './MyPageReport';
-export { default as PublicPage } from './PublicPage';
+export { default as MyPageComment } from './MyPageComment';
 export { default as ListenPage } from './ListenPage';
 export { default as SearchPage } from './SearchPage';
 export { default as SignUpPage } from './SignUpPage';

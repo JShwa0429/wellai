@@ -73,38 +73,35 @@ const CardDiv = styled.div`
 `;
 
 const SummaryDiv = styled.div`
-display: flex;
-flex-direction: column;
-border 1px solid #BDBDBD;
-overflow: hidden;
-margin:4%;
-font-size:1rem;
-font-weight:bold;
-a{
-  text-decoration:none;
-}
-.image {
-    background-color:#F5F5F5;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #bdbdbd;
+  overflow: hidden;
+  margin: 4%;
+  font-size: 1rem;
+  font-weight: bold;
+  a {
+    text-decoration: none;
+  }
+  .image {
+    background-color: #f5f5f5;
     img {
-      width:100%;
-      object-fit:cover;
+      width: 100%;
+      object-fit: cover;
     }
-}
+  }
 
-
-
-.explain {
-    display:flex;
-    flex-direction:column;
-    padding : 1%;
-    padding-left:3%;
-    text-align:left;
-    background-color:white;
-    div{
-        margin:0.5%;
+  .explain {
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    padding-left: 3%;
+    text-align: left;
+    background-color: white;
+    div {
+      margin: 0.5%;
     }
-    float:bottom;
-    
+    float: bottom;
   }
 
   font-weight: bold;
