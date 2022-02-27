@@ -67,6 +67,7 @@ const DivSummary = styled.div`
     align-items: center;
     width: 50%;
     text-align: center;
+    margin-bottom: 0;
   }
 
   font-weight: bold;

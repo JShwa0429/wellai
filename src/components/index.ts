@@ -6,3 +6,4 @@ export { Waves } from './wave';
 export { Banner, Summary } from './common';
 
 export { SignUp, SignUpInfo } from './signup';
+export { MyPageLayout } from './mypage';

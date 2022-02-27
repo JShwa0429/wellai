@@ -1,7 +1,6 @@
 import { Rate } from 'antd';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 const CourseDetailPage = () => {
   const id = useParams();
 
@@ -22,23 +21,33 @@ const CourseDetailPage = () => {
           </div>
           <div className="explain">{data.explain}</div>
         </div>
+        <Button>
+          <Link to={`/listen/${id.id}`}>수업 시작하기</Link>
+        </Button>
       </DivCourseDetail>
-      <div className="hr-sect">코스 후기</div>
-      <Link to={`/listen/${id.id}`}>
-        <Button>수업 시작하기</Button>
-      </Link>
+
+      <div className="hr-sect">
+        <h1>코스 후기</h1>
+      </div>
+
+      <Rate allowHalf defaultValue={2.5} />
     </Div>
   );
 };
 
 export default CourseDetailPage;
 const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
   .hr-sect {
+    width: 80%;
     display: flex;
     flex-basis: 100%;
     align-items: center;
     color: rgba(0, 0, 0, 0.35);
-    font-size: 12px;
     margin: 8px 0px;
   }
   .hr-sect::before,
@@ -53,10 +62,13 @@ const Div = styled.div`
   }
 `;
 const DivCourseDetail = styled.div`
+  width: 100vw;
   background: linear-gradient(to right, rgba(255, 114, 114, 0.5), rgba(255, 114, 114, 0.2));
   display: flex;
   flex-direction: column;
-  padding-top: 10vh;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh 0;
 `;
 
 const Button = styled.button`
@@ -64,4 +76,6 @@ const Button = styled.button`
   height: 3em;
   color: white;
   background-color: ${(props) => props.theme.main};
+
+  margin-top: auto;
 `;

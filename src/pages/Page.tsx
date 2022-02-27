@@ -12,7 +12,6 @@ const Page = () => {
 };
 
 const Div = styled.div`
-  /* font-family: 'Noto Sans KR', 'sans-serif'; */
   width: 100vw;
   height: max-content;
   overflow: scroll;

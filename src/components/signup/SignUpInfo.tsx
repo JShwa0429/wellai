@@ -63,6 +63,5 @@ const Info = styled.div<{ number: number; infoId: number }>`
     border-radius: 50%;
     color: ${(props) => (props.number === props.infoId ? props.theme.buttonText : props.theme.defaultText)};
     background-color: ${(props) => (props.number === props.infoId ? props.theme.main : '#ACACAC')};
-    font-family: 'Noto Sans KR';
   }
 `;

@@ -38,7 +38,7 @@ const SearchResult: React.FunctionComponent<{ searchTitle: string }> = ({ search
         {cardData.map((data: SummaryProps, idx: number) => {
           return (
             <SummaryDiv key={idx}>
-              <Link to={`${data.id}`}>
+              <Link to={`../course/${data.id}`}>
                 <Summary {...data} />
               </Link>
             </SummaryDiv>
@@ -61,6 +61,7 @@ const Div = styled.div`
     border-bottom: 1px solid #888;
     padding: 25px 0;
     margin: 25px 0;
+    font-size: 1.2vw;
   }
 `;
 

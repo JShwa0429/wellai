@@ -22,13 +22,9 @@ export default CoursePage;
 
 const DivCourse = styled.div`
   width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
 
-  p {
-    text-align: center;
-  }
   .summary {
     width: 100%;
     display: flex;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Header } from 'components/headerTemp';
 
-import MypageLayout from 'components/mypage/MyPageLayout';
+import { MyPageLayout } from 'components';
 
 const MyPageReport = () => {
   // const dispatch = useAppDispatch();
@@ -9,7 +9,7 @@ const MyPageReport = () => {
 
   return (
     <Wrapper>
-      <MypageLayout />
+      <MyPageLayout />
     </Wrapper>
   );
 };

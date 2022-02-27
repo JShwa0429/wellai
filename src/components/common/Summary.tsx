@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-
 export type SummaryProps = {
   id: string;
   title: string;
