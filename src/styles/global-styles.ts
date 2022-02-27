@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
+import NotoSansKRRegular from './fonts/NotoSansKr/NotoSansKR-Regular.woff2';
 
 const GlobalStyle = createGlobalStyle`
         ${normalize}
@@ -9,8 +10,17 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         word-wrap: break-word;
-        
+        font-family:'Noto Sans Kr',  'sans-serif';
     }
+
+    @font-face {
+        font-size : 12px | 0.8em;
+        font-style: normal;
+        font-weight:300;
+        font-style:normal;
+        line-height: 20px | 120%;
+    }
+
     button {
         border: 0;
         background: transparent;
@@ -32,13 +42,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     @font-face { 
-        font-family: "Noto Sans KR";
+        font-family: "Noto Sans Kr";
+        font-size: 12px | 0.8em;
         font-style: normal;
         font-weight:400;
-        src: local('./fonts/NotoSansKR-Regular.woff') format('woff'),
-            url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        src: local('Noto Sans KR'), url(${NotoSansKRRegular}) format('woff2');
     }
-
 `;
 
 export default GlobalStyle;
