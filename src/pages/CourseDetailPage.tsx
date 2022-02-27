@@ -35,8 +35,12 @@ const CourseDetailPage = () => {
 
 export default CourseDetailPage;
 const Div = styled.div`
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .hr-sect {
+    width: 80%;
     display: flex;
     flex-basis: 100%;
     align-items: center;
@@ -55,10 +59,13 @@ const Div = styled.div`
   }
 `;
 const DivCourseDetail = styled.div`
+  width: 100vw;
   background: linear-gradient(to right, rgba(255, 114, 114, 0.5), rgba(255, 114, 114, 0.2));
   display: flex;
   flex-direction: column;
-  padding-top: 10vh;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh 0;
 `;
 
 const Button = styled.button`

@@ -36,8 +36,9 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
 
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: bold;
+    line-height: 120%;
   }
 
   .summary {
