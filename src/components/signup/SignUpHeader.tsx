@@ -13,7 +13,7 @@ const SignUpHeader = () => {
 export default SignUpHeader;
 
 const DivSignUpHeader = styled(DivHeader)`
-  width: 50vw;
+  width: 60vw;
   display: flex;
   justify-content: center;
 

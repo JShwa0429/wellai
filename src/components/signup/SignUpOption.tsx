@@ -189,7 +189,7 @@ const InputDiv = styled.div`
   [type='radio'] {
     display: none;
   }
-  margin: 1vh 0;
+  margin: 0.5vh 0;
   span {
     text-align: center;
     font-weight: bold;
@@ -199,7 +199,7 @@ const InputDiv = styled.div`
     width: 100%;
   }
   input {
-    padding: 0.5em;
+    margin-top: 0;
     line-height: 1.47;
     font-size: 1em;
     outline: 1px solid ${({ theme }) => theme.text};
@@ -242,7 +242,7 @@ const GenderButton = styled.button<{ gender: string | null; id: string }>`
 `;
 
 const GenderDiv = styled.div`
-  margin-top: 5%;
+  margin-top: 2%;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -251,7 +251,7 @@ const GenderDiv = styled.div`
 `;
 
 const BodyDiv = styled.div`
-  margin-top: 5%;
+  margin-top: 2%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 120%;
@@ -282,7 +282,7 @@ const OptionDiv = styled.div`
 `;
 
 const PreferenceDiv = styled.div`
-  margin-top: 5%;
+  margin-top: 2%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
