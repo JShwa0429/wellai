@@ -32,16 +32,16 @@ const SignUp = () => {
 export default SignUp;
 
 const Div = styled.div`
-  width: 480px;
-  height: 500px;
+  width:480px;
+  height:500px;
   color: ${(props) => props.theme.text};
   display: flex;
   margin-bottom: auto;
   justify-content: center;
   align-items: center;
-  border: 2px solid ${(props) => props.theme.border};
+  border: 0px solid ${(props) => props.theme.border};
   border-radius: 8px;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  
   padding-bottom: 2vh;
   z-index: 98;
   background-color: rgba(255, 255, 255, 0.8);
@@ -49,9 +49,10 @@ const Div = styled.div`
   flex-direction: column;
   
   h2 {
-    margin: 10% 0 5% 0;
+    margin: 5vh 0 5vh 0;
     font-weight:bold;
     text-align: center;
+    line-height:120%;
     color: ${(props) => props.theme.defaultText};
   }
 
@@ -68,7 +69,7 @@ const Div = styled.div`
     input {
       max-height: 2.5em;
       height: 5vh;
-      border-radius: 8px;
+      border-radius: 4px;
       outline: 1px solid 'C4C4C4';
     }
   }
@@ -96,7 +97,7 @@ export const Button = styled.button<{ pageNumber: number }>`
   width: 100%;
   min-height: 3em;
   margin-top: auto;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid ${(props) => (props.pageNumber === 1 ? props.theme.main : props.theme.text)};
 
   :disabled {

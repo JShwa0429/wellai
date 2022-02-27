@@ -44,7 +44,7 @@ const Label = styled.label<{ withFocus: boolean }>`
   }
 
   input:focus {
-    outline: 3px solid ${(props) => props.theme.main};
+    outline: 2px solid ${(props) => props.theme.main};
   }
 
   input::placeholder {
