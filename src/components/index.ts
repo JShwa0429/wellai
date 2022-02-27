@@ -1,7 +1,9 @@
-export { Header } from './header';
-export { default as PublicRoute } from './PublicRoute';
-export { default as AuthRoute } from './AuthRoute';
+export { Header } from './headerTemp';
+// export { HeaderTemp } from './headerTemp';
 export { WebCam } from './course';
+
 export { Waves } from './wave';
 export { Banner, Summary } from './common';
+
 export { SignUp, SignUpInfo } from './signup';
+export { MyPageLayout } from './mypage';
