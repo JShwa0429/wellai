@@ -28,7 +28,6 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   }
   .hr-sect {
     width: 90%;
