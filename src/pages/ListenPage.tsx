@@ -8,7 +8,7 @@ const ListenPage = () => {
   //     autoplay: 1,
   //   },
   // };
-  const url = 'hEnr6Ewpu_U';
+  const url = '3V3oA8scvyQ';
   return (
     <DivCourse>
       <TitleDiv>
@@ -42,11 +42,10 @@ export default ListenPage;
 const DivCourse = styled.div`
   display: flex;
   width: 100vw;
-  height: 100vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 10%;
+  padding: 0 10%;
 
   p {
     font-size: 1.5em;
