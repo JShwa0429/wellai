@@ -273,6 +273,7 @@ const OptionDiv = styled.div`
   input {
     outline: 2px solid ${(props) => props.theme.border};
     width: 80%;
+    padding-left: 1em;
   }
   span {
     position: absolute;
