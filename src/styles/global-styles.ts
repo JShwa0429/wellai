@@ -12,6 +12,11 @@ const GlobalStyle = createGlobalStyle`
         border: 0;
         word-wrap: break-word;
         font-family:'Noto Sans Kr',  'sans-serif';
+        
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
     }
 
     @font-face {
