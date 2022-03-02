@@ -61,7 +61,7 @@ const Div = styled.div`
     border-bottom: 1px solid #888;
     padding: 25px 0;
     margin: 25px 0;
-    font-size: 1.2vw;
+    font-size: 1.2em;
   }
 `;
 

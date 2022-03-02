@@ -24,7 +24,7 @@ const DivCourse = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-
+  min-width: 1000px;
   .summary {
     width: 100%;
     display: flex;

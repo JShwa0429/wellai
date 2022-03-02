@@ -22,7 +22,6 @@ const Banner: React.FunctionComponent = ({ children }) => {
 export default Banner;
 
 const Div = styled.div`
-  width: 100vw;
   height: 40vh;
   padding-top: 5vh;
   display: flex;
@@ -36,7 +35,7 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
 
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     line-height: 120%;
   }
@@ -53,7 +52,7 @@ const Div = styled.div`
 `;
 
 const DivSummary = styled.div`
-  font-size: 1.8vw;
+  font-size: 1.5em;
   display: flex;
   img {
     height: 30vh;

@@ -11,3 +11,4 @@ export { default as SignUpPage } from './SignUpPage';
 export { default as CoursePage } from './CoursePage';
 export { default as CourseDetailPage } from './CourseDetailPage';
 export { default as MainRenderPage } from './MainRenderPage';
+export { default as MainRenderPageTemp } from './MainRenderPageTemp';
