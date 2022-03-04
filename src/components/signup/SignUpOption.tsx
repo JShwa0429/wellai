@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Option, saveOption } from 'features/signupSlice';
+import { Option, saveOptions } from 'features/signupSlice';
 import axios from 'axios';
 
 type Props = {
@@ -32,18 +32,18 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   const dispatch = useDispatch();
   const signUp = useSelector((state: RootState) => state.signUp);
   const handleSaveOption = () => {
-    const option: Option = {
+    const options: Option = {
       gender: gender,
       weight: weight,
       height: height,
-      core: preferenceList[0].checked,
-      leg: preferenceList[1].checked,
-      back: preferenceList[2].checked,
-      stand: preferenceList[3].checked,
-      sit: preferenceList[4].checked,
-      balance: preferenceList[5].checked,
+      is_core: preferenceList[0].checked,
+      is_leg: preferenceList[1].checked,
+      is_back: preferenceList[2].checked,
+      is_stand: preferenceList[3].checked,
+      is_sit: preferenceList[4].checked,
+      is_balance: preferenceList[5].checked,
     };
-    dispatch(saveOption(option));
+    dispatch(saveOptions(options));
   };
 
   const handleCheckPreference = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -67,11 +67,10 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
 
     console.log(signUp);
     axios
-      .post('/users/register/', {
-        user_id: signUp.userId,
-        nickname: signUp.nickname,
+      .post('/api/users/register', {
+        email: signUp.email,
         password: signUp.password,
-        options: signUp.option,
+        options: signUp.options,
       })
       .then((res) => {
         console.log(res);

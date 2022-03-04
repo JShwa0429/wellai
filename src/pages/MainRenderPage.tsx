@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row, Col, Button, Input } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import MainImage from 'asset/main_page_img.png';
 import MainImage2 from 'asset/main_page_img_5.jpeg';

@@ -25,8 +25,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Page />}>
-          <Route path="" element={<MainRenderPage />} />
-          <Route path="/main" element={<MainRenderPageTemp />} />
+          <Route path="" element={<MainRenderPageTemp />} />
           <Route path="/course" element={<CoursePage />} />
           <Route path="/course/:id" element={<CourseDetailPage />} />
           <Route path="/listen/:id" element={<ListenPage />} />

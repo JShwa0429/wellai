@@ -56,7 +56,7 @@ const MainRenderPageTemp = () => {
               <br />
               <small>위클리포트</small>
             </h2>
-            <div style={{ width: '90%', margin: '1em auto', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ width: '60%', margin: '1em auto 1em 0', display: 'flex', justifyContent: 'space-between' }}>
               <button className="enable">운동 시간</button>
               <button className="disable">칼로리</button>
             </div>
@@ -168,10 +168,11 @@ const SectionThree = styled.section`
   height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   min-width: 1200px;
   .introduce {
     position: relative;
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -197,11 +198,10 @@ const SectionThree = styled.section`
     }
   }
   .image {
-    width: 50%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     h2 {
       line-height: 100%;
       margin-right: auto;

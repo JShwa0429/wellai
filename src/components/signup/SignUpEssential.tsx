@@ -7,52 +7,38 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 type RegisterUserForm = {
-  userId: string;
-  nickname: string;
+  email: string;
   password: string;
-  passwordCheck: string;
+  confirmPassword: string;
 };
 type Props = { pageNumber: number; handleNextPage: () => void };
 
 const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNextPage }) => {
   const [userAccountInfo, setUserAccountInfo] = useState<RegisterUserForm>({
-    userId: '',
-    nickname: '',
+    email: '',
     password: '',
-    passwordCheck: '',
+    confirmPassword: '',
   });
 
   // 서버측의 validation을 통해 중복 메세지를 담는 state
   const [userAccountMessage, setUserAccountMessage] = useState<RegisterUserForm>({
-    userId: '',
-    nickname: '',
+    email: '',
     password: '',
-    passwordCheck: '',
+    confirmPassword: '',
   });
 
   const dispatch = useDispatch();
 
-  const userIdError = useMemo(() => {
-    const userId = userAccountInfo.userId;
-    const userIdMessage = userAccountMessage.userId;
+  const emailError = useMemo(() => {
+    const email = userAccountInfo.email;
+    const emailMessage = userAccountMessage.email;
 
-    const userIdRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    const emailIdRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-    if (userIdMessage) return userIdMessage;
-    else if (!userId) return '';
-    else if (!userIdRegex.test(userId)) {
+    if (emailMessage) return emailMessage;
+    else if (!email) return '';
+    else if (!emailIdRegex.test(email)) {
       return '이메일 형식을 지켜주세요';
-    }
-    return '';
-  }, [userAccountInfo, userAccountMessage]);
-
-  const nicknameError = useMemo(() => {
-    const nickname = userAccountInfo.nickname;
-    const nicknameMessage = userAccountMessage.nickname;
-    const nicknameRegex = /^[가-힣|a-z|A-Z]{2,8}$/;
-    if (nicknameMessage) return nicknameMessage;
-    else if (!nicknameRegex.test(nickname)) {
-      return '한글/영어 2글자 이상 8글자 이하';
     }
     return '';
   }, [userAccountInfo, userAccountMessage]);
@@ -67,44 +53,44 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
       return '비밀번호는 8자리 이상이어야합니다';
     } else if (!regex.test(password)) {
       return '영문 숫자 특수문자를 포함시켜주세요';
-    } else if (passwordMessage) return passwordMessage;
+    } else if (passwordMessage) {
+      return passwordMessage;
+    }
     return '';
   }, [userAccountInfo, userAccountMessage]);
 
-  const passwordCheckError = useMemo(() => {
+  const confirmPasswordError = useMemo(() => {
     const password = userAccountInfo.password;
-    const passwordCheck = userAccountInfo.passwordCheck;
-    const passwordCheckMessage = userAccountMessage.passwordCheck;
+    const confirmPassword = userAccountInfo.confirmPassword;
+    const passwordCheckMessage = userAccountMessage.confirmPassword;
     if (passwordCheckMessage) return passwordCheckMessage;
-    else if (!passwordCheck) {
+    else if (!confirmPassword) {
       return '';
     }
-    if (password !== passwordCheck) {
+    if (password !== confirmPassword) {
       return '비밀번호가 일치하지 않습니다';
     }
   }, [userAccountInfo, userAccountMessage]);
 
   const isError = useMemo(() => {
     if (
-      userAccountInfo.userId &&
-      userAccountInfo.nickname &&
+      userAccountInfo.email &&
       userAccountInfo.password &&
-      userAccountInfo.passwordCheck &&
-      !(userIdError || nicknameError || passwordError || passwordCheckError)
+      userAccountInfo.confirmPassword &&
+      !(emailError || passwordError || confirmPasswordError)
     )
       return false;
     else return true;
-  }, [userAccountInfo, userIdError, nicknameError, passwordError, passwordCheckError]);
+  }, [userAccountInfo, emailError, passwordError, confirmPasswordError]);
 
   const handleSaveEssential = (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(saveEssential(userAccountInfo));
     axios
-      .post('/users/check/', {
-        user_id: userAccountInfo.userId,
-        nickname: userAccountInfo.nickname,
+      .post('/api/users/check', {
+        email: userAccountInfo.email,
         password: userAccountInfo.password,
-        password2: userAccountInfo.passwordCheck,
+        confirm_password: userAccountInfo.confirmPassword,
       })
       .then((res) => {
         if (res.status === 200) {
@@ -112,14 +98,14 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         }
       })
       .catch((err) => {
-        if (err.response.status === 400) {
+        if (err.response.data.status_code === 400) {
           setUserAccountMessage({
-            userId: err.response.data.user_id,
-            nickname: err.response.data.nickname,
+            email: err.response.data.email,
             password: err.response.data.password,
-            passwordCheck: err.response.data.password2,
+            confirmPassword: err.response.data.confirm_password,
           });
         }
+        console.log(err.response);
       });
     // axios
     //   .post('/users/check/', {
@@ -140,47 +126,26 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         <Input
           type="email"
           placeholder="example@email.com"
-          value={userAccountInfo.userId}
+          value={userAccountInfo.email}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setUserAccountInfo((current) => {
               const newUserAccountInfo = { ...current };
-              newUserAccountInfo.userId = event.target.value;
+              newUserAccountInfo.email = event.target.value;
               return newUserAccountInfo;
             });
             setUserAccountMessage((current) => {
               const newUserAccountMessage = { ...current };
-              newUserAccountMessage.userId = '';
+              newUserAccountMessage.email = '';
               return newUserAccountMessage;
             });
           }}
         >
           <DivInput>
             이메일
-            <small>{userIdError}</small>
+            <Small error={emailError ? true : false}>{emailError}</Small>
           </DivInput>
         </Input>
-        <Input
-          type="text"
-          placeholder="닉네임"
-          value={userAccountInfo.nickname}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setUserAccountInfo((current) => {
-              const newUserAccountInfo = { ...current };
-              newUserAccountInfo.nickname = event.target.value;
-              return newUserAccountInfo;
-            });
-            setUserAccountMessage((current) => {
-              const newUserAccountMessage = { ...current };
-              newUserAccountMessage.nickname = '';
-              return newUserAccountMessage;
-            });
-          }}
-        >
-          <DivInput>
-            닉네임
-            <small>{nicknameError}</small>
-          </DivInput>
-        </Input>
+
         <Input
           type="password"
           placeholder="********"
@@ -200,29 +165,33 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
         >
           <DivInput>
             비밀번호
-            <small>{passwordError}</small>
+            {!userAccountInfo.password ? (
+              <Small error={false}>영문/숫자/특수문자 8글자 이상</Small>
+            ) : (
+              <Small error={true}>{passwordError}</Small>
+            )}
           </DivInput>
         </Input>
         <Input
           type="password"
           placeholder="********"
-          value={userAccountInfo.passwordCheck}
+          value={userAccountInfo.confirmPassword}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setUserAccountInfo((current) => {
               const newUserAccountInfo = { ...current };
-              newUserAccountInfo.passwordCheck = event.target.value;
+              newUserAccountInfo.confirmPassword = event.target.value;
               return newUserAccountInfo;
             });
             setUserAccountMessage((current) => {
               const newUserAccountMessage = { ...current };
-              newUserAccountMessage.passwordCheck = '';
+              newUserAccountMessage.confirmPassword = '';
               return newUserAccountMessage;
             });
           }}
         >
           <DivInput>
             비밀번호 확인
-            <small>{passwordCheckError}</small>
+            <Small error={confirmPasswordError ? true : false}>{confirmPasswordError}</Small>
           </DivInput>
         </Input>
 
@@ -242,10 +211,11 @@ const DivInput = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  small {
-    color: ${({ theme }) => theme.main};
+`;
+
+const Small = styled.small<{ error: boolean }>`
+  color: ${({ error, theme }) => (error ? theme.main : theme.border)};
     margin: 1vh 0;
     margin-left: auto;
     text-verical-align-center;
-  }
 `;
