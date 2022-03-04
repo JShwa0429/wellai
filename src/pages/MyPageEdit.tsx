@@ -45,14 +45,22 @@ const MyPageEdit = () => {
               <Row
                 style={{
                   marginBottom: '30px',
-                  fontSize: '25px',
+                  fontSize: '28px',
                 }}
                 justify="space-between"
                 align="middle"
               >
                 <Col>내 정보</Col>
                 <Col>
-                  <Button type="primary">수정하기</Button>
+                  <Button
+                    size="large"
+                    type="primary"
+                    style={{
+                      borderRadius: '5px',
+                    }}
+                  >
+                    수정하기
+                  </Button>
                 </Col>
               </Row>
               <Row>
@@ -105,8 +113,9 @@ const MyPageEdit = () => {
                         size="large"
                         onClick={() => setGender(0)}
                         style={{
+                          borderColor: `${gender === 0 ? '#ff7273' : 'lightgray'}`,
                           backgroundColor: `${gender === 0 ? '#ff7273' : 'white'}`,
-                          color: `${gender === 0 ? 'white' : '#ff7273'}`,
+                          color: `${gender === 0 ? 'white' : 'lightgray'}`,
                           width: '130px',
                           borderRadius: '5px',
                           marginRight: '80px',
@@ -118,8 +127,9 @@ const MyPageEdit = () => {
                         size="large"
                         onClick={() => setGender(1)}
                         style={{
+                          borderColor: `${gender === 1 ? '#ff7273' : 'lightgray'}`,
                           backgroundColor: `${gender === 1 ? '#ff7273' : 'white'}`,
-                          color: `${gender === 1 ? 'white' : '#ff7273'}`,
+                          color: `${gender === 1 ? 'white' : 'lightgray'}`,
                           width: '130px',
                           borderRadius: '5px',
                         }}
