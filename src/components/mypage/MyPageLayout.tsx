@@ -29,6 +29,7 @@ const MyPageLayout = () => {
           fontWeight: 'bold',
           paddingLeft: '30px',
           borderRight: '1px solid #f0f0f0',
+          borderLeft: '1px solid #f0f0f0',
         }}
         justify="start"
         align="middle"
@@ -40,7 +41,8 @@ const MyPageLayout = () => {
         defaultSelectedKeys={[location.pathname]}
         mode="vertical"
         style={{
-          minHeight: '100vh',
+          minHeight: 'calc(100vh - 80px - 100px)',
+          borderLeft: '1px solid #f0f0f0',
         }}
         onSelect={({ key }) => navigate(key)}
       >

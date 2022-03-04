@@ -2,7 +2,6 @@ import React from 'react';
 import { Row, Col, Modal, Form, Button, Input, Divider, Image } from 'antd';
 import styled from 'styled-components';
 import KakaoLogin from 'react-kakao-login';
-import KakaoImage from 'asset/kakao_login_large_wide.png';
 
 type Props = {
   isModalVisible: boolean;
@@ -98,7 +97,7 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
                         cursor: 'pointer',
                       }}
                       preview={false}
-                      src={KakaoImage}
+                      src={'/image/kakao_login_large_wide.png'}
                       alt="asdasd"
                       onClick={(e) => {
                         e.preventDefault();

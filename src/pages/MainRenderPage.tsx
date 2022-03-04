@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Row, Col, Button, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import MainImage from 'asset/main_page_img.png';
-import MainImage2 from 'asset/main_page_img_5.jpeg';
 const MainRenderPage = () => {
   const navigate = useNavigate();
 
@@ -20,10 +18,10 @@ const MainRenderPage = () => {
           <Row>
             <Col
               style={{
-                fontSize: '75px',
+                fontSize: '62px',
                 fontWeight: '910',
                 color: 'transparent',
-                backgroundImage: `url(${MainImage2})`,
+                backgroundImage: `url('/image/main_page_img_5.jpeg')`,
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -31,7 +29,7 @@ const MainRenderPage = () => {
                 lineHeight: '1',
                 marginBottom: '10px',
                 WebkitFontSmoothing: 'antialiased',
-                zIndex: 999,
+                zIndex: 3,
               }}
             >
               집에서도 지키는 <br /> 나만의 건강
@@ -57,7 +55,7 @@ const MainRenderPage = () => {
           </Row>
         </Col>
         <Col>
-          <img style={{ width: '550px', maxHeight: '100vh' }} src={MainImage} alt="" />
+          <img style={{ width: '550px', maxHeight: '100vh' }} src={'/image/main_page_img.png'} alt="" />
         </Col>
       </Row>
       <Row style={{ height: '1000px' }}> </Row>
@@ -69,7 +67,7 @@ export default MainRenderPage;
 
 const Wrapper = styled.div`
   width: 90vw;
-  min-width: 1000px;
+  min-width: 1300px;
   max-width: 1400px;
   height: max-content;
   justify-content: center;
@@ -77,7 +75,7 @@ const Wrapper = styled.div`
   margin-top: -80px;
   /* height: calc(100vh - 80px); */
   /* background-color: ${(props) => props.theme.light}; */
-  /* background-image: url(${MainImage}); */
+  /* background-image: url('/image/main_page_img'); */
   /* background: linear-gradient(
       to left,
       rgba(255, 114, 115, 0.05) 50%,
@@ -87,7 +85,7 @@ const Wrapper = styled.div`
       rgba(255, 114, 115, 0.45) 90%,
       rgba(255, 114, 115, 0.55) 100%
     ),
-    url(${MainImage});
+    url('/image/main_page_img');
   background-repeat: no-repeat;
   background-size: cover; ; */
 `;

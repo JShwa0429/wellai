@@ -1,24 +1,61 @@
 import styled from 'styled-components';
-import { Row, Col, Button, Input } from 'antd';
+import { Row, Col, Button, Input, Card } from 'antd';
+import { MyPageLayout } from 'components';
+const { Meta } = Card;
 
-import MypageLayout from 'components/mypage/MyPageLayout';
-
-const MyPageReport = () => {
+const MyPageComment = () => {
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
 
   return (
     <Wrapper>
-      <Row>
+      <Row
+        style={{
+          width: '100%',
+          minWidth: '1350px',
+          maxWidth: '1600px',
+          margin: '0 auto',
+        }}
+      >
         <Col>
-          <MypageLayout />
+          <MyPageLayout />
         </Col>
-        <Col>dasdas</Col>
+        <Col
+          style={{
+            width: 'calc(100% - 332px)',
+          }}
+        >
+          <Row
+            style={{
+              paddingTop: '30px',
+              paddingLeft: '50px',
+            }}
+          >
+            <Col>
+              <Row
+                style={{
+                  marginBottom: '30px',
+                }}
+              >
+                <Col>차차님의 댓글</Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Card hoverable style={{ borderRadius: '5px' }}>
+                    <Row>
+                      <Col></Col>
+                    </Row>
+                  </Card>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
       </Row>
     </Wrapper>
   );
 };
 
-export default MyPageReport;
+export default MyPageComment;
 
 const Wrapper = styled.div``;
