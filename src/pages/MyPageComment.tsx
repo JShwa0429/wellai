@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row, Col, Button, Input, Card } from 'antd';
+import { Row, Col, Button, Rate, Card } from 'antd';
 import { MyPageLayout } from 'components';
 const { Meta } = Card;
 
@@ -31,7 +31,7 @@ const MyPageComment = () => {
               paddingLeft: '50px',
             }}
           >
-            <Col>
+            <Col span={22}>
               <Row
                 style={{
                   marginBottom: '30px',
@@ -40,10 +40,17 @@ const MyPageComment = () => {
                 <Col>차차님의 댓글</Col>
               </Row>
               <Row>
-                <Col>
-                  <Card hoverable style={{ borderRadius: '5px' }}>
+                <Col span={24}>
+                  <Card hoverable style={{ borderRadius: '5px', width: '100%' }}>
+                    <Row align="middle">
+                      <Col>
+                        <Rate disabled defaultValue={2} style={{ color: '#ff7273' }} />
+                      </Col>
+                      <Col>2022.02.22</Col>
+                    </Row>
                     <Row>
-                      <Col></Col>
+                      <Col>제목</Col>
+                      <Col>댓글</Col>
                     </Row>
                   </Card>
                 </Col>

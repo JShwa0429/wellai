@@ -28,7 +28,7 @@ const MyPageReport = () => {
             justify="space-around"
             align="middle"
             style={{
-              paddingTop: '30px',
+              paddingTop: '60px',
             }}
           >
             <Col>
