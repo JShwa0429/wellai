@@ -1,7 +1,9 @@
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, Menu } from 'antd';
-
+import { shallowEqual } from 'react-redux';
 import { LikeOutlined, CommentOutlined, PieChartOutlined, EditOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import styled from 'styled-components';
 type menu = {
   name: string;
@@ -19,6 +21,9 @@ const MenuList: menu[] = [
 const MyPageLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { nickname } = useAppSelector((state) => state.myPage, shallowEqual);
+  // useEffect(() => {});
   return (
     <Wrapper style={{ width: 332, height: 'max-content' }}>
       <Row
@@ -35,7 +40,7 @@ const MyPageLayout = () => {
         align="middle"
       >
         <Col style={{ marginRight: '5px' }}>🧘‍♀️</Col>
-        <Col style={{ letterSpacing: '1.5px' }}>{'강경욱'} 님</Col>
+        <Col style={{ letterSpacing: '1.5px' }}>{nickname} 님</Col>
       </Row>
       <Menu
         defaultSelectedKeys={[location.pathname]}

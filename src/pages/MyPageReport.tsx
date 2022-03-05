@@ -1,11 +1,9 @@
 import styled from 'styled-components';
+
 import { Row, Col, Button, Input } from 'antd';
 import { MyPageLayout, MonthlyReport, WeeklyReport } from 'components';
 
 const MyPageReport = () => {
-  // const dispatch = useAppDispatch();
-  // const { value } = useAppSelector((state) => state.test, shallowEqual);
-
   return (
     <Wrapper>
       <Row

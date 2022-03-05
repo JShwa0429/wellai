@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import { Row, Col, Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -13,7 +14,6 @@ type link = {
 
 const links: link[] = [
   { to: '/course', text: '코스탐색' },
-  { to: '/community', text: '커뮤니티' },
   { to: '/mypage/report', text: '마이페이지' },
 ];
 
@@ -21,8 +21,15 @@ const logoName = 'WellAi.';
 
 const Header = () => {
   const navigate = useNavigate();
+  const access = Cookies.get('access');
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const handleSignOut = () => {
+    Cookies.remove('access');
+    Cookies.remove('refresh');
+    navigate('/');
+  };
   const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
     navigate('/search', { state: e.currentTarget.value });
   };
@@ -47,9 +54,20 @@ const Header = () => {
         </Col>
         <Col>
           <Row>
-            {links.map((link) => (
+            <Col
+              style={{
+                fontSize: '15px',
+                fontWeight: 'bold',
+                marginRight: '40px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Link to={'/course'}>{'코스탐색'}</Link>
+            </Col>
+            {access ? (
               <Col
-                key={link.text}
                 style={{
                   fontSize: '15px',
                   fontWeight: 'bold',
@@ -59,9 +77,10 @@ const Header = () => {
                   alignItems: 'center',
                 }}
               >
-                <Link to={link.to}>{link.text}</Link>
+                <Link to={'/mypage/report'}>{'마이페이지'}</Link>
               </Col>
-            ))}
+            ) : null}
+
             <Col>
               <Input
                 suffix={<SearchOutlined />}
@@ -71,38 +90,59 @@ const Header = () => {
                 style={{ width: 170, borderRadius: '20px' }}
               />
             </Col>
-            <Col
-              style={{
-                marginLeft: '30px',
-              }}
-            >
-              <Button
-                type="primary"
+            {!access ? (
+              <>
+                <Col
+                  style={{
+                    marginLeft: '30px',
+                  }}
+                >
+                  <Button
+                    type="primary"
+                    style={{
+                      width: '100px',
+                      borderRadius: '5px',
+                    }}
+                    onClick={() => setIsModalVisible(true)}
+                  >
+                    로그인
+                  </Button>
+                </Col>
+                <Col
+                  style={{
+                    marginLeft: '7px',
+                  }}
+                >
+                  <Button
+                    type="primary"
+                    style={{
+                      width: '100px',
+                      borderRadius: '5px',
+                    }}
+                    onClick={() => navigate('/signup')}
+                  >
+                    회원가입
+                  </Button>
+                </Col>
+              </>
+            ) : (
+              <Col
                 style={{
-                  width: '100px',
-                  borderRadius: '5px',
+                  marginLeft: '30px',
                 }}
-                onClick={() => setIsModalVisible(true)}
               >
-                로그인
-              </Button>
-            </Col>
-            <Col
-              style={{
-                marginLeft: '7px',
-              }}
-            >
-              <Button
-                type="primary"
-                style={{
-                  width: '100px',
-                  borderRadius: '5px',
-                }}
-                onClick={() => navigate('/signup')}
-              >
-                회원가입
-              </Button>
-            </Col>
+                <Button
+                  type="primary"
+                  style={{
+                    width: '100px',
+                    borderRadius: '5px',
+                  }}
+                  onClick={handleSignOut}
+                >
+                  로그아웃
+                </Button>
+              </Col>
+            )}
           </Row>
         </Col>
       </Row>

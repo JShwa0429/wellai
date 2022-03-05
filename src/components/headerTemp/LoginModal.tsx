@@ -1,18 +1,29 @@
 import React from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { Row, Col, Modal, Form, Button, Input, Divider, Image } from 'antd';
 import styled from 'styled-components';
 import KakaoLogin from 'react-kakao-login';
-
 type Props = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+};
+type LoginForm = {
+  email: string;
+  password: string;
 };
 
 const LOGONAME = 'WellAi.';
 
 const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
-  const onFinish = () => {
-    console.log('검색');
+  const onFinish = async ({ email, password }: LoginForm) => {
+    const result = await axios.post('/users/login', { email, password });
+
+    const { refresh, access } = result.data;
+    Cookies.set('access', access, { path: '/', expires: 7 });
+    Cookies.set('refresh', refresh, { path: '/', expires: 7 });
+    setIsModalVisible(false);
+    return;
   };
   return (
     <Modal visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
