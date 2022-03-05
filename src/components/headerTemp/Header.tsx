@@ -3,19 +3,9 @@ import Cookies from 'js-cookie';
 import { Row, Col, Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginModal from './LoginModal';
-
-type link = {
-  to: string;
-  text: string;
-};
-
-const links: link[] = [
-  { to: '/course', text: '코스탐색' },
-  { to: '/mypage/report', text: '마이페이지' },
-];
 
 const logoName = 'WellAi.';
 

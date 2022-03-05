@@ -24,61 +24,62 @@ import './styles/antd.css';
 
 function App() {
   const navigate = useNavigate();
-  let isAlreadyFetchingAccessToken = false;
+  // let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
-  console.log(process.env.REACT_APP_NEXT_PUBLIC_BASE_URL, 'asdsds');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
 
   const signout = () => {
     Cookies.remove('accessToken');
     Cookies.remove('refreshToken');
     navigate('/');
   };
-  useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = Cookies.get('accessToken') || false;
-    console.log(Cookies.get('access'));
-  }, []);
-  axios.interceptors.response.use(
-    (response) => {
-      isAlreadyFetchingAccessToken = false;
-      return response;
-    },
-    async (error) => {
-      const originalRequest = error.config;
+  // useEffect(() => {
 
-      //무한 루프 방지
-      //AT001 === 토큰 만료
-      //AT002 === 리프레시 토큰 만료
-      if (error.response.data.code === 'AT002') {
-        signout();
-        return Promise.reject(error);
-      }
+  // }, []);
+  // axios.interceptors.response.use(
+  //   (response) => {
+  //     isAlreadyFetchingAccessToken = false;
+  //     return response;
+  //   },
+  //   async (error) => {
+  //     console.log('여기옴?');
+  //     console.log(error);
+  //     const originalRequest = error.config;
 
-      if (!isAlreadyFetchingAccessToken && error.response.data.code === 'AT001') {
-        isAlreadyFetchingAccessToken = true;
-        try {
-          const res = await axios.post('user/renew_token', {
-            refreshToken: Cookies.get('refreshToken'),
-          });
-          const { refresh, access } = res.data;
+  //     // //무한 루프 방지
+  //     // //AT001 === 토큰 만료
+  //     // //AT002 === 리프레시 토큰 만료
+  //     // if (error.response.data.code === 'AT002') {
+  //     //   signout();
+  //     //   return Promise.reject(error);
+  //     // }
 
-          Cookies.set('access', access, { path: '/', maxAge: 3600 });
-          Cookies.set('refresh', refresh, { path: '/', maxAge: 7200 });
+  //     // if (!isAlreadyFetchingAccessToken && error.response.data.code === 'AT001') {
+  //     //   isAlreadyFetchingAccessToken = true;
+  //     //   try {
+  //     //     const res = await axios.post('user/renew_token', {
+  //     //       refreshToken: Cookies.get('refreshToken'),
+  //     //     });
+  //     //     const { refresh, access } = res.data;
 
-          originalRequest.headers['Authorization'] = access;
-          axios.defaults.headers.common['Authorization'] = access;
+  //     //     Cookies.set('access', access, { path: '/', maxAge: 3600 });
+  //     //     Cookies.set('refresh', refresh, { path: '/', maxAge: 7200 });
 
-          return axios(originalRequest);
-        } catch (error) {
-          signout();
-          isAlreadyFetchingAccessToken = false;
-          return Promise.reject(error);
-        }
-      }
+  //     //     originalRequest.headers['Authorization'] = access;
+  //     //     axios.defaults.headers.common['Authorization'] = access;
 
-      return Promise.reject(error);
-    },
-  );
+  //     //     return axios(originalRequest);
+  //     //   } catch (error) {
+  //     //     signout();
+  //     //     isAlreadyFetchingAccessToken = false;
+  //     //     return Promise.reject(error);
+  //     //   }
+  //     // }
+
+  //     return Promise.reject(error);
+  //   },
+  // );
 
   return (
     // <BrowserRouter>

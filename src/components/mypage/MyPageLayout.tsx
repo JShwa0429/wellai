@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, Menu } from 'antd';
 import { shallowEqual } from 'react-redux';
 import { LikeOutlined, CommentOutlined, PieChartOutlined, EditOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
+import * as myPageAction from 'features/myPageSlice';
 import styled from 'styled-components';
 type menu = {
   name: string;
@@ -23,7 +26,14 @@ const MyPageLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { nickname } = useAppSelector((state) => state.myPage, shallowEqual);
-  // useEffect(() => {});
+  useEffect(() => {
+    const getUserNickName = async () => {
+      await axios.get('/users/option').then((result) => dispatch(myPageAction.nicknameChange(result.data.nickname)));
+    };
+    if (nickname === undefined) {
+      getUserNickName();
+    }
+  }, []);
   return (
     <Wrapper style={{ width: 332, height: 'max-content' }}>
       <Row
