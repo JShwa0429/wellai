@@ -34,7 +34,6 @@ const GlobalStyle = createGlobalStyle`
         background: transparent;
         cursor: pointer;
     }
-    ol,
     ul,
     li {
         list-style: none;

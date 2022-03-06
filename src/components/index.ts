@@ -1,6 +1,6 @@
 export { Header } from './headerTemp';
 // export { HeaderTemp } from './headerTemp';
-export { WebCam } from './listen';
+export { WebCam, Video, Description } from './exercise';
 export { Waves } from './wave';
 export { Banner, Summary } from './common';
 export { SignUp, SignUpInfo } from './signup';

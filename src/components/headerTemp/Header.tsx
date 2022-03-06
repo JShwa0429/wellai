@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginModal from './LoginModal';
 
@@ -13,7 +13,6 @@ type link = {
 
 const links: link[] = [
   { to: '/course', text: '코스탐색' },
-  { to: '/community', text: '커뮤니티' },
   { to: '/mypage/report', text: '마이페이지' },
 ];
 

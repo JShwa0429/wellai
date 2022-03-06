@@ -4,7 +4,6 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveEssential } from 'features/signupSlice';
 import styled from 'styled-components';
-import axios from 'axios';
 import { SignUpApi } from 'api';
 
 type RegisterUserForm = {

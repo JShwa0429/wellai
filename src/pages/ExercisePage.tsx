@@ -1,7 +1,7 @@
-import { WebCam } from 'components';
+import { WebCam, Video, Description } from 'components';
 import styled from 'styled-components';
 
-const ListenPage = () => {
+const ExcercisePage = () => {
   // const opts = {
   //   playerVars: {
   //     // https://developers.google.com/youtube/player_parameters
@@ -11,37 +11,21 @@ const ListenPage = () => {
   const url = '3V3oA8scvyQ';
   return (
     <DivCourse>
-      <TitleDiv>
-        <h1>no5.Downward dog(다운독)</h1>
-        <h1>
-          2/3<small>reps</small>
-        </h1>
-      </TitleDiv>
-
-      <p>
-        얼굴을 아래로 향한 개자새로, 개가 기지개를 펴는 자세와
-        <br />
-        유사하여 붙여진 이름입니다.
-      </p>
+      <Description />
       <VideoDiv>
-        <iframe
-          src={`https://www.youtube.com/embed/${url}?autoplay=1&mute=1&modestbranding=1&playlist=${url}&loop=1`}
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          title="video"
-        />
+        <Video url={url} />
         <WebCam />
       </VideoDiv>
     </DivCourse>
   );
 };
 
-export default ListenPage;
+export default ExcercisePage;
 
 const DivCourse = styled.div`
   display: flex;
   width: 100vw;
+  height:100vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -65,9 +49,9 @@ const TitleDiv = styled.div`
 `;
 
 const VideoDiv = styled.div`
-  margin-top: 3vw;
+  margin-top: auto;
   display: flex;
-  width: 100%;
+  width: 100vw;
 
   video {
     width: 50%;
