@@ -15,7 +15,7 @@ const SignUpPage = () => {
         </Div>
       </>
       <DivImage>
-        <img alt="사진" src="/image/signup.jpg" />
+        <img alt="회원가입 사진" src="/image/signup.jpg" />
       </DivImage>
     </DivSignUp>
   );

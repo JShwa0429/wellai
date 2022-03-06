@@ -1,4 +1,4 @@
-import LoginModal from 'components/headerTemp/LoginModal';
+import LoginModal from 'components/header/LoginModal';
 import { Button } from './SignUp';
 import { useState } from 'react';
 const SignUpLogin = () => {

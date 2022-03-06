@@ -22,6 +22,8 @@ const Div = styled.div`
   }
   section {
     padding-top: 80px;
+    display: flex;
+    justify-content: center;
   }
 `;
 export default Page;

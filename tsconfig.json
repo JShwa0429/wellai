@@ -18,5 +18,6 @@
     "noImplicitAny": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["**/*.ts", "**/*.tsx", "src/components/Webcam.js"],
+  "exclude": ["node_modules"]
 }

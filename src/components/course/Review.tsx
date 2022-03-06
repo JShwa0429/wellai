@@ -1,18 +1,22 @@
 import { Rating } from './Comment';
 import styled from 'styled-components';
 export type ReviewProps = {
-  nickname: string;
-  rate: number;
-  comment: string;
+  id: string;
+  user_id: string;
+  created_at: string;
+  modified_at: string;
+  content: string;
+  rating: number;
+  course_id: string;
 };
-const Review: React.FunctionComponent<ReviewProps> = ({ nickname, rate, comment }) => {
+const Review: React.FunctionComponent<ReviewProps> = ({ user_id, rating, content }) => {
   return (
     <Div>
       <div>
-        <b>{nickname}</b>
-        <Rating defaultValue={rate} allowHalf disabled />
+        <b>{user_id}</b>
+        <Rating defaultValue={rating} disabled />
       </div>
-      <div className="comment">{comment}</div>
+      <div className="comment">{content}</div>
     </Div>
   );
 };

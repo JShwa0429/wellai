@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { DivHeader } from 'components/header/Header';
 import { Link } from 'react-router-dom';
 const SignUpHeader = () => {
   const logoName = 'WellAi.';
@@ -12,8 +11,13 @@ const SignUpHeader = () => {
 
 export default SignUpHeader;
 
-const DivSignUpHeader = styled(DivHeader)`
+const DivSignUpHeader = styled.div`
   width: 60vw;
+  height: 5vh;
+  min-height: 60px;
+  max-height: 80px;
+  position: absolute;
+  z-index: 99;
   display: flex;
   justify-content: center;
 

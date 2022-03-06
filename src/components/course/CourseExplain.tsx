@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Rating } from 'components/course/Comment';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 type Props = {
   id: string | undefined;
   title: string;
@@ -8,7 +8,15 @@ type Props = {
   explain: string;
 };
 
-const CourseExplain: React.FunctionComponent<Props> = ({ id, title, rate, explain }) => {
+const CourseExplain: React.FunctionComponent = () => {
+  const { id } = useParams();
+  const data = {
+    id: id,
+    title: '절대빠진다, 하루 1시간! 복부 군살 제거 홈트',
+    rate: 4.5,
+    explain:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi viverra sem sit amet rhoncus pretium. Curabitur sit amet interdum risus, at feugiat tortor. Class aptent taciti ',
+  };
   return (
     <DivCourseDetail>
       <DivBanner>
@@ -16,18 +24,17 @@ const CourseExplain: React.FunctionComponent<Props> = ({ id, title, rate, explai
           <img src="/image/yoga.png" alt="요가" />
         </div>
         <Explain>
-          <h1>{title}</h1>
+          <h1>{data.title}</h1>
           <div className="rate">
-            <Rating allowHalf disabled defaultValue={rate} />
-            {rate}
+            <Rating allowHalf disabled defaultValue={data.rate} />
+            {data.rate}
           </div>
-          <div className="explain">{explain}</div>
+          <div className="explain">{data.explain}</div>
         </Explain>
       </DivBanner>
-
-      <Button>
-        <Link to={`/listen/${id}`}>수업 시작하기</Link>
-      </Button>
+      <Link to={`/guide/${data.id}`}>
+        <Button>수업 시작하기</Button>
+      </Link>
     </DivCourseDetail>
   );
 };

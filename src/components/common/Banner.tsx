@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Summary } from '.';
-const Banner: React.FunctionComponent = ({ children }) => {
+const Banner = () => {
   const data = {
     id: '0',
     title: '절대 빠진다, 하루 1시간! 복부 군살 제거 홈트',
@@ -9,7 +9,12 @@ const Banner: React.FunctionComponent = ({ children }) => {
   };
   return (
     <Div>
-      <div className="banner">{children}</div>
+      <div className="banner">
+        <p>
+          {`“차차”`}님을 위한
+          <br /> 오늘의 코스
+        </p>
+      </div>
       <div className="summary">
         <DivSummary>
           <Summary {...data} />
@@ -22,7 +27,6 @@ const Banner: React.FunctionComponent = ({ children }) => {
 export default Banner;
 
 const Div = styled.div`
-  width: 100vw;
   height: 40vh;
   padding-top: 5vh;
   display: flex;
@@ -36,11 +40,13 @@ const Div = styled.div`
     display: flex;
     justify-content: center;
 
-    font-size: 2vw;
+    font-size: 2em;
     font-weight: bold;
     line-height: 120%;
   }
-
+  .bookmark {
+    display: none;
+  }
   .summary {
     display: flex;
     flex-direction: row;
@@ -53,7 +59,7 @@ const Div = styled.div`
 `;
 
 const DivSummary = styled.div`
-  font-size: 1.8vw;
+  font-size: 1.5em;
   display: flex;
   img {
     height: 30vh;

@@ -33,7 +33,8 @@ export default SignUp;
 
 const Div = styled.div`
   width:480px;
-  height:500px;
+  min-height:400px;
+  height:50vh;
   color: ${(props) => props.theme.text};
   display: flex;
   margin-bottom: auto;

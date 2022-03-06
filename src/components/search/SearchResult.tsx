@@ -61,21 +61,21 @@ const Div = styled.div`
     border-bottom: 1px solid #888;
     padding: 25px 0;
     margin: 25px 0;
-    font-size: 1.2vw;
+    font-size: 1.2em;
   }
 `;
 
 const CardDiv = styled.div`
   display: grid;
-
   grid-template-columns: repeat(auto-fill, 20%);
-  gap: 5%;
-  padding-left: 5%;
+  gap: 6.5%;
+  margin: auto;
 `;
 
 const SummaryDiv = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   border: 1px solid #bdbdbd;
   overflow: hidden;
   margin: 4%;
@@ -91,7 +91,12 @@ const SummaryDiv = styled.div`
       object-fit: cover;
     }
   }
-
+  .bookmark {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+  }
   .explain {
     display: flex;
     flex-direction: column;

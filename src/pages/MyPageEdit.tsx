@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 // import { useAppSelector, useAppDispatch } from '../hooks/useStoreHooks';
 // import * as testActions from '../features/test';
-import { Header } from 'components/headerTemp';
+import { Header } from 'components/header';
 
 import { MyPageLayout } from 'components';
 const MyPageEdit = () => {

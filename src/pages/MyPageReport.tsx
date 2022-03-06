@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Header } from 'components/headerTemp';
 
 import { MyPageLayout } from 'components';
 

@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Option, saveOption } from 'features/signupSlice';
-import axios from 'axios';
+import { saveOptions } from 'features/signupSlice';
+import { Options } from 'type';
+import { SignUpApi } from 'api';
 
 type Props = {
   pageNumber: number;
@@ -32,18 +33,18 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   const dispatch = useDispatch();
   const signUp = useSelector((state: RootState) => state.signUp);
   const handleSaveOption = () => {
-    const option: Option = {
+    const options: Options = {
       gender: gender,
       weight: weight,
       height: height,
-      core: preferenceList[0].checked,
-      leg: preferenceList[1].checked,
-      back: preferenceList[2].checked,
-      stand: preferenceList[3].checked,
-      sit: preferenceList[4].checked,
-      balance: preferenceList[5].checked,
+      is_core: preferenceList[0].checked,
+      is_leg: preferenceList[1].checked,
+      is_back: preferenceList[2].checked,
+      is_stand: preferenceList[3].checked,
+      is_sit: preferenceList[4].checked,
+      is_balance: preferenceList[5].checked,
     };
-    dispatch(saveOption(option));
+    dispatch(saveOptions(options));
   };
 
   const handleCheckPreference = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,17 +65,10 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     handleSaveOption();
-
-    console.log(signUp);
-    axios
-      .post('/users/register/', {
-        user_id: signUp.userId,
-        nickname: signUp.nickname,
-        password: signUp.password,
-        options: signUp.option,
-      })
+    const signupApi = SignUpApi();
+    signupApi
+      .signUpAccount(signUp)
       .then((res) => {
-        console.log(res);
         if (res.status === 201) handleNextPage();
         else alert('회원가입 실패');
       })
