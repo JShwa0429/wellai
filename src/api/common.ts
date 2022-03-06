@@ -30,9 +30,9 @@ export interface courseList {
   results: detailResponse[];
 }
 export interface detailResponse {
-  id: number;
+  id: string;
   exercises: string[];
-  hashtag: { tag_name: string }[];
+  hash_tag: { tag_name: string }[];
   course_name: string;
   img_url: string;
   avg_rating: number;

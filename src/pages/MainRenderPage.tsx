@@ -10,9 +10,9 @@ const MainRenderPageTemp = () => {
             <br /> 나만의 건강
           </h1>
           <p>
-            언제 어디서나 당신의 건강을 책임지는 AI홈트 서비스
+            언제 어디서나 당신의 건강을 책임지는 AI홈트 서비스,
             <br />
-            WellAi.
+            웰라이
           </p>
           <Link to="/course">
             <button>운동 바로가기</button>
@@ -24,11 +24,11 @@ const MainRenderPageTemp = () => {
       </SectionOne>
       <SectionTwo>
         <div className="introduce">
-          <h1>집에서도 지키는 나만의 건강</h1>
+          <h1>당신의 퍼스널 AI 트레이너</h1>
           <p>
-            언제 어디서나 당신의 건강을 책임지는 AI 홈트 서비스
+            AI 트레이너의 실시간 운동자세 피드백,
             <br />
-            WellAi.
+            혼자서 하는 운동도 이젠 두렵지 않아!
           </p>
         </div>
         <div className="image">
@@ -39,14 +39,14 @@ const MainRenderPageTemp = () => {
         <div className="introduce">
           <img src="image/ellipse.png" alt="원" />
           <h1>
-            스마트한 건강 관리 코치,
+            한 눈에 보는
             <br />
-            WellAi.
+            스마트한 건강 관리
           </h1>
           <p>
             마이 리포트로 주간/월간 운동 기록을 체크해보세요.
             <br />
-            그동안의 노력을 한 눈에 파악할 수 있게 도와드릴게요.
+            당신의 노력을 한 눈에 보기 쉽게!
           </p>
         </div>
         <div className="image">
@@ -89,8 +89,9 @@ const SectionOne = styled.section`
 
   h1 {
     font-size: 3.5em;
+    font-weight: 900;
     line-height: 110%;
-    background: linear-gradient(to right top, ${(props) => props.theme.main}, #ffa69e);
+    background: linear-gradient(to right, #ffafbd, #ffc3a0);
     color: transparent;
     -webkit-background-clip: text;
 
@@ -99,6 +100,8 @@ const SectionOne = styled.section`
   }
 
   p {
+    font-family: 'Noto Sans KR';
+    font-weight: 400;
     margin-right: auto;
   }
 
@@ -110,7 +113,7 @@ const SectionOne = styled.section`
   button {
     background-color: ${(props) => props.theme.main};
     color: white;
-    width: 8rem;
+    width: 10rem;
     height: 3rem;
     border-radius: 4px;
   }

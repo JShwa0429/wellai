@@ -1,11 +1,6 @@
-import { CourseApi } from 'api/CourseApi';
 import { Comment, ReviewDiv, CourseExplain } from 'components';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 const CourseDetailPage = () => {
-  const navigate = useNavigate();
-
   return (
     <Div>
       <CourseExplain />

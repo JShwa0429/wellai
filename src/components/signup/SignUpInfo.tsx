@@ -48,7 +48,7 @@ const Info = styled.div<{ number: number; infoId: number }>`
   width: 100%;
   margin: 2vh auto;
   color: ${(props) => (props.number === props.infoId ? props.theme.main : props.theme.defaultText)};
-  font-weight: bold;
+  font-weight: 700;
 
   .circle {
     display: flex;
