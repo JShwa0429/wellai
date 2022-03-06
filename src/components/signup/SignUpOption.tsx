@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { Option, saveOptions } from 'features/signupSlice';
-import axios from 'axios';
+import { saveOptions } from 'features/signupSlice';
+import { Options } from 'type';
+import { SignUpApi } from 'api';
 
 type Props = {
   pageNumber: number;
@@ -32,7 +33,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   const dispatch = useDispatch();
   const signUp = useSelector((state: RootState) => state.signUp);
   const handleSaveOption = () => {
-    const options: Option = {
+    const options: Options = {
       gender: gender,
       weight: weight,
       height: height,
@@ -64,16 +65,10 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     handleSaveOption();
-
-    console.log(signUp);
-    axios
-      .post('/api/users/register', {
-        email: signUp.email,
-        password: signUp.password,
-        options: signUp.options,
-      })
+    const signupApi = SignUpApi();
+    signupApi
+      .signUpAccount(signUp)
       .then((res) => {
-        console.log(res);
         if (res.status === 201) handleNextPage();
         else alert('회원가입 실패');
       })

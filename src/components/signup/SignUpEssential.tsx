@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { saveEssential } from 'features/signupSlice';
 import styled from 'styled-components';
 import axios from 'axios';
+import { SignUpApi } from 'api';
 
 type RegisterUserForm = {
   email: string;
@@ -86,12 +87,9 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   const handleSaveEssential = (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(saveEssential(userAccountInfo));
-    axios
-      .post('/api/users/check', {
-        email: userAccountInfo.email,
-        password: userAccountInfo.password,
-        confirm_password: userAccountInfo.confirmPassword,
-      })
+    const signupApi = SignUpApi();
+    signupApi
+      .checkValidation(userAccountInfo)
       .then((res) => {
         if (res.status === 200) {
           handleNextPage();
@@ -105,18 +103,7 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
             confirmPassword: err.response.data.confirm_password,
           });
         }
-        console.log(err.response);
       });
-    // axios
-    //   .post('/users/check/', {
-    //     user_id: signUp.userId,
-    //     nickname: signUp.nickname,
-    //     password: signUp.password,
-    //   })
-    //   .then((res) => {
-    //     if (res.statusText === 'Created') handleNextPage();
-    //   })
-    //   .catch((err) => console.log(err));
   };
 
   return (

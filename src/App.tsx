@@ -5,7 +5,6 @@ import {
   ListenPage,
   SearchPage,
   CoursePage,
-  MainRenderPage,
   MainRenderPageTemp,
   CourseDetailPage,
   SignUpPage,
