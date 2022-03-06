@@ -10,7 +10,7 @@ type Props = {
 
 const CourseExplain: React.FunctionComponent = () => {
   const { id } = useParams();
-  const data = {
+  const data: Props = {
     id: id,
     title: '절대빠진다, 하루 1시간! 복부 군살 제거 홈트',
     rate: 4.5,

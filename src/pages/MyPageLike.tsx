@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Header } from 'components/header';
 import { MyPageLayout } from 'components';
 
 const MyPageLike = () => {
