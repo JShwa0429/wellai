@@ -3,6 +3,7 @@ import { CourseApi } from 'api/CourseApi';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from 'antd';
 
 const Banner = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
@@ -25,7 +26,18 @@ const Banner = () => {
         </p>
         <div>
           <Link to={`../course/${datas[0]?.id}`}>
-            <Button>오늘의 추천코스 확인하러 가기</Button>
+            <Button
+              type="primary"
+              style={{
+                marginTop: '1em',
+                width: 'max-content',
+                height: '50px',
+                borderRadius: '5px',
+                fontSize: '20px',
+              }}
+            >
+              오늘의 추천코스 보러 가기
+            </Button>
           </Link>
         </div>
       </div>
@@ -56,7 +68,7 @@ const Div = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-left: 180px;
-    font-size: 2em;
+    font-size: 2.5em;
     font-weight: bold;
     line-height: 120%;
   }
@@ -80,14 +92,15 @@ const Div = styled.div`
   }
 `;
 
-const Button = styled.button`
-  width: 15em;
-  margin-top: 1em;
-  height: 3em;
-  color: ${(props) => props.theme.sub};
-  background-color: ${(props) => props.theme.main};
-  border-radius: 4px;
-`;
+// const Button = styled.button`
+//   width: 10em;
+//   margin-top: 1em;
+//   height: 3em;
+//   font-size: 20px;
+//   color: ${(props) => props.theme.sub};
+//   background-color: ${(props) => props.theme.main};
+//   border-radius: 5px;
+// `;
 // const DivSummary = styled.div`
 //   font-size: 1.5em;
 //   display: flex;
