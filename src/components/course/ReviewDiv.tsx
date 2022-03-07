@@ -30,7 +30,7 @@ const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewProps[]; onRemove: 
 export default ReviewDiv;
 
 const Div = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 1em 0;
   border-top: 1px solid black;
   display: flex;

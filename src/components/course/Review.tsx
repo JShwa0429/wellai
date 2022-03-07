@@ -2,7 +2,6 @@ import { Rating } from './Comment';
 import styled from 'styled-components';
 import { FiDelete } from 'react-icons/fi';
 import { CourseApi } from 'api/CourseApi';
-import { useParams } from 'react-router-dom';
 export type ReviewProps = {
   id: string;
   user_id: string;
@@ -39,7 +38,7 @@ const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({ user_i
 
       <div>
         <b>{user_id}</b>
-        <Rating defaultValue={rating} disabled />
+        <Rating value={rating} disabled />
       </div>
       <div className="comment">{content}</div>
     </Div>

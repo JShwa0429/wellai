@@ -1,7 +1,8 @@
+import { ApiFilled } from '@ant-design/icons';
 import { CourseApi } from 'api/CourseApi';
 import { Comment, ReviewDiv, CourseExplain } from 'components';
 import { ReviewProps } from 'components/course/Review';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 const CourseDetailPage = () => {
@@ -37,6 +38,18 @@ const CourseDetailPage = () => {
     });
   };
 
+  const handleReviewOrdering = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const ordering = event.currentTarget.id;
+    const course = CourseApi();
+    course
+      .getReviewOrdering(id as string, ordering)
+      .then((res) => {
+        setReviewData(res.data.results);
+        console.log(res.data.results);
+      })
+      .catch((err) => console.log(err.response));
+  };
+
   return (
     <Div>
       <CourseExplain />
@@ -44,6 +57,20 @@ const CourseDetailPage = () => {
         <h1>코스 후기</h1>
       </div>
       <Comment onAdd={handleAddReview} />
+      <DivOrdering>
+        <button id="rating" onClick={handleReviewOrdering}>
+          평점 높은 순
+        </button>
+        <button id="-rating" onClick={handleReviewOrdering}>
+          평점 낮은 순
+        </button>
+        <button id="-created_at" onClick={handleReviewOrdering}>
+          최신 순
+        </button>
+        <button id="created_at" onClick={handleReviewOrdering}>
+          오래된 순
+        </button>
+      </DivOrdering>
       <ReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
     </Div>
   );
@@ -56,8 +83,9 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   }
+  width:60%;
   .hr-sect {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-basis: 100%;
     align-items: center;
@@ -77,4 +105,11 @@ const Div = styled.div`
     line-height: 0px;
     margin: 0px 16px;
   }
+`;
+
+const DivOrdering = styled.div`
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
 `;

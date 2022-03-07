@@ -19,7 +19,7 @@ interface requestApiOptions {
 export const CourseApi = (): requestApiOptions => {
   const course = axios.create({
     headers: {
-      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ2NzQ4MjYxLCJpYXQiOjE2NDY1NjgyNjEsImp0aSI6ImM0NzliMjUwMDllOTQyN2E5NjIwNGRkYzgxYzJiMTBmIiwidXNlcl9pZCI6Mn0.wgFmcAFctfVPP1Nm9LrqWzzGn0PPPHX_HZgyTv03O9k`,
+      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ2ODE2ODUwLCJpYXQiOjE2NDY2MzY4NTAsImp0aSI6IjkxNzJjYzNiNmY2ZTQxZTY4MzAzODM0NDU1MzA4NzU5IiwidXNlcl9pZCI6M30.HMbLH7BWpuhrP_rNj0OuAov940a8axW1F5wFUWrlsOg`,
     },
     baseURL: '/api/course',
   });
