@@ -18,8 +18,8 @@ const ExcercisePage = () => {
   const [exerciseNumber, setExerciseNumber] = useState<number>();
   const [exerciseData, setExerciseData] = useState<exercise>();
   const navigate = useNavigate();
+  const course = CourseApi();
   useEffect(() => {
-    const course = CourseApi();
     course
       .getDetailInformation(id as string)
       .then((res) => {
@@ -30,7 +30,6 @@ const ExcercisePage = () => {
   }, []);
 
   useEffect(() => {
-    const course = CourseApi();
     course
       .getExercise(exercises[exerciseNumber as number])
       .then((res) => setExerciseData(res.data))
@@ -46,17 +45,17 @@ const ExcercisePage = () => {
   };
   return (
     <DivCourse>
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%', display: 'flex' }}>
         <Link to={`../course/${id}`}>
           <Button>
             <IoIosExit size="1.5em" fill="white" />
             강의실 나가기
           </Button>
         </Link>
-        <button onClick={handleNextExercise}>다음 운동으로</button>
+        <Button onClick={handleNextExercise}>다음 운동으로</Button>
       </div>
       <div style={{ width: '80%' }}>
-        <Description />
+        <Description {...(exerciseData as exercise)} />
       </div>
       <VideoDiv>
         <Video url={exerciseData?.youtube_key as string} />
