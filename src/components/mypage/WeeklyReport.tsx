@@ -1,58 +1,65 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Radio } from 'antd';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
 
-const options = {
-  chart: {
-    id: 'basic-bar',
-  },
-  xaxis: {
-    categories: ['월', '화', '수', '목', '금', '토', '일'],
-    axisTicks: {
-      show: false,
+const WeeklyReport = () => {
+  const [type, setType] = useState('0');
+  const [records, setRecords] = useState({ '0': [], '1': [] });
+  const getWeeklyReport = async () => {
+    const result = await axios.get('/users/records/month/');
+    const { month_exercise_time, month_calories } = result.data[0];
+    // setRecords({ month_exercise_time, month_calories });
+  };
+  const options = {
+    chart: {
+      id: 'basic-bar',
     },
-    labels: {
-      show: true,
-      style: {
-        colors: [],
-        fontSize: '12px',
-        fontFamily: 'Noto Sans KR',
-        fontWeight: 'bold',
-        cssClass: 'apexcharts-xaxis-label',
+    xaxis: {
+      categories: ['월', '화', '수', '목', '금', '토', '일'],
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        show: true,
+        style: {
+          colors: [],
+          fontSize: '12px',
+          fontFamily: 'Noto Sans KR',
+          fontWeight: 'bold',
+          cssClass: 'apexcharts-xaxis-label',
+        },
+      },
+      axisBorder: {
+        show: false,
       },
     },
-    axisBorder: {
-      show: false,
-    },
-  },
-  grid: {
-    borderColor: 'transparent',
+    grid: {
+      borderColor: 'transparent',
 
-    lines: {
-      show: false,
+      lines: {
+        show: false,
+      },
     },
-  },
-  yaxis: {
-    labels: {
-      show: false,
+    yaxis: {
+      labels: {
+        show: false,
+      },
+      tickAmount: 1,
+      min: 0,
+      max: 26,
     },
-    tickAmount: 1,
-    min: 0,
-    max: 26,
-  },
-  colors: ['#ff7273'],
-};
-const series = [
-  {
-    name: '운동시간',
-    data: [24, 8, 10, 24, 15, 18, 20],
-  },
-];
-const WeeklyReport = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+    colors: ['#ff7273'],
+  };
+  const series = [
+    {
+      name: '운동시간',
+      data: [24, 8, 10, 24, 15, 18, 20],
+    },
+  ];
   return (
     <Wrapper>
       <Row
@@ -78,16 +85,19 @@ const WeeklyReport = () => {
               marginBottom: '30px',
             }}
           >
-            <Col>
-              <Button style={{ width: '100px' }} size="large">
-                운동량
-              </Button>
-            </Col>
-            <Col>
-              <Button style={{ width: '100px' }} size="large">
-                칼로리
-              </Button>
-            </Col>
+            <Radio.Group
+              buttonStyle="solid"
+              // defaultValue="0"
+              size="large"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+            >
+              <Radio.Button style={{ marginRight: '50px' }} value="0">
+                운동시간
+              </Radio.Button>
+
+              <Radio.Button value="1">칼로리</Radio.Button>
+            </Radio.Group>
           </Row>
           <Row justify="center">
             <Col>

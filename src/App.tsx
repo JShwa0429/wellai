@@ -24,62 +24,66 @@ import './styles/antd.css';
 
 function App() {
   const navigate = useNavigate();
-  // let isAlreadyFetchingAccessToken = false;
+  let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
-  axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
 
   const signout = () => {
-    Cookies.remove('accessToken');
-    Cookies.remove('refreshToken');
+    Cookies.remove('access');
+    Cookies.remove('refresh');
     navigate('/');
   };
-  // useEffect(() => {
 
-  // }, []);
-  // axios.interceptors.response.use(
-  //   (response) => {
-  //     isAlreadyFetchingAccessToken = false;
-  //     return response;
-  //   },
-  //   async (error) => {
-  //     console.log('여기옴?');
-  //     console.log(error);
-  //     const originalRequest = error.config;
+  axios.interceptors.request.use(function (config) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
+    return config;
+  });
+  axios.interceptors.response.use(
+    (response) => {
+      isAlreadyFetchingAccessToken = false;
+      return response;
+    },
+    async (error) => {
+      const fromWhere = error.response.config.url;
 
-  //     // //무한 루프 방지
-  //     // //AT001 === 토큰 만료
-  //     // //AT002 === 리프레시 토큰 만료
-  //     // if (error.response.data.code === 'AT002') {
-  //     //   signout();
-  //     //   return Promise.reject(error);
-  //     // }
+      const originalRequest = error.config;
 
-  //     // if (!isAlreadyFetchingAccessToken && error.response.data.code === 'AT001') {
-  //     //   isAlreadyFetchingAccessToken = true;
-  //     //   try {
-  //     //     const res = await axios.post('user/renew_token', {
-  //     //       refreshToken: Cookies.get('refreshToken'),
-  //     //     });
-  //     //     const { refresh, access } = res.data;
+      // 리프레시 토큰으로 재요청 보냈는데 리프레시 토큰 마저 만료된경우
+      if (fromWhere === '/users/token/refresh') {
+        signout();
+        return Promise.reject(error);
+      }
+      //무한 루프 방지
+      // 엑세스토큰 만료된 경우
+      if (
+        !isAlreadyFetchingAccessToken &&
+        fromWhere !== '/users/token/refresh' &&
+        error.response.data.code === 'token_not_valid'
+      ) {
+        isAlreadyFetchingAccessToken = true;
+        try {
+          const res = await axios.post('/users/token/refresh', {
+            refresh: Cookies.get('refresh'),
+          });
+          const { refresh, access } = res.data;
 
-  //     //     Cookies.set('access', access, { path: '/', maxAge: 3600 });
-  //     //     Cookies.set('refresh', refresh, { path: '/', maxAge: 7200 });
+          Cookies.set('access', access, { path: '/', expires: 0.0000578 });
+          Cookies.set('refresh', refresh, { path: '/', expires: 7 });
 
-  //     //     originalRequest.headers['Authorization'] = access;
-  //     //     axios.defaults.headers.common['Authorization'] = access;
+          originalRequest.headers['Authorization'] = access;
+          axios.defaults.headers.common['Authorization'] = access;
 
-  //     //     return axios(originalRequest);
-  //     //   } catch (error) {
-  //     //     signout();
-  //     //     isAlreadyFetchingAccessToken = false;
-  //     //     return Promise.reject(error);
-  //     //   }
-  //     // }
+          return axios(originalRequest);
+        } catch (error) {
+          signout();
+          isAlreadyFetchingAccessToken = false;
+          return Promise.reject(error);
+        }
+      }
 
-  //     return Promise.reject(error);
-  //   },
-  // );
+      return Promise.reject(error);
+    },
+  );
 
   return (
     // <BrowserRouter>
@@ -95,14 +99,12 @@ function App() {
           <Route path="/community" element={<p>커뮤니티 페이지</p>} />
         </Route>
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/private" element={<AuthRoute element={AuthPage} />} />
         <Route path="/" element={<Page />}>
-          <Route path="/mypage/report" element={<PublicRoute element={MyPageReport} />} />
-          <Route path="/mypage/like" element={<PublicRoute element={MyPageLike} />} />
-          <Route path="/mypage/comment" element={<PublicRoute element={MyPageComment} />} />
-          <Route path="/mypage/edit" element={<PublicRoute element={MyPageEdit} />} />
+          <Route path="/mypage/report" element={<AuthRoute element={MyPageReport} />} />
+          <Route path="/mypage/like" element={<AuthRoute element={MyPageLike} />} />
+          <Route path="/mypage/comment" element={<AuthRoute element={MyPageComment} />} />
+          <Route path="/mypage/edit" element={<AuthRoute element={MyPageEdit} />} />
         </Route>
-        <Route path="/test" element={<PublicRoute element={TestPage} />} />
       </Routes>
     </>
     // </BrowserRouter>

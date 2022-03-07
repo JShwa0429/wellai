@@ -1,60 +1,87 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, DatePicker } from 'antd';
-import moment from 'moment';
+import moment, { Moment, MomentFormatSpecification } from 'moment';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
 
-const options = {
-  chart: {
-    id: 'basic-bar',
-  },
-  plotOptions: {
-    bar: {
-      horizontal: true,
+const MonthlyReport = () => {
+  const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
+  const [date, setDate] = useState({ month: Number(moment().format('MM')), year: Number(moment().format('YYYY')) });
+  const handleChange = async (value: Moment | null) => {
+    if (value?.format('MM') !== undefined) {
+      setDate({ month: Number(value?.format('MM')), year: Number(value?.format('YYYY')) });
+      getMonthlyReport();
+    }
+  };
+  const getMonthlyReport = async () => {
+    const result = await axios.get('/users/records/month/', { params: { month: date.month, year: date.year } });
+    const { month_exercise_time, month_calories } = result.data[0];
+    // setRecord({ month_exercise_time, month_calories });
+  };
+  const options = {
+    chart: {
+      id: 'basic-bar',
     },
-  },
-  xaxis: {
-    categories: ['운동시간', '칼로리', '몸무게'],
-    axisTicks: {
-      show: false,
-    },
-    labels: {
-      show: false,
-      style: {
-        colors: [],
-        fontSize: '12px',
-        fontFamily: 'Noto Sans KR',
-        fontWeight: 'bold',
-        cssClass: 'apexcharts-xaxis-label',
+    plotOptions: {
+      bar: {
+        horizontal: true,
       },
     },
-    axisBorder: {
-      show: false,
+    xaxis: {
+      categories: ['운동시간', '칼로리'],
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        show: false,
+        style: {
+          colors: [],
+          fontSize: '12px',
+          fontFamily: 'Noto Sans KR',
+          fontWeight: 'bold',
+          cssClass: 'apexcharts-xaxis-label',
+        },
+      },
+      axisBorder: {
+        show: false,
+      },
     },
-  },
-  grid: {
-    borderColor: 'transparent',
-    lines: {
-      show: false,
+    grid: {
+      borderColor: 'transparent',
+      lines: {
+        show: false,
+      },
     },
-  },
-  yaxis: {
-    tickAmount: 1,
-    min: 0,
-    max: 100,
-  },
-  colors: ['#ff7273'],
-};
-const series = [
-  {
-    name: '운동시간',
-    data: [10, 20, 30],
-  },
-];
-const MonthlyReport = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+    yaxis: {
+      tickAmount: 1,
+      min: 0,
+      max: 100,
+      labels: {
+        show: true,
+        style: {
+          colors: [],
+          fontSize: '12px',
+          fontFamily: 'Noto Sans KR',
+          fontWeight: 'bold',
+          cssClass: 'apexcharts-xaxis-label',
+        },
+      },
+    },
+    colors: ['#ff7273'],
+  };
+  const series = [
+    {
+      name: '운동시간',
+      data: [record.month_exercise_time, record.month_calories],
+    },
+  ];
+  useEffect(() => {
+    getMonthlyReport();
+  }, []);
+
   return (
     <Wrapper>
       <Row
@@ -76,7 +103,7 @@ const MonthlyReport = () => {
         >
           <Row justify="center" style={{ marginBottom: '20px' }}>
             <Col>
-              <DatePicker picker="month" defaultValue={moment()} />
+              <DatePicker onChange={handleChange} picker="month" defaultValue={moment()} />
             </Col>
           </Row>
           <Row>

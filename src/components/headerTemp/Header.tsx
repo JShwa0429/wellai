@@ -11,7 +11,7 @@ const logoName = 'WellAi.';
 
 const Header = () => {
   const navigate = useNavigate();
-  const access = Cookies.get('access');
+  const access = Cookies.get('refresh');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 

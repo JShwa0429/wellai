@@ -20,7 +20,9 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
     const result = await axios.post('/users/login', { email, password });
 
     const { refresh, access } = result.data;
-    Cookies.set('access', access, { path: '/', expires: 7 });
+    const date = new Date();
+    console.log(date.setSeconds(date.getSeconds() + 10));
+    Cookies.set('access', access, { path: '/', expires: 0.0000578 });
     Cookies.set('refresh', refresh, { path: '/', expires: 7 });
     setIsModalVisible(false);
     return;
