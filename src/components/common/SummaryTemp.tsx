@@ -22,8 +22,8 @@ const SummaryTemp: React.FunctionComponent<detailResponse> = ({
     } else if (!toggle) {
       course
         .postBookmark(id as string)
-        .then((res) => (res.status === 400 ? alert('이미 북마크된 코스입니다.') : setToggle(true)))
-        .catch((err) => console.log(err.response));
+        .then(() => setToggle(true))
+        .catch((err) => (err.response.status === 400 ? alert('이미 북마크된 코스입니다.') : console.log(err.response)));
     }
   };
   return (

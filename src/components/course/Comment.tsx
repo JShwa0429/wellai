@@ -1,22 +1,29 @@
 import { Rate } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CourseApi } from 'api/CourseApi';
+import { ReviewProps } from './Review';
 
-const Comment = () => {
+const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => void }> = ({ onAdd }) => {
   const { id } = useParams();
   const [rateValue, setRateValue] = useState(3);
   const [textAreaValue, setTextAreaValue] = useState('');
   const handleCommentSubmit = () => {
     const course = CourseApi();
     course
-      .postReview(id, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
+      .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
       .then((res) => {
         if (res.status === 429) alert('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
-        else window.location.replace(`/course/${id}`);
+        else {
+          onAdd(res.data);
+          setTextAreaValue('');
+          setRateValue(3);
+        }
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) =>
+        err.response.status === 400 ? alert('이미 이 코스에 대한 리뷰가 있습니다!') : console.log(err.response),
+      );
   };
   return (
     <Div>
@@ -46,7 +53,6 @@ export default Comment;
 
 const Div = styled.div`
   width: 80%;
-  min-width:
   margin: 1em 0;
 `;
 

@@ -1,34 +1,26 @@
 import { Pagination } from 'antd';
-import { CourseApi } from 'api/CourseApi';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Review, { ReviewProps } from './Review';
 
-const ReviewDiv = () => {
-  const { id } = useParams();
+const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewProps[]; onRemove: (id: string) => void }> = ({
+  reviewData,
+  onRemove,
+}) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [datas, setDatas] = useState<ReviewProps[]>([]);
 
-  useEffect(() => {
-    const course = CourseApi();
-    course
-      .getReview(id as string)
-      .then((res) => {
-        setDatas(res.data.results);
-      })
-      .catch((err) => console.log(err.response));
-  }, []);
   return (
     <Div>
-      {datas.map((data: ReviewProps, idx: number) => {
-        return pageNumber * 10 > idx && idx > (pageNumber - 1) * 10 - 1 && <Review {...data} key={idx} />;
+      {reviewData.map((data: ReviewProps, idx: number) => {
+        return (
+          pageNumber * 10 > idx && idx > (pageNumber - 1) * 10 - 1 && <Review {...data} onRemove={onRemove} key={idx} />
+        );
       })}
       <Pagination
         current={pageNumber}
         onChange={(page) => setPageNumber(page)}
         defaultCurrent={1}
-        total={datas.length}
+        total={reviewData.length}
         pageSize={10}
         style={{ margin: '2em 0' }}
       />
