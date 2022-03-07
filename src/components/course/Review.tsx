@@ -1,5 +1,8 @@
 import { Rating } from './Comment';
 import styled from 'styled-components';
+import { FiDelete } from 'react-icons/fi';
+import { CourseApi } from 'api/CourseApi';
+import { useParams } from 'react-router-dom';
 export type ReviewProps = {
   id: string;
   user_id: string;
@@ -9,9 +12,27 @@ export type ReviewProps = {
   rating: number;
   course_id: string;
 };
-const Review: React.FunctionComponent<ReviewProps> = ({ user_id, rating, content }) => {
+const Review: React.FunctionComponent<ReviewProps> = ({ user_id, id, rating, content }) => {
+  const removeReview = () => {
+    const course = CourseApi();
+    course
+      .deleteReview(id)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.response));
+    location.reload();
+  };
   return (
     <Div>
+      <div className="close">
+        <button
+          onClick={() => {
+            removeReview();
+          }}
+        >
+          <FiDelete size="1.5em" />
+        </button>
+      </div>
+
       <div>
         <b>{user_id}</b>
         <Rating defaultValue={rating} disabled />
@@ -27,7 +48,7 @@ const Div = styled.div`
   width: 100%;
   padding: 2%;
   border-bottom: 1px solid ${(props) => props.theme.border};
-
+  position: relative;
   b {
     font-size: 1.5em;
     margin-right: 1em;
@@ -35,5 +56,10 @@ const Div = styled.div`
 
   .comment {
     margin-top: 1em;
+  }
+
+  .close {
+    position: absolute;
+    right: 3%;
   }
 `;

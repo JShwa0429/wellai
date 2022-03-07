@@ -52,24 +52,25 @@ const SearchResult: React.FunctionComponent<{ searchTitle: string }> = ({ search
 export default SearchResult;
 
 const Div = styled.div`
-  padding: 0 5vw;
+  margin: 0 5vw;
   font-size: 1.5em;
-  width: 100%;
   h2 {
     color: ${(props) => props.theme.defaultText};
     width: 100%;
-    border-bottom: 1px solid #888;
-    padding: 25px 0;
-    margin: 25px 0;
+    //border-bottom: 1px solid #888;
+    padding-top: 25px;
+    margin-top: 25px;
     font-size: 1.2em;
   }
 `;
 
 const CardDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 20%);
-  gap: 6.5%;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 2%;
   margin: auto;
+  align-items: center;
+  justify-content: left;
 `;
 
 const SummaryDiv = styled.div`
@@ -100,7 +101,7 @@ const SummaryDiv = styled.div`
   .explain {
     display: flex;
     flex-direction: column;
-    padding: 1%;
+    padding: 5%;
     padding-left: 3%;
     text-align: left;
     background-color: white;

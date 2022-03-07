@@ -14,11 +14,19 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         word-wrap: break-word;
-        font-family:'Noto Sans KR',  'sans-serif';
+        font-family:'Noto Sans Kr',  'sans-serif';
+        
     }
 
     ::-webkit-scrollbar {
         display: none;
+    }
+
+    @font-face {
+        font-size : 12px | 0.8em;
+        font-style: normal;
+        font-weight:300;
+        line-height: 20px | 120%;
     }
 
     button {
@@ -44,6 +52,33 @@ const GlobalStyle = createGlobalStyle`
     }
     
    
+
+    @font-face{
+        font-family: "Noto Sans Kr" !important;
+        font-size: 12px | 0.8em;
+        font-style: normal;
+        font-weight:400;
+        src: local('Noto Sans KR'), url(${NotoSansKRRegular}) format('woff2');
+    }
+
+   
+
+    @font-face { 
+        font-family: "Noto Sans Kr";
+        font-size: 12px | 0.8em;
+        font-style: normal;
+        font-weight:700;
+        src: local('Noto Sans KR'), url(${NotoSansKRBold}) format('woff2');
+    }
+
+    @font-face { 
+        font-family: "Noto Sans Kr";
+        font-size: 12px | 0.8em;
+        font-style: normal;
+        font-weight:900;
+        src: local('Noto Sans KR'), url(${NotoSansKRBlack}) format('woff2');
+    }
+
     @font-face { 
         font-family: "Noto Sans KR Thin";
         font-size: 12px | 0.8em;
@@ -59,32 +94,6 @@ const GlobalStyle = createGlobalStyle`
         font-weight:300;
         src: local('Noto Sans KR'), url(${NotoSansKRLight}) format('woff2');
     }
-
-    @font-face{
-        font-family: "Noto Sans KR";
-        font-size: 12px | 0.8em;
-        font-style: normal;
-        font-weight:400;
-        src: local('Noto Sans KR'), url(${NotoSansKRRegular}) format('woff2');
-    }
-
-    @font-face { 
-        font-family: "Noto Sans KR";
-        font-size: 12px | 0.8em;
-        font-style: normal;
-        font-weight:700;
-        src: local('Noto Sans KR'), url(${NotoSansKRBold}) format('woff2');
-    }
-
-    @font-face { 
-        font-family: "Noto Sans KR";
-        font-size: 12px | 0.8em;
-        font-style: normal;
-        font-weight:900;
-        src: local('Noto Sans KR'), url(${NotoSansKRBlack}) format('woff2');
-    }
-
-   
 `;
 
 export default GlobalStyle;

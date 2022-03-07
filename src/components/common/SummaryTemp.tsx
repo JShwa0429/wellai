@@ -1,6 +1,7 @@
 import { detailResponse } from 'api/common';
 import { CourseApi } from 'api/CourseApi';
 import React, { useState } from 'react';
+import styled from 'styled-components';
 const SummaryTemp: React.FunctionComponent<detailResponse> = ({ id, course_name, img_url, hash_tag }) => {
   const [toggle, setToggle] = useState<boolean>(false);
   const handleBookmark = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -15,7 +16,7 @@ const SummaryTemp: React.FunctionComponent<detailResponse> = ({ id, course_name,
     }
   };
   return (
-    <>
+    <Div>
       <div className="image">
         <button className="bookmark" onClick={handleBookmark}>
           <img src={`${process.env.PUBLIC_URL}/image/${toggle ? 'heart_on.png' : 'heart_off.png'}`} alt="좋아요" />
@@ -37,8 +38,13 @@ const SummaryTemp: React.FunctionComponent<detailResponse> = ({ id, course_name,
           ))}
         </div>
       </div>
-    </>
+    </Div>
   );
 };
 
 export default SummaryTemp;
+
+const Div = styled.div`
+  height: 250px;
+  object-fit: cover;
+`;

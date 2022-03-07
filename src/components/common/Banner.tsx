@@ -16,9 +16,9 @@ const Banner = () => {
         </p>
       </div>
       <div className="summary">
-        <DivSummary>
-          <Summary {...data} />
-        </DivSummary>
+        <div className="image">
+          <img src="/image/courseGirl.png" alt="요가 소녀" />
+        </div>
       </div>
     </Div>
   );
@@ -34,12 +34,13 @@ const Div = styled.div`
   align-items: center;
 
   background: linear-gradient(rgba(255, 114, 114, 0.6), rgba(255, 114, 114, 0.2));
-
+  overflow: hidden;
   .banner {
     width: 50%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-
+    margin-left: 180px;
     font-size: 2em;
     font-weight: bold;
     line-height: 120%;
@@ -52,39 +53,45 @@ const Div = styled.div`
     flex-direction: row;
     justify-content: start;
     align-items: center;
-
-    width: 80%;
+    width: 60%;
+    height: 100%;
     padding: 0 5vw;
   }
+
+  .summary .img {
+    min-height: 250px;
+    max-height: 300px;
+    width: 100%;
+  }
 `;
 
-const DivSummary = styled.div`
-  font-size: 1.5em;
-  display: flex;
-  img {
-    height: 30vh;
-  }
+// const DivSummary = styled.div`
+//   font-size: 1.5em;
+//   display: flex;
+//   img {
+//     height: 30vh;
+//   }
 
-  .explain {
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    text-align: center;
-    margin-bottom: 0;
-  }
+//   .explain {
+//     margin-left: auto;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     width: 50%;
+//     text-align: center;
+//     margin-bottom: 0;
+//   }
 
-  font-weight: bold;
-  .title {
-    color: ${(props) => props.theme.defaultText};
-  }
-  .duration {
-    color: ${(props) => props.theme.main};
-  }
+//   font-weight: bold;
+//   .title {
+//     color: ${(props) => props.theme.defaultText};
+//   }
+//   .duration {
+//     color: ${(props) => props.theme.main};
+//   }
 
-  .hashTag {
-    color: #988d8d;
-  }
-`;
+//   .hashTag {
+//     color: #988d8d;
+//   }
+// `;

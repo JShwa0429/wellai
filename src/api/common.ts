@@ -59,10 +59,10 @@ export interface reviewRequest {
   course_id: string | undefined;
 }
 export interface review {
-  id: number;
+  id: string;
   user_id: string;
-  created_at: Date;
-  modified_at: Date;
+  created_at: string;
+  modified_at: string;
   content: string;
   rating: number;
   course_id: string;

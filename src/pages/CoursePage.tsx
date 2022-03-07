@@ -17,7 +17,6 @@ const CoursePage: React.FunctionComponent = () => {
     <DivCourse>
       <Banner />
       <div className="search">
-        <SearchResult searchTitle="직장인을 위한 코스" />
         <CourseList />
       </div>
     </DivCourse>
