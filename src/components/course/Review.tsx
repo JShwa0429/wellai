@@ -12,14 +12,18 @@ export type ReviewProps = {
   rating: number;
   course_id: string;
 };
-const Review: React.FunctionComponent<ReviewProps> = ({ user_id, id, rating, content }) => {
+
+export type EditReviewProps = {
+  onRemove: (id: string) => void;
+};
+
+const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({ user_id, id, rating, content, onRemove }) => {
   const removeReview = () => {
     const course = CourseApi();
     course
       .deleteReview(id)
-      .then((res) => console.log(res))
+      .then(() => onRemove(id))
       .catch((err) => console.log(err.response));
-    location.reload();
   };
   return (
     <Div>
