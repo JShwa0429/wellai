@@ -12,8 +12,11 @@ const Comment = () => {
     const course = CourseApi();
     course
       .postReview(id, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        if (res.status === 429) alert('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
+        else window.location.replace(`/course/${id}`);
+      })
+      .catch((err) => console.log(err.response));
   };
   return (
     <Div>
@@ -43,13 +46,14 @@ export default Comment;
 
 const Div = styled.div`
   width: 80%;
+  min-width:
   margin: 1em 0;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: row;
-  width: 80vw;
+  width: 100%;
   height: 8em;
 `;
 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Banner } from 'components';
 import { useEffect } from 'react';
 import { CourseApi } from 'api/CourseApi';
+import { CourseList } from 'components/common';
 const CoursePage: React.FunctionComponent = () => {
   useEffect(() => {
     const course = CourseApi();
@@ -16,7 +17,7 @@ const CoursePage: React.FunctionComponent = () => {
     <DivCourse>
       <Banner />
       <div className="search">
-        <SearchResult searchTitle="직장인을 위한 코스" />
+        <CourseList />
       </div>
     </DivCourse>
   );

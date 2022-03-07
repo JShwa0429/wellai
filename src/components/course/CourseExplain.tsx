@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { Rating } from 'components/course/Comment';
 import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { CourseApi } from 'api/CourseApi';
+import { detailResponse } from 'api/common';
 type Props = {
   id: string | undefined;
   title: string;
@@ -10,29 +13,41 @@ type Props = {
 
 const CourseExplain: React.FunctionComponent = () => {
   const { id } = useParams();
-  const data: Props = {
-    id: id,
-    title: '절대빠진다, 하루 1시간! 복부 군살 제거 홈트',
-    rate: 4.5,
-    explain:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi viverra sem sit amet rhoncus pretium. Curabitur sit amet interdum risus, at feugiat tortor. Class aptent taciti ',
-  };
+  // const data: Props = {
+  //   id: id,
+  //   title: '절대빠진다, 하루 1시간! 복부 군살 제거 홈트',
+  //   rate: 4.5,
+  //   explain:
+  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi viverra sem sit amet rhoncus pretium. Curabitur sit amet interdum risus, at feugiat tortor. Class aptent taciti ',
+  // };
+  const [data, setData] = useState<detailResponse | null>(null);
+
+  useEffect(() => {
+    const course = CourseApi();
+    course
+      .getDetailInformation(id)
+      .then((res) => {
+        console.log(res.data);
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <DivCourseDetail>
       <DivBanner>
         <div className="image">
-          <img src="/image/yoga.png" alt="요가" />
+          <img src={data?.img_url} alt="요가" />
         </div>
         <Explain>
-          <h1>{data.title}</h1>
+          <h1>{data?.course_name}</h1>
           <div className="rate">
-            <Rating allowHalf disabled defaultValue={data.rate} />
-            {data.rate}
+            <Rating allowHalf disabled value={data?.avg_rating} />
+            {data?.avg_rating}
           </div>
-          <div className="explain">{data.explain}</div>
+          <div className="explain">{data?.description}</div>
         </Explain>
       </DivBanner>
-      <Link to={`/guide/${data.id}`}>
+      <Link to={`/guide/${data?.id}`}>
         <Button>수업 시작하기</Button>
       </Link>
     </DivCourseDetail>

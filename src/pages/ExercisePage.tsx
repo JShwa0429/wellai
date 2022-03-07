@@ -17,7 +17,7 @@ const ExcercisePage = () => {
         <Link to={`../course/${id}`}>
           <Button>
             <IoIosExit size="1.5em" fill="white" />
-            운동 그만 두기
+            강의실 나가기
           </Button>
         </Link>
       </div>
