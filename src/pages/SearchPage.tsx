@@ -6,7 +6,7 @@ const SearchPage = () => {
   return (
     <Div>
       <Category keyword={state as string} />
-      <SearchResult searchTitle="검색결과" />
+      <SearchResult keyword={state as string} />
     </Div>
   );
 };

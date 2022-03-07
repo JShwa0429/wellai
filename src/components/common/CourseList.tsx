@@ -38,6 +38,7 @@ const CourseList = () => {
 
 export default CourseList;
 const Div = styled.div`
+  width: 100%;
   margin: 0 5vw;
   font-size: 1.5em;
   h2 {

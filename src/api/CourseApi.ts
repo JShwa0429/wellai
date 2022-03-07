@@ -5,6 +5,7 @@ interface requestApiOptions {
   readonly course: AxiosInstance;
   readonly recommendCourse: () => AxiosPromise<Api.detailResponse[]>;
   readonly getCourse: () => AxiosPromise<Api.courseList>;
+  readonly searchCourse: (search: string) => AxiosPromise<Api.courseList>;
   readonly getDetailInformation: (id: string | undefined) => AxiosPromise<Api.detailResponse>;
   readonly getReview: (id: string) => AxiosPromise<Api.reviewReponse>;
   readonly getReviewOrdering: (id: string, ordering: string) => AxiosPromise<Api.reviewReponse>;
@@ -27,6 +28,10 @@ export const CourseApi = (): requestApiOptions => {
     course,
     getCourse: () => course.get(`/list`),
     recommendCourse: () => course.get(`/recommendation`),
+    searchCourse: (search) =>
+      course.get(`/list`, {
+        params: { search: search },
+      }),
     getDetailInformation: (id) => course.get(`/${id}`),
     getReview: (id) => course.get(`/${id}/review`),
     getReviewOrdering: (id, ordering) =>
