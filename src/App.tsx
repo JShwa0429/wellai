@@ -35,7 +35,11 @@ function App() {
   let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
-  axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
+  useEffect(() => {
+    if (Cookies.get('access')) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
+    }
+  }, []);
 
   const signout = () => {
     Cookies.remove('access');
@@ -109,7 +113,6 @@ function App() {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/community" element={<p>커뮤니티 페이지</p>} />
         </Route>
-
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/" element={<Page />}>
           <Route path="/mypage/report" element={<AuthRoute element={MyPageReport} />} />

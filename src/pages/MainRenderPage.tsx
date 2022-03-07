@@ -138,8 +138,7 @@ const SectionOne = styled.section`
   }
 
   .image {
-    width: 700px;
-    margin: -80px 0 80px auto;
+    margin: 0 110px 0 auto;
     object-fit: cover;
     img {
       min-width: 500px;
