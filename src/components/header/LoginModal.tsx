@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import { Row, Col, Modal, Form, Button, Input, Divider, Image } from 'antd';
 import styled from 'styled-components';
 import KakaoLogin from 'react-kakao-login';
@@ -16,6 +17,7 @@ type LoginForm = {
 const LOGONAME = 'WellAi.';
 
 const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
+  const navigate = useNavigate();
   const onFinish = async ({ email, password }: LoginForm) => {
     const result = await axios.post('/users/login', { email, password });
 
@@ -23,6 +25,8 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
     Cookies.set('access', access, { path: '/', expires: 1 });
     Cookies.set('refresh', refresh, { path: '/', expires: 7 });
     setIsModalVisible(false);
+    navigate('/');
+
     return;
   };
   return (
