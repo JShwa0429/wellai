@@ -1,7 +1,12 @@
+import React, { useEffect } from 'react';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, Menu } from 'antd';
-
+import { shallowEqual } from 'react-redux';
 import { LikeOutlined, CommentOutlined, PieChartOutlined, EditOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
+import * as myPageAction from 'features/myPageSlice';
 import styled from 'styled-components';
 type menu = {
   name: string;
@@ -19,6 +24,16 @@ const MenuList: menu[] = [
 const MyPageLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { nickname } = useAppSelector((state) => state.myPage, shallowEqual);
+  useEffect(() => {
+    const getUserNickName = async () => {
+      await axios.get('/users/option').then((result) => dispatch(myPageAction.nicknameChange(result.data.nickname)));
+    };
+    if (nickname === undefined) {
+      getUserNickName();
+    }
+  }, []);
   return (
     <Wrapper style={{ width: 332, height: 'max-content' }}>
       <Row
@@ -29,18 +44,20 @@ const MyPageLayout = () => {
           fontWeight: 'bold',
           paddingLeft: '30px',
           borderRight: '1px solid #f0f0f0',
+          borderLeft: '1px solid #f0f0f0',
         }}
         justify="start"
         align="middle"
       >
         <Col style={{ marginRight: '5px' }}>🧘‍♀️</Col>
-        <Col style={{ letterSpacing: '1.5px' }}>{'강경욱'} 님</Col>
+        <Col style={{ letterSpacing: '1.5px' }}>{nickname} 님</Col>
       </Row>
       <Menu
         defaultSelectedKeys={[location.pathname]}
         mode="vertical"
         style={{
-          minHeight: '100vh',
+          minHeight: 'calc(100vh - 80px - 100px)',
+          borderLeft: '1px solid #f0f0f0',
         }}
         onSelect={({ key }) => navigate(key)}
       >
