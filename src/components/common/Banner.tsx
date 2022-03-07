@@ -23,10 +23,13 @@ const Banner = () => {
           {`“차차”`}님을 위한
           <br /> 오늘의 코스
         </p>
-        <Link to={`../course/${datas[0]?.id}`}>
-          <Button>오늘의 추천코스 확인하러 가기</Button>
-        </Link>
+        <div>
+          <Link to={`../course/${datas[0]?.id}`}>
+            <Button>오늘의 추천코스 확인하러 가기</Button>
+          </Link>
+        </div>
       </div>
+
       <div className="summary">
         <div className="image">
           <img src="/image/courseGirl.png" alt="요가 소녀" />
@@ -78,10 +81,12 @@ const Div = styled.div`
 `;
 
 const Button = styled.button`
-  width: 10em;
+  width: 15em;
+  margin-top: 1em;
   height: 3em;
   color: ${(props) => props.theme.sub};
   background-color: ${(props) => props.theme.main};
+  border-radius: 4px;
 `;
 // const DivSummary = styled.div`
 //   font-size: 1.5em;
