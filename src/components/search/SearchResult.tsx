@@ -1,45 +1,28 @@
-import Summary from 'components/common/Summary';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { SummaryProps } from 'components/common/Summary';
 import { Link } from 'react-router-dom';
+import { CourseApi } from 'api/CourseApi';
+import SummaryTemp from 'components/common/SummaryTemp';
+import { detailResponse } from 'api/common';
 
-const SearchResult: React.FunctionComponent<{ searchTitle: string }> = ({ searchTitle }) => {
-  const [cardData, setCardData] = useState<SummaryProps[]>([
-    {
-      id: '0',
-      title: '절대 빠진다, 하루 1시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-    {
-      id: '1',
-      title: '절대 빠진다, 하루 3시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-    {
-      id: '2',
-      title: '절대 빠진다, 하루 5시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-    {
-      id: '3',
-      title: '절대 빠진다, 하루 7시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-  ]);
+const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
+  const [datas, setDatas] = useState<detailResponse[]>([]);
+  useEffect(() => {
+    const course = CourseApi();
+    course
+      .searchCourse(keyword)
+      .then((res) => setDatas(res.data.results))
+      .catch((err) => console.log(err.response));
+  }, []);
   return (
     <Div>
-      <h2>{searchTitle}</h2>
+      <h2>검색 결과</h2>
       <CardDiv>
-        {cardData.map((data: SummaryProps, idx: number) => {
+        {datas.map((data: detailResponse, idx: number) => {
           return (
             <SummaryDiv key={idx}>
               <Link to={`../course/${data.id}`}>
-                <Summary {...data} />
+                <SummaryTemp {...data} />
               </Link>
             </SummaryDiv>
           );
@@ -52,6 +35,7 @@ const SearchResult: React.FunctionComponent<{ searchTitle: string }> = ({ search
 export default SearchResult;
 
 const Div = styled.div`
+  width: 90%;
   margin: 0 5vw;
   font-size: 1.5em;
   h2 {
@@ -65,6 +49,7 @@ const Div = styled.div`
 `;
 
 const CardDiv = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, 250px);
   gap: 2%;
