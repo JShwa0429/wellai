@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CourseApi } from 'api/CourseApi';
 import { ReviewProps } from './Review';
+import Cookies from 'js-cookie';
 
 const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => void }> = ({ onAdd }) => {
   const { id } = useParams();
@@ -27,9 +28,16 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
   };
   return (
     <Div>
-      <Rating allowHalf defaultValue={rateValue} onChange={setRateValue} style={{ marginRight: 'auto' }} />
+      <Rating
+        disabled={Cookies.get('refresh') ? false : true}
+        allowHalf
+        defaultValue={rateValue}
+        onChange={setRateValue}
+        style={{ marginRight: 'auto' }}
+      />
       <Form>
         <TextArea
+          disabled={Cookies.get('refresh') ? false : true}
           value={textAreaValue}
           maxLength={150}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => setTextAreaValue(event.target.value)}
@@ -37,6 +45,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
         />
         <Button
           type="button"
+          disabled={Cookies.get('refresh') ? false : true}
           onClick={() => {
             if (textAreaValue) handleCommentSubmit();
             else alert('댓글을 입력해주세요');
@@ -80,4 +89,8 @@ const Button = styled.button`
   width: 10%;
   color: white;
   background-color: ${(props) => props.theme.main};
+
+  :disabled {
+    background-color: ${(props) => props.theme.border};
+  }
 `;

@@ -4,22 +4,10 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CourseApi } from 'api/CourseApi';
 import { detailResponse } from 'api/common';
-type Props = {
-  id: string | undefined;
-  title: string;
-  rate: number;
-  explain: string;
-};
+import Cookies from 'js-cookie';
 
 const CourseExplain: React.FunctionComponent = () => {
   const { id } = useParams();
-  // const data: Props = {
-  //   id: id,
-  //   title: '절대빠진다, 하루 1시간! 복부 군살 제거 홈트',
-  //   rate: 4.5,
-  //   explain:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi viverra sem sit amet rhoncus pretium. Curabitur sit amet interdum risus, at feugiat tortor. Class aptent taciti ',
-  // };
   const [data, setData] = useState<detailResponse | null>(null);
 
   useEffect(() => {
@@ -48,7 +36,7 @@ const CourseExplain: React.FunctionComponent = () => {
         </Explain>
       </DivBanner>
       <Link to={`/guide/${data?.id}`}>
-        <Button>수업 시작하기</Button>
+        <Button disabled={Cookies.get('refresh') ? false : true}>수업 시작하기</Button>
       </Link>
     </DivCourseDetail>
   );
@@ -109,5 +97,9 @@ const Button = styled.button`
   margin-bottom: 1em;
   a {
     color: white;
+  }
+
+  :disabled {
+    background-color: ${(props) => props.theme.border};
   }
 `;
