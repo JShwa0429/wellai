@@ -1,12 +1,21 @@
+import { detailResponse } from 'api/common';
+import { CourseApi } from 'api/CourseApi';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Summary } from '.';
+
 const Banner = () => {
-  const data = {
-    id: '0',
-    title: '절대 빠진다, 하루 1시간! 복부 군살 제거 홈트',
-    duration: ['3주', '3주차', '60분'],
-    hashTags: ['#초중급', '#군살', '#다이어트'],
-  };
+  const [datas, setDatas] = useState<detailResponse[]>([]);
+  useEffect(() => {
+    const course = CourseApi();
+    course
+      .recommendCourse()
+      .then((res) => {
+        console.log(res.data);
+        setDatas(res.data);
+      })
+      .catch((err) => console.log(err.response));
+  }, []);
   return (
     <Div>
       <div className="banner">
@@ -14,6 +23,9 @@ const Banner = () => {
           {`“차차”`}님을 위한
           <br /> 오늘의 코스
         </p>
+        <Link to={`../course/${datas[0]?.id}`}>
+          <Button>오늘의 추천코스 확인하러 가기</Button>
+        </Link>
       </div>
       <div className="summary">
         <div className="image">
@@ -65,6 +77,12 @@ const Div = styled.div`
   }
 `;
 
+const Button = styled.button`
+  width: 10em;
+  height: 3em;
+  color: ${(props) => props.theme.sub};
+  background-color: ${(props) => props.theme.main};
+`;
 // const DivSummary = styled.div`
 //   font-size: 1.5em;
 //   display: flex;
