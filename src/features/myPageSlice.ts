@@ -5,12 +5,18 @@ export type SignUpState = {
   userId: string;
   nickname: string | undefined;
   isLoading: boolean;
+  token: string | undefined;
+};
+export type Tokens = {
+  access: string;
+  refresh: string;
 };
 
 const initialState: SignUpState = {
   nickname: undefined,
   isLoading: false,
   userId: '',
+  token: undefined,
 };
 
 export const myPageSlice = createSlice({
@@ -26,8 +32,11 @@ export const myPageSlice = createSlice({
     isLoadingChange: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    tokenChange: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+    },
   },
 });
 
-export const { emailChange, isLoadingChange, nicknameChange } = myPageSlice.actions;
+export const { emailChange, isLoadingChange, nicknameChange, tokenChange } = myPageSlice.actions;
 export default myPageSlice.reducer;

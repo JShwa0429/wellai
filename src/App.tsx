@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { shallowEqual } from 'react-redux';
+import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import {
   Page,
   AuthPage,
@@ -20,13 +22,17 @@ import {
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyle from 'styles/global-styles';
 import { AuthRoute, PublicRoute } from './routes';
+import * as myPageAction from 'features/myPageSlice';
 import './styles/antd.css';
 
 function App() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { token } = useAppSelector((state) => state.myPage, shallowEqual);
   let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
 
   const signout = () => {
     Cookies.remove('access');
@@ -34,10 +40,10 @@ function App() {
     navigate('/');
   };
 
-  axios.interceptors.request.use(function (config) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
-    return config;
-  });
+  // axios.interceptors.request.use(function (config) {
+  //   axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
+  //   return config;
+  // });
   axios.interceptors.response.use(
     (response) => {
       isAlreadyFetchingAccessToken = false;
@@ -67,8 +73,9 @@ function App() {
           });
           const { refresh, access } = res.data;
 
-          Cookies.set('access', access, { path: '/', expires: 0.0000578 });
+          Cookies.set('access', access, { path: '/', expires: 1 });
           Cookies.set('refresh', refresh, { path: '/', expires: 7 });
+          dispatch(myPageAction.tokenChange(access));
 
           originalRequest.headers['Authorization'] = access;
           axios.defaults.headers.common['Authorization'] = access;
