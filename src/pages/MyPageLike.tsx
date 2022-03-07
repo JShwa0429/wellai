@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Row, Col, Button, Input, Card } from 'antd';
 import { MyPageLayout } from 'components';
+import { HeartFilled } from '@ant-design/icons';
+
 const { Meta } = Card;
 
 const MyPageLike = () => {
@@ -44,9 +46,40 @@ const MyPageLike = () => {
                   <Card
                     hoverable
                     style={{ width: 240 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                    // cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
                   >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                    <Row
+                      style={{
+                        marginBottom: '20px',
+                      }}
+                    >
+                      <Col>
+                        <img style={{ width: '100%' }} src="/image/image6.png" alt="" />
+                      </Col>
+
+                      <HeartFilled
+                        style={{
+                          position: 'absolute',
+                          top: 15,
+                          right: 15,
+                          fontSize: '20px',
+                          color: '#ff7273',
+                        }}
+                      />
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Row>
+                          <Col>절대빠진다, 하루 1시간 복부 군살제거</Col>
+                        </Row>
+                        <Row>
+                          <Col>3주 / 주3회 / 60분</Col>
+                        </Row>
+                        <Row>
+                          <Col> #초중급 #군살 #다이어트</Col>
+                        </Row>
+                      </Col>
+                    </Row>
                   </Card>
                 </Col>
               </Row>
