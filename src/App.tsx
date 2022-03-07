@@ -108,10 +108,6 @@ function App() {
 
           <Route path="/search" element={<SearchPage />} />
           <Route path="/community" element={<p>커뮤니티 페이지</p>} />
-          <Route path="/mypage/report" element={<PublicRoute element={MyPageReport} />} />
-          <Route path="/mypage/like" element={<PublicRoute element={MyPageLike} />} />
-          <Route path="/mypage/comment" element={<PublicRoute element={MyPageComment} />} />
-          <Route path="/mypage/edit" element={<PublicRoute element={MyPageEdit} />} />
         </Route>
 
         <Route path="/signup" element={<SignUpPage />} />
@@ -123,7 +119,6 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
         <Route path="/exercise/:id" element={<ExercisePage />} />
-        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/private" element={<AuthRoute element={AuthPage} />} />
         <Route path="/test" element={<PublicRoute element={TestPage} />} />
       </Routes>
