@@ -3,10 +3,10 @@ import type * as Api from './common';
 
 interface requestApiOptions {
   readonly course: AxiosInstance;
-  readonly recommendCourse: () => AxiosPromise<Api.detailResponse>;
+  readonly recommendCourse: () => AxiosPromise<Api.detailResponse[]>;
   readonly getCourse: () => AxiosPromise<Api.courseList>;
   readonly getDetailInformation: (id: string | undefined) => AxiosPromise<Api.detailResponse>;
-  readonly getReview: (id: string | undefined) => AxiosPromise<Api.reviewReponse>;
+  readonly getReview: (id: string) => AxiosPromise<Api.reviewReponse>;
   postReview: (id: string | undefined, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
   putReview: (id: string, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
   readonly deleteReview: (id: string) => AxiosPromise<void>;
@@ -25,7 +25,7 @@ export const CourseApi = (): requestApiOptions => {
   return {
     course,
     getCourse: () => course.get(`/list`),
-    recommendCourse: () => course.get(`/recommend`),
+    recommendCourse: () => course.get(`/recommendation`),
     getDetailInformation: (id) => course.get(`/${id}`),
     getReview: (id) => course.get(`/${id}/review`),
     postReview: (id, reviewData) =>
