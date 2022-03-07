@@ -12,7 +12,7 @@ interface requestApiOptions {
   readonly deleteReview: (id: string) => AxiosPromise<void>;
   readonly getExercise: (id: string) => AxiosPromise<Api.exercise>;
   postBookmark: (id: string) => AxiosPromise<Api.review>;
-  deleteBookmark: (id: string) => void;
+  deleteBookmark: (id: string) => AxiosPromise<void>;
 }
 
 export const CourseApi = (): requestApiOptions => {
@@ -45,6 +45,6 @@ export const CourseApi = (): requestApiOptions => {
       course.post(`/bookmark`, {
         course_id: id,
       }),
-    deleteBookmark: (id) => course.delete(`/bookmark/${id}`),
+    deleteBookmark: (id) => course.delete(`/${id}/bookmark`),
   };
 };

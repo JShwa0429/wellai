@@ -1,5 +1,5 @@
 import { CourseApi } from 'api/CourseApi';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export type SummaryProps = {
@@ -15,10 +15,18 @@ const Summary: React.FunctionComponent<SummaryProps> = ({ title, duration, hashT
     event.stopPropagation();
     event.preventDefault();
     const course = CourseApi();
-    if (toggle) course.deleteBookmark(id ?? '0');
-    else if (!toggle) course.postBookmark(id ?? '0').catch((err) => console.log(err.response));
-    setToggle((current) => !current);
+    if (toggle) {
+      course.deleteBookmark(id as string);
+      setToggle(false);
+    } else if (!toggle) {
+      course.postBookmark(id as string).catch((err) => console.log(err.response));
+      setToggle(true);
+    }
   };
+
+  useEffect(() => {
+    console.log(toggle);
+  }, [toggle]);
   return (
     <>
       <div className="image">

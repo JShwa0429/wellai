@@ -44,6 +44,7 @@ export interface detailResponse {
   core_count: number;
   arm_count: number;
   recline_count: number;
+  is_bookmarked: boolean;
 }
 
 export interface reviewReponse {

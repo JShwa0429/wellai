@@ -2,17 +2,28 @@ import { detailResponse } from 'api/common';
 import { CourseApi } from 'api/CourseApi';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-const SummaryTemp: React.FunctionComponent<detailResponse> = ({ id, course_name, img_url, hash_tag }) => {
-  const [toggle, setToggle] = useState<boolean>(false);
+const SummaryTemp: React.FunctionComponent<detailResponse> = ({
+  id,
+  course_name,
+  img_url,
+  hash_tag,
+  is_bookmarked,
+}) => {
+  const [toggle, setToggle] = useState<boolean>(is_bookmarked);
   const handleBookmark = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     event.preventDefault();
     const course = CourseApi();
-    if (toggle) course.deleteBookmark(id);
-    else if (!toggle) {
-      course.postBookmark(id).then((res) => {
-        if (res.status !== 400) setToggle((current) => !current);
-      });
+    if (toggle) {
+      course
+        .deleteBookmark(id as string)
+        .then(() => setToggle(false))
+        .catch(() => alert('북마크 삭제가 실패했습니다.'));
+    } else if (!toggle) {
+      course
+        .postBookmark(id as string)
+        .then((res) => (res.status === 400 ? alert('이미 북마크된 코스입니다.') : setToggle(true)))
+        .catch((err) => console.log(err.response));
     }
   };
   return (
@@ -34,7 +45,7 @@ const SummaryTemp: React.FunctionComponent<detailResponse> = ({ id, course_name,
       */}
         <div className="hashTag">
           {hash_tag.map((tag: { tag_name: string }, idx: number) => (
-            <span key={`tag` + idx}>#{tag.tag_name}</span>
+            <span key={`tag` + idx}> #{tag.tag_name}</span>
           ))}
         </div>
       </div>
