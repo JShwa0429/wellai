@@ -52,7 +52,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
 export default Comment;
 
 const Div = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 1em 0;
 `;
 
