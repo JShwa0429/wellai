@@ -1,4 +1,4 @@
-import { ApiFilled } from '@ant-design/icons';
+import { SmileTwoTone } from '@ant-design/icons';
 import { CourseApi } from 'api/CourseApi';
 import { Comment, ReviewDiv, CourseExplain } from 'components';
 import { ReviewProps } from 'components/course/Review';
@@ -66,19 +66,33 @@ const CourseDetailPage = () => {
       <CourseExplain />
       <div className="explain-below">
         <div className="explain">
-          {data?.description.split('/n').map((line, i) => {
-            return (
-              <span key={i}>
-                {line}
-                <br />
-                <br />
-              </span>
-            );
-          })}
+          <div className="hr-exp">
+            <h1>커리큘럼</h1>
+          </div>
+          <div className="content-exp">
+            {data?.description.split('/n').map((line, i) => {
+              const title = line.split(':')[0];
+              const content = line.split(':')[1];
+              return (
+                <>
+                  <h3 key={'h - ' + { i }}>
+                    <SmileTwoTone twoToneColor="#eb2f96" />
+                    &nbsp;
+                    {title}
+                  </h3>
+                  <span key={'k - ' + { i }}>
+                    {content}
+                    <br />
+                    <br />
+                  </span>
+                </>
+              );
+            })}
+          </div>
         </div>
         <div className="review-sect">
           <div className="hr-sect">
-            <h1>코스 후기</h1>
+            <h1>한줄평</h1>
           </div>
           <Comment onAdd={handleAddReview} />
           <DivOrdering>
@@ -117,9 +131,11 @@ const Div = styled.div`
     padding: 0 160px;
 
     .explain {
-      margin-top: 1em;
       width: 50%;
       padding-right: 20px;
+      .hr-exp h1{
+        margin-bottom: 25px;
+      }
     }
     .review-sect{
       width: 50%;
@@ -131,20 +147,20 @@ const Div = styled.div`
         align-items: center;
         color: rgba(0, 0, 0, 0.35);
         h1{
-          margin : 0 2em;
+          margin-bottom: 0;
         }
       }
-      .hr-sect::before,
-      .hr-sect::after {
-        content: '';
-        flex-grow: 1;
-        background: rgba(0, 0, 0, 0.35);
-        height: 1px;
-        font-size: 0px;
-        line-height: 0px;
-        margin: 0px 16px;
-      }
-    }
+    //   .hr-sect::before,
+    //   .hr-sect::after {
+    //     content: '';
+    //     flex-grow: 1;
+    //     background: rgba(0, 0, 0, 0.35);
+    //     height: 1px;
+    //     font-size: 0px;
+    //     line-height: 0px;
+    //     margin: 0px 16px;
+    //   }
+    // }
   }
 
 `;
