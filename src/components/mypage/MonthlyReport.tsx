@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Row, Col, DatePicker, Radio } from 'antd';
+import { Row, Col, Radio, Statistic } from 'antd';
+import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import moment, { Moment } from 'moment';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
@@ -20,7 +21,6 @@ const MonthlyReport = () => {
   }, []);
 
   const getYearlyReport = async () => {
-    // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
     const mypage = MyPageApi();
     mypage
       .getRecordsYear()
@@ -66,28 +66,28 @@ const MonthlyReport = () => {
     return arr;
   }, [category, yearlyRecord]);
 
-  // 그래프 옵션
   const yearlyOptions: ApexOptions = {
     chart: {
       width: '100%',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
+      toolbar: {
+        show: false,
+      },
     },
     stroke: {
       width: 4,
       curve: 'smooth',
     },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'dark',
-        gradientToColors: ['#fdd835'],
-        shadeIntensity: 1,
-        type: 'horizontal',
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [0, 100, 100, 100],
-      },
+    markers: {
+      size: 1,
     },
-
     xaxis: {
       categories: category,
       tickAmount: 12,
@@ -126,56 +126,19 @@ const MonthlyReport = () => {
     },
     colors: ['#ff7273'],
   };
-  // 들어갈 데이터 값
   const yearlySeries = [
     {
       name: !type ? '운동시간' : '칼로리',
-      // data: !type ? YearlyRecordTime : YearlyRecordCalories,
       data: !type ? MonthlyRecordCalories : MonthlyRecordTime,
     },
   ];
 
-  // const category = useMemo(() => {
-  //   const month = new Date(date.year, date.month, 0).getDate();
-  //   let arr: number[] = [];
-  //   for (let i = 1; i <= month; i++) {
-  //     arr = arr.concat(i);
-  //   }
-  //   return arr;
-  // }, [date]);
-
-  // const YearlyRecordTime = useMemo(() => {
-  //   let count = 0;
-  //   let arr: number[] = [];
-  //   for (let i = 1; i <= category.length; i++) {
-  //     if (yearlyRecord[count]?.day === i) {
-  //       arr = arr.concat(yearlyRecord[count].exercise_duration ?? 0);
-  //       count += 1;
-  //     } else {
-  //       arr = arr.concat(1);
-  //     }
-  //   }
-  //   return arr;
-  // }, [category, yearlyRecord]);
-
-  // const YearlyRecordCalories = useMemo(() => {
-  //   let count = 0;
-  //   let arr: number[] = [];
-  //   for (let i = 1; i <= category.length; i++) {
-  //     if (yearlyRecord[count]?.day === i) {
-  //       arr = arr.concat(yearlyRecord[count].calories_total ?? 0);
-  //       count += 1;
-  //     } else {
-  //       arr = arr.concat(1);
-  //     }
-  //   }
-  //   return arr;
-  // }, [category, yearlyRecord]);
   return (
     <Wrapper>
       <Row
         style={{
-          marginBottom: '20px',
+          marginTop: '10px',
+          marginBottom: '5px',
           fontSize: '20px',
         }}
       >
@@ -185,10 +148,21 @@ const MonthlyReport = () => {
         style={{
           backgroundColor: 'rgb(247, 247, 247)',
           padding: '10px 30px',
-          height: '250px',
+          height: '260px',
         }}
       >
-        <Col span={5}>이만큼?!</Col>
+        <Col span={4}>
+          <Col style={{ marginTop: '50px' }}>
+            <Statistic
+              title="운동시간(분)"
+              value={yearlyRecord?.year_exercise_duration}
+              prefix={<ClockCircleOutlined />}
+            />
+          </Col>
+          <Col style={{ marginTop: '15px' }}>
+            <Statistic title="칼로리" value={yearlyRecord?.year_calories} prefix={<DashboardOutlined />} />
+          </Col>
+        </Col>
         <Col span={19}>
           <Row justify="center">
             <Row
@@ -200,7 +174,7 @@ const MonthlyReport = () => {
               <Radio.Group
                 buttonStyle="solid"
                 // defaultValue="0"
-                size="large"
+                size="middle"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
@@ -212,7 +186,7 @@ const MonthlyReport = () => {
               </Radio.Group>
             </Row>
             <Col>
-              <ReactApexChart options={yearlyOptions} series={yearlySeries} type="line" width={750} height={200} />
+              <ReactApexChart options={yearlyOptions} series={yearlySeries} type="line" width={750} height={180} />
             </Col>
           </Row>
         </Col>

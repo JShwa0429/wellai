@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Row, Col, Button, Radio, DatePicker } from 'antd';
+import { Row, Col, Statistic, Radio, DatePicker } from 'antd';
+import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
@@ -36,7 +37,6 @@ const WeeklyReport = () => {
   }, [date]);
 
   const getMonthlyReport = async () => {
-    // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
     const mypage = MyPageApi();
     mypage
       .getRecordsMonth(date.month, date.year)
@@ -46,10 +46,6 @@ const WeeklyReport = () => {
       })
       .catch((err) => console.log(err.response));
   };
-
-  // useEffect(() => {
-  //   console.log(monthlyRecord);
-  // }, [monthlyRecord]);
 
   const DailyRecordTime = useMemo(() => {
     let count = 0;
@@ -129,23 +125,36 @@ const WeeklyReport = () => {
     <Wrapper>
       <Row
         style={{
-          marginBottom: '20px',
+          marginTop: '10px',
+          marginBottom: '5px',
           fontSize: '20px',
         }}
       >
-        <Col>{date.month}월 리포트</Col>
+        <Col>{date.month}월 운동 기록</Col>
       </Row>
-      <Row>
-        <Col
-          span={24}
-          style={{
-            backgroundColor: 'rgb(247, 247, 247)',
-            padding: '20px 30px',
-          }}
-        >
-          <Row>
+      <Row
+        style={{
+          backgroundColor: 'rgb(247, 247, 247)',
+          padding: '10px 30px',
+          height: '300px',
+        }}
+      >
+        <Col span={4}>
+          <Col style={{ marginTop: '5px' }}>
             <DatePicker onChange={handleChange} picker="month" defaultValue={moment()} />
-          </Row>
+          </Col>
+          <Col style={{ marginTop: '50px' }}>
+            <Statistic
+              title="운동시간(분)"
+              value={monthlyRecord?.month_exercise_time}
+              prefix={<ClockCircleOutlined />}
+            />
+          </Col>
+          <Col style={{ marginTop: '15px' }}>
+            <Statistic title="칼로리" value={monthlyRecord?.month_calories} prefix={<DashboardOutlined />} />
+          </Col>
+        </Col>
+        <Col span={19}>
           <Row
             justify="space-around"
             style={{
@@ -155,20 +164,19 @@ const WeeklyReport = () => {
             <Radio.Group
               buttonStyle="solid"
               // defaultValue="0"
-              size="large"
+              size="middle"
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
               <Radio.Button style={{ marginRight: '50px' }} value={0}>
                 운동시간
               </Radio.Button>
-
               <Radio.Button value={1}>칼로리</Radio.Button>
             </Radio.Group>
           </Row>
           <Row justify="center">
             <Col>
-              <ReactApexChart options={options} series={series} type="bar" height={300} width={750} />
+              <ReactApexChart options={options} series={series} type="bar" width={750} height={200} />
             </Col>
           </Row>
         </Col>
