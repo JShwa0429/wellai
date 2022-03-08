@@ -2,7 +2,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Rate, Card } from 'antd';
-import { MyPageLayout } from 'components';
+import { MyPageLayout, ReviewDiv } from 'components';
+import { CourseApi } from 'api/CourseApi';
+import { reviewReponse } from 'api/common';
+import { ReviewProps } from 'components/course/Review';
 const { Meta } = Card;
 
 const MyPageComment = () => {
@@ -18,15 +21,26 @@ const MyPageComment = () => {
     },
   ]);
 
-  const getMyReview = async () => {
-    const result = await axios.get('/course/3/myreview');
-    console.log(result);
-    setReview(result.data);
-  };
+  const [reviewData, setReviewData] = useState<ReviewProps[]>([]);
   useEffect(() => {
-    getMyReview();
-    return;
+    const course = CourseApi();
+    course
+      .getUserReview()
+      .then((res) => setReviewData(res.data))
+      .catch((err) => console.log(err.reponse));
   }, []);
+
+  const handleRemoveReview = (id: string) => {
+    setReviewData((current) => {
+      const newReviewData = [];
+      for (let i = 0; i < current.length; i++) {
+        if (current[i].id === id) continue;
+        newReviewData.push(current[i]);
+      }
+      return newReviewData;
+    });
+  };
+
   return (
     <Wrapper>
       <Row
@@ -57,28 +71,9 @@ const MyPageComment = () => {
                   marginBottom: '30px',
                 }}
               >
-                <Col>차차님의 댓글</Col>
+                <Col>내 댓글</Col>
               </Row>
-              {review.map((item, index) => {
-                return (
-                  <Row key={item.id}>
-                    <Col span={24}>
-                      <Card hoverable style={{ borderRadius: '5px', width: '100%' }}>
-                        <Row align="middle">
-                          <Col>
-                            <Rate disabled defaultValue={2} style={{ color: '#ff7273' }} />
-                          </Col>
-                          <Col>{item.created_at}</Col>
-                        </Row>
-                        <Row>
-                          <Col>{'코스제목'}</Col>
-                          <Col>{item.content}</Col>
-                        </Row>
-                      </Card>
-                    </Col>
-                  </Row>
-                );
-              })}
+              <ReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
             </Col>
           </Row>
         </Col>
