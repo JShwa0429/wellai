@@ -10,8 +10,10 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
   const { id } = useParams();
   const [rateValue, setRateValue] = useState(3);
   const [textAreaValue, setTextAreaValue] = useState('');
+
   const handleCommentSubmit = () => {
     const course = CourseApi();
+
     course
       .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
       .then((res) => {
@@ -26,6 +28,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
         err.response.status === 400 ? alert('이미 이 코스에 대한 리뷰가 있습니다!') : console.log(err.response),
       );
   };
+
   return (
     <Div>
       <Rating
@@ -80,7 +83,7 @@ const TextArea = styled.textarea`
   width: 90%;
   border: 0.5px solid black;
   padding: 2%;
-
+  resize: none;
   ::placeholder {
     color: ${(props) => props.theme.border};
   }
@@ -92,6 +95,6 @@ const Button = styled.button`
 
   :disabled {
     background-color: ${(props) => props.theme.border};
-    border: 1px solid black;
+    border: 0.4px solid grey;
   }
 `;
