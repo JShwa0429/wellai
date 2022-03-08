@@ -26,11 +26,11 @@ const MyPageLike = () => {
   return (
     <Wrapper>
       <Row
+        justify="space-between"
         style={{
           width: '100%',
           minWidth: '1350px',
           maxWidth: '1600px',
-          margin: '0 auto',
         }}
       >
         <Col>
@@ -53,7 +53,7 @@ const MyPageLike = () => {
                   marginBottom: '30px',
                 }}
               >
-                <Col>좋아요 보관함</Col>
+                <Col style={{ fontSize: '20px' }}>좋아요 보관함</Col>
               </Row>
               <CardDiv>
                 {courseList
@@ -81,7 +81,7 @@ export default MyPageLike;
 const Wrapper = styled.div``;
 const CardDiv = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
+  grid-template-columns: repeat(3, 250px);
   gap: 2%;
   margin: auto;
   align-items: center;
