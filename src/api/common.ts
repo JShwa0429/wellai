@@ -105,7 +105,7 @@ export interface reportMonth {
     exercise_day: number;
     created_at: string;
     modified_at: string;
-    exercise_data: string;
+    exercise_date: string;
     exercise_week: number;
     exercise_duration: number;
     calories_total: number;

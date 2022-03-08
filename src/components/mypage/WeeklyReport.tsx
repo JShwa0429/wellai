@@ -62,7 +62,7 @@ const WeeklyReport = () => {
   ];
   return (
     <Wrapper>
-      <Row
+      {/* <Row
         style={{
           marginBottom: '20px',
           fontSize: '20px',
@@ -106,7 +106,7 @@ const WeeklyReport = () => {
             </Col>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
     </Wrapper>
   );
 };

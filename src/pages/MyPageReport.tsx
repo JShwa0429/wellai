@@ -38,12 +38,12 @@ const MyPageReport = () => {
               paddingTop: '60px',
             }}
           >
-            <Col>
+            <Row>
               <MonthlyReport />
-            </Col>
-            <Col>
+            </Row>
+            <Row>
               <WeeklyReport />
-            </Col>
+            </Row>
           </Row>
         </Col>
       </Row>
