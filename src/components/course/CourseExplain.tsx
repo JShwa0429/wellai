@@ -42,7 +42,7 @@ const CourseExplain: React.FunctionComponent = () => {
             <Rating allowHalf disabled value={data?.avg_rating} />
             {data?.avg_rating}
           </div>
-          <div className="explain">{data?.description}</div>
+          {/* <div className="explain">{data?.description}</div> */}
           <div className="start">
             <Link to={`/guide/${data?.id}`}>
               <Button
