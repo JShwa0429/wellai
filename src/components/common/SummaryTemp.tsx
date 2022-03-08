@@ -1,5 +1,6 @@
 import { detailResponse } from 'api/common';
 import { CourseApi } from 'api/CourseApi';
+import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 const SummaryTemp: React.FunctionComponent<detailResponse> = ({
@@ -29,10 +30,13 @@ const SummaryTemp: React.FunctionComponent<detailResponse> = ({
   return (
     <Div>
       <div className="image">
-        <button className="bookmark" onClick={handleBookmark}>
-          <img src={`${process.env.PUBLIC_URL}/image/${toggle ? 'heart_on.png' : 'heart_off.png'}`} alt="좋아요" />
-        </button>
-
+        {Cookies.get('refresh') ? (
+          <button className="bookmark" onClick={handleBookmark}>
+            <img src={`${process.env.PUBLIC_URL}/image/${toggle ? 'heart_on.png' : 'heart_off.png'}`} alt="좋아요" />
+          </button>
+        ) : (
+          ''
+        )}
         <img src={img_url} alt="요가" />
       </div>
       <div className="explain">

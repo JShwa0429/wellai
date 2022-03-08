@@ -1,5 +1,6 @@
 import { CourseApi } from 'api/CourseApi';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export type SummaryProps = {
@@ -30,10 +31,13 @@ const Summary: React.FunctionComponent<SummaryProps> = ({ title, duration, hashT
   return (
     <>
       <div className="image">
-        <button className="bookmark" onClick={handleBookmark}>
-          <img src={`${process.env.PUBLIC_URL}/image/${toggle ? 'heart_on.png' : 'heart_off.png'}`} alt="좋아요" />
-        </button>
-
+        {Cookies.get('access') ? (
+          <button className="bookmark" onClick={handleBookmark}>
+            <img src={`${process.env.PUBLIC_URL}/image/${toggle ? 'heart_on.png' : 'heart_off.png'}`} alt="좋아요" />
+          </button>
+        ) : (
+          '뭐지'
+        )}
         <img src={`${process.env.PUBLIC_URL}/image/yoga.svg`} alt="요가" />
       </div>
       <div className="explain">
