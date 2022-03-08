@@ -13,7 +13,7 @@ import { reportMonth } from 'api/common';
 //   nickname:string;
 //   month_exercise_time: number;
 //   month_calories: number;
-//   records : {  
+//   records : {
 //     id:string;
 //     exercise_day:number;
 //     created_at:string;
@@ -24,7 +24,6 @@ import { reportMonth } from 'api/common';
 //     calories_total:number;
 //   }[];
 // };
-
 
 const MonthlyReport = () => {
   const [record, setRecord] = useState<reportMonth>();

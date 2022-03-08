@@ -95,22 +95,23 @@ export interface reportYear {
   }[];
 }
 
+export interface record {
+  exercise_week: number;
+  exercise_day: number;
+  exercise_date: string;
+  year: number;
+  month: number;
+  day: number;
+  exercise_duration: number;
+  calories_total: number;
+}
 export interface reportMonth {
   id: string;
   email: string;
   nickname: string;
   month_exercise_time: number;
   month_calories: number;
-  records: {
-    id: number;
-    exercise_day: number;
-    created_at: string;
-    modified_at: string;
-    exercise_date: string;
-    exercise_week: number;
-    exercise_duration: number;
-    calories_total: number;
-  }[];
+  records: record[];
 }
 
 export interface bookmark {

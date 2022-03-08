@@ -10,13 +10,6 @@ import { reportYear } from 'api/common';
 const MonthlyReport = () => {
   const [yearlyRecord, setYearlyRecord] = useState<reportYear>();
   const [date, setDate] = useState({ month: Number(moment().format('MM')), year: Number(moment().format('YYYY')) });
-  const [type, setType] = useState('0');
-  const handleChange = async (value: Moment | null) => {
-    if (value?.format('MM') !== undefined) {
-      setDate({ month: Number(value?.format('MM')), year: Number(value?.format('YYYY')) });
-      getYearlyReport();
-    }
-  };
   const getYearlyReport = async () => {
     // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
     const mypage = MyPageApi();
@@ -36,6 +29,7 @@ const MonthlyReport = () => {
   useEffect(() => {
     console.log(yearlyRecord);
   }, [yearlyRecord]);
+
   const yearlyOptions = {
     chart: {
       id: 'basic-bar',
@@ -186,5 +180,5 @@ const MonthlyReport = () => {
 export default MonthlyReport;
 
 const Wrapper = styled.div`
-  width: 65vw;
+  width: 800px;
 `;
