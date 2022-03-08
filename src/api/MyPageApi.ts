@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
-import { Options } from 'type';
+import { OptionType } from 'type';
 import type * as Api from './common';
 
 interface requestApiOptions {
@@ -7,7 +7,7 @@ interface requestApiOptions {
   readonly getRecordsYear: () => AxiosPromise<Api.reportYear[]>;
   readonly getRecordsMonth: (month: number, year: number) => AxiosPromise<Api.reportMonth[]>;
   readonly getUserInformation: () => AxiosPromise<Api.userInformation>;
-  putUserInformation: (options: Options) => AxiosPromise<Api.options>;
+  putUserInformation: (options: OptionType) => AxiosPromise<Api.options>;
 }
 
 export const MyPageApi = (): requestApiOptions => {

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Row, Col, DatePicker } from 'antd';
-import moment, { Moment, MomentFormatSpecification } from 'moment';
+import moment, { Moment } from 'moment';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';

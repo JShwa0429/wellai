@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { saveOptions } from 'features/signupSlice';
-import { Options } from 'type';
+import { OptionType } from 'type';
 import { SignUpApi } from 'api';
 
 type Props = {
@@ -33,7 +33,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   const dispatch = useDispatch();
   const signUp = useSelector((state: RootState) => state.signUp);
   const handleSaveOption = () => {
-    const options: Options = {
+    const options: OptionType = {
       gender: gender,
       weight: weight,
       height: height,
