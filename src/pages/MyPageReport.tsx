@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Row, Col, Button, Input } from 'antd';
+import { Row, Col } from 'antd';
 import { MyPageLayout, MonthlyReport, WeeklyReport } from 'components';
 import { useEffect } from 'react';
 import { MyPageApi } from 'api/MyPageApi';

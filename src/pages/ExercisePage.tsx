@@ -1,10 +1,12 @@
 import { WebCam, Video, Description } from 'components';
 import styled from 'styled-components';
 import { IoIosExit } from 'react-icons/io';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
 import { CourseApi } from 'api/CourseApi';
 import { exercise } from 'api/common';
+import { Loading } from 'components/common';
+import { clearInterval } from 'timers';
 const ExcercisePage = () => {
   // const opts = {
   //   playerVars: {
@@ -17,6 +19,7 @@ const ExcercisePage = () => {
   const [exercises, setExercises] = useState<string[]>([]);
   const [exerciseNumber, setExerciseNumber] = useState<number>();
   const [exerciseData, setExerciseData] = useState<exercise>();
+  const [loading, setloading] = useState(true);
   const navigate = useNavigate();
   const course = CourseApi();
   useEffect(() => {
@@ -27,19 +30,24 @@ const ExcercisePage = () => {
         setExerciseNumber(0);
       })
       .catch((err) => console.log(err.response));
+    setloading(false);
   }, []);
 
   useEffect(() => {
-    course
-      .getExercise(exercises[exerciseNumber as number])
-      .then((res) => setExerciseData(res.data))
-      .catch((err) => console.log(err.response));
+    setTimeout(() => {
+      course
+        .getExercise(exercises[exerciseNumber as number])
+        .then((res) => setExerciseData(res.data))
+        .catch((err) => console.log(err.response));
+    }, 5000);
+    setTimeout(() => setloading(false), 5000);
   }, [exerciseNumber]);
 
   const handleNextExercise = () => {
     if (exerciseNumber === exercises.length - 1) {
       navigate(`../course/${id}`);
     } else {
+      setloading(true);
       setExerciseNumber((current) => (current as number) + 1);
     }
   };
@@ -61,6 +69,7 @@ const ExcercisePage = () => {
         <Video url={exerciseData?.youtube_key as string} />
         <WebCam />
       </VideoDiv>
+      {loading && <Loading />}
     </DivCourse>
   );
 };
