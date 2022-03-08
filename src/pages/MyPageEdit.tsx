@@ -11,7 +11,6 @@ import { Options } from 'type';
 const MyPageEdit = () => {
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
-  const [gender, setGender] = useState<string | null>(null);
   const [options, setOptions] = useState<Options>({
     gender: null,
     height: 0,
@@ -151,7 +150,7 @@ const MyPageEdit = () => {
                     >
                       <Button
                         size="large"
-                        onClick={() => setGender('M')}
+                        onClick={() => setOptions({ ...options, gender: 'M' })}
                         style={{
                           borderColor: `${options.gender === 'M' ? '#ff7273' : 'lightgray'}`,
                           backgroundColor: `${options.gender === 'M' ? '#ff7273' : 'white'}`,
@@ -165,7 +164,7 @@ const MyPageEdit = () => {
                       </Button>
                       <Button
                         size="large"
-                        onClick={() => setGender('F')}
+                        onClick={() => setOptions({ ...options, gender: 'F' })}
                         style={{
                           borderColor: `${options.gender === 'F' ? '#ff7273' : 'lightgray'}`,
                           backgroundColor: `${options.gender === 'F' ? '#ff7273' : 'white'}`,
