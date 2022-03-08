@@ -77,3 +77,37 @@ export interface exercise {
   exercise_level: string;
   description: string;
 }
+
+export interface reportYear {
+  id: string;
+  email: string;
+  nickname: string;
+  year_exercise_duration: number;
+  year_calories: number;
+  months_exercise_duration: {
+    month: number;
+    total: number;
+  }[];
+  months_calories: {
+    month: number;
+    total: number;
+  }[];
+}
+
+export interface reportMonth {
+  id: string;
+  email: string;
+  nickname: string;
+  month_exercise_time: number;
+  month_calories: number;
+  records: {
+    id: number;
+    exercise_day: number;
+    created_at: string;
+    modified_at: string;
+    exercise_data: string;
+    exercise_week: number;
+    exercise_duration: number;
+    calories_total: number;
+  }[];
+}

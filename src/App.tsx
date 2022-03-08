@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import { shallowEqual } from 'react-redux';
-import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import {
   Page,
   AuthPage,
@@ -21,17 +19,18 @@ import {
   MyPageComment,
 } from './pages';
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import GlobalStyle from 'styles/global-styles';
 import { AuthRoute, PublicRoute } from './routes';
 import * as myPageAction from 'features/myPageSlice';
 import './styles/antd.css';
+import { useAppDispatch } from 'hooks/useStoreHooks';
 
 function App() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.myPage, shallowEqual);
+  // const { token } = useAppSelector((state) => state.myPage, shallowEqual);
   let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;

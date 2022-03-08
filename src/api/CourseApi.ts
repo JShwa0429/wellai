@@ -19,9 +19,6 @@ interface requestApiOptions {
 
 export const CourseApi = (): requestApiOptions => {
   const course = axios.create({
-    // headers: {
-    //   Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ2ODE2ODUwLCJpYXQiOjE2NDY2MzY4NTAsImp0aSI6IjkxNzJjYzNiNmY2ZTQxZTY4MzAzODM0NDU1MzA4NzU5IiwidXNlcl9pZCI6M30.HMbLH7BWpuhrP_rNj0OuAov940a8axW1F5wFUWrlsOg`,
-    // },
     baseURL: '/api/course',
   });
   return {
@@ -32,7 +29,7 @@ export const CourseApi = (): requestApiOptions => {
       course.get(`/list`, {
         params: { search: search },
       }),
-    getDetailInformation: (id) => course.get(`/${id}`),
+    getDetailInformation: (id) => axios.get(`/course/${id}`),
     getReview: (id) => course.get(`/${id}/review`),
     getReviewOrdering: (id, ordering) =>
       course.get(`/${id}/review`, {

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const BASE_URL = 'http://localhost:3000';
-const DOMAIN = 'http://localhost:8030';
+const BASE_URL = 'http://127.0.0.1:3000';
+const DOMAIN = 'http://127.0.0.1:8030';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = `http://localhost:3000`;
+axios.defaults.baseURL = `http://127.0.0.1:3000`;
 
 const req = (
   method,

@@ -4,22 +4,19 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CourseApi } from 'api/CourseApi';
 import { detailResponse } from 'api/common';
-type Props = {
-  id: string | undefined;
-  title: string;
-  rate: number;
-  explain: string;
-};
+import Cookies from 'js-cookie';
+import { Button } from 'antd';
+import { PlayCircleOutlined } from '@ant-design/icons';
+
+// type Props = {
+//   id: string | undefined;
+//   title: string;
+//   rate: number;
+//   explain: string;
+// };
 
 const CourseExplain: React.FunctionComponent = () => {
   const { id } = useParams();
-  // const data: Props = {
-  //   id: id,
-  //   title: '절대빠진다, 하루 1시간! 복부 군살 제거 홈트',
-  //   rate: 4.5,
-  //   explain:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi viverra sem sit amet rhoncus pretium. Curabitur sit amet interdum risus, at feugiat tortor. Class aptent taciti ',
-  // };
   const [data, setData] = useState<detailResponse | null>(null);
 
   useEffect(() => {
@@ -32,6 +29,7 @@ const CourseExplain: React.FunctionComponent = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
   return (
     <DivCourseDetail>
       <DivBanner>
@@ -45,11 +43,26 @@ const CourseExplain: React.FunctionComponent = () => {
             {data?.avg_rating}
           </div>
           <div className="explain">{data?.description}</div>
+          <div className="start">
+            <Link to={`/guide/${data?.id}`}>
+              <Button
+                disabled={Cookies.get('refresh') ? false : true}
+                type="primary"
+                shape="round"
+                icon={<PlayCircleOutlined />}
+                style={{
+                  marginTop: '1em',
+                  width: 'max-content',
+                  height: '50px',
+                  fontSize: '20px',
+                }}
+              >
+                수업 시작하기
+              </Button>
+            </Link>
+          </div>
         </Explain>
       </DivBanner>
-      <Link to={`/guide/${data?.id}`}>
-        <Button>수업 시작하기</Button>
-      </Link>
     </DivCourseDetail>
   );
 };
@@ -58,27 +71,31 @@ export default CourseExplain;
 
 const DivCourseDetail = styled.div`
   width: 100vw;
-  background: linear-gradient(to right, rgba(255, 114, 114, 0.3), rgba(255, 114, 114, 0.1));
+  // background: linear-gradient(to right, rgba(255, 114, 114, 0.3), rgba(255, 114, 114, 0.1));
+
+  background: #fbeaeb;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 const DivBanner = styled.div`
-  height: 50vh;
+  height: 30vh;
   margin: 2em 0;
   display: flex;
+  width: 100vw;
   .image {
     width: 50%;
     display: flex;
-
-    justify-content: center;
+    justify-content: right;
     align-items: center;
+    overflow: hidden;
   }
 
   img {
-    margin-left: 10vw;
-    height: 70%;
+    margin-right: 10%;
+    height: 100%;
+    border-radius: 8px;
   }
 `;
 const Explain = styled.div`
@@ -98,16 +115,20 @@ const Explain = styled.div`
   }
 `;
 
-const Button = styled.button`
-  border-radius: 64px;
-  width: 10em;
-  height: 3em;
-  font-size: 1.5em;
-  color: white;
-  background-color: ${(props) => props.theme.main};
-  margin-top: auto;
-  margin-bottom: 1em;
-  a {
-    color: white;
-  }
-`;
+// const Button = styled.button`
+//   border-radius: 64px;
+//   width: 10em;
+//   height: 3em;
+//   font-size: 1.5em;
+//   color: white;
+//   background-color: ${(props) => props.theme.main};
+//   margin-top: auto;
+//   margin-bottom: 1em;
+//   a {
+//     color: white;
+//   }
+
+//   :disabled {
+//     background-color: ${(props) => props.theme.border};
+//   }
+// `;
