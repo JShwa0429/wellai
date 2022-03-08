@@ -11,6 +11,7 @@ import { Options } from 'type';
 const MyPageEdit = () => {
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
+  const [gender, setGender] = useState<string | null>(null);
   const [options, setOptions] = useState<Options>({
     gender: null,
     height: 0,
@@ -31,10 +32,11 @@ const MyPageEdit = () => {
         console.log(res);
         const data = res.data;
         const options = data.options;
+        setUser({ email: data.email, nickname: data.nickname });
         setOptions({
           gender: options.gender,
-          weight: options.weight ?? 0,
           height: options.height ?? 0,
+          weight: options.weight ?? 0,
           is_core: options.is_core,
           is_leg: options.is_leg,
           is_back: options.is_back,
@@ -47,17 +49,6 @@ const MyPageEdit = () => {
   }, []);
 
   const handleEditUserInformation = () => {
-    // const data: Options = {
-    //   gender: gender,
-    //   height: body.height,
-    //   weight: body.weight,
-    //   is_back: option.is_back,
-    //   is_core: option.is_core,
-    //   is_balance: option.is_balance,
-    //   is_leg: option.is_leg,
-    //   is_sit: option.is_sit,
-    //   is_stand: option.is_stand,
-    // };
     mypage
       .putUserInformation(options)
       .then((res) => console.log(res))
@@ -160,7 +151,7 @@ const MyPageEdit = () => {
                     >
                       <Button
                         size="large"
-                        onClick={() => setOptions({ ...options, gender: 'M' })}
+                        onClick={() => setGender('M')}
                         style={{
                           borderColor: `${options.gender === 'M' ? '#ff7273' : 'lightgray'}`,
                           backgroundColor: `${options.gender === 'M' ? '#ff7273' : 'white'}`,
@@ -174,7 +165,7 @@ const MyPageEdit = () => {
                       </Button>
                       <Button
                         size="large"
-                        onClick={() => setOptions({ ...options, gender: 'F' })}
+                        onClick={() => setGender('F')}
                         style={{
                           borderColor: `${options.gender === 'F' ? '#ff7273' : 'lightgray'}`,
                           backgroundColor: `${options.gender === 'F' ? '#ff7273' : 'white'}`,
