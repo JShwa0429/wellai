@@ -20,7 +20,7 @@ const DivSignUpHeader = styled.div`
   z-index: 99;
   display: flex;
   justify-content: left;
-  padding-left: 5em;
+  padding: 10px 60px;
 
   a {
     text-decoration: none;
