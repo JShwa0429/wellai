@@ -351,7 +351,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        disabled={options.is_sit ? false : disabled}
+                        disabled={options.is_balance ? false : disabled}
                         onClick={() => setOptions({ ...options, is_balance: !options.is_balance })}
                         style={{
                           backgroundColor: `${options.is_balance === true ? '#ff7273' : 'white'}`,
@@ -361,7 +361,7 @@ const MyPageEdit = () => {
                           borderRadius: '5px',
                         }}
                       >
-                        앉아서
+                        밸런스
                       </Button>
                     </Col>
                   </Row>
