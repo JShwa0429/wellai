@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { CourseApi } from 'api/CourseApi';
 import { detailResponse } from 'api/common';
 import Cookies from 'js-cookie';
-import { Button } from 'antd';
+import { Button, Tag, Space } from 'antd';
 import { PlayCircleOutlined } from '@ant-design/icons';
 
 // type Props = {
@@ -37,12 +37,16 @@ const CourseExplain: React.FunctionComponent = () => {
           <img src={data?.img_url} alt="요가" />
         </div>
         <Explain>
+          <Space>
+            <Tag color="cyan">{data?.hash_tag[0]['tag_name']}</Tag>
+            <Tag color="orange">{data?.hash_tag[1]['tag_name']}</Tag>
+            <Tag color="purple">{data?.hash_tag[2]['tag_name']}</Tag>
+          </Space>
           <h1>{data?.course_name}</h1>
           <div className="rate">
             <Rating allowHalf disabled value={data?.avg_rating} />
             {data?.avg_rating}
           </div>
-          {/* <div className="explain">{data?.description}</div> */}
           <div className="start">
             <Link to={`/guide/${data?.id}`}>
               <Button
@@ -93,25 +97,21 @@ const DivBanner = styled.div`
   }
 
   img {
-    margin-right: 10%;
+    margin-right: 5%;
     height: 100%;
     border-radius: 8px;
   }
 `;
 const Explain = styled.div`
   width: 30%;
-  margin: 1em 10vw;
+  margin: 0 0 1em 20px;
   display: flex;
   flex-direction: column;
-  padding: 2em 2em;
+  padding: 2em 0;
 
   h1 {
-    margin: 10% 0 0 0;
-    color: ${(props) => props.theme.main};
-  }
-
-  .explain {
-    margin-top: 2em;
+    color: ${(props) => props.theme.defaultText};
+    margin: 0.5em 0 0.5em 0;
   }
 `;
 

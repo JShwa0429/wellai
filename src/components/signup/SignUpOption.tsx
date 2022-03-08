@@ -5,6 +5,7 @@ import { RootState } from 'store';
 import { saveOptions } from 'features/signupSlice';
 import { OptionType } from 'type';
 import { SignUpApi } from 'api';
+import { message } from 'antd';
 
 type Props = {
   pageNumber: number;
@@ -70,11 +71,11 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
       .signUpAccount(signUp)
       .then((res) => {
         if (res.status === 201) handleNextPage();
-        else alert('회원가입 실패');
+        else message.info('회원가입 실패');
       })
       .catch((err) => {
         console.log(err);
-        alert('회원가입 실패');
+        message.info('회원가입 실패');
       });
     //handleNextPage();
   };

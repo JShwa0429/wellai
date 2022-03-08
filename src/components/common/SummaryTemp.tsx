@@ -3,6 +3,8 @@ import { CourseApi } from 'api/CourseApi';
 import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { message } from 'antd';
+
 const SummaryTemp: React.FunctionComponent<detailResponse> = ({
   id,
   course_name,
@@ -19,12 +21,14 @@ const SummaryTemp: React.FunctionComponent<detailResponse> = ({
       course
         .deleteBookmark(id as string)
         .then(() => setToggle(false))
-        .catch(() => alert('북마크 삭제가 실패했습니다.'));
+        .catch(() => message.info('북마크 삭제가 실패했습니다.'));
     } else if (!toggle) {
       course
         .postBookmark(id as string)
         .then(() => setToggle(true))
-        .catch((err) => (err.response.status === 400 ? alert('이미 북마크된 코스입니다.') : console.log(err.response)));
+        .catch((err) =>
+          err.response.status === 400 ? message.info('이미 북마크된 코스입니다.') : console.log(err.response),
+        );
     }
   };
   return (
