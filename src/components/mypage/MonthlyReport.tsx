@@ -32,6 +32,10 @@ const MonthlyReport = () => {
       .catch((err) => console.log(err.response));
   };
 
+  useEffect(() => {
+    getMonthlyReport();
+  }, []);
+
   const options = {
     chart: {
       id: 'basic-bar',
@@ -89,9 +93,6 @@ const MonthlyReport = () => {
       data: [record.month_exercise_time, record.month_calories],
     },
   ];
-  useEffect(() => {
-    getMonthlyReport();
-  }, []);
 
   return (
     <Wrapper>

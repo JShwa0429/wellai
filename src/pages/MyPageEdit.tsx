@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Input, Card, Divider, Form, Radio } from 'antd';
 import { MyPageLayout } from 'components';
-const { Meta } = Card;
-// import { shallowEqual } from 'react-redux';
+
 import styled from 'styled-components';
 import { MyPageApi } from 'api/MyPageApi';
 import { Options } from 'type';
@@ -12,9 +11,10 @@ import { Options } from 'type';
 const MyPageEdit = () => {
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
-  const [gender, setGender] = useState<string | null>(null);
-  const [body, setBody] = useState({ height: 0, weight: 0 });
-  const [like, setLike] = useState({
+  const [options, setOptions] = useState<Options>({
+    gender: null,
+    height: 0,
+    weight: 0,
     is_core: false,
     is_leg: false,
     is_back: false,
@@ -31,10 +31,10 @@ const MyPageEdit = () => {
         console.log(res);
         const data = res.data;
         const options = data.options;
-        setGender(data.options.gender);
-        setUser({ email: data.email, nickname: data.nickname });
-        setBody({ height: options.height ?? 0, weight: options.weight ?? 0 });
-        setLike({
+        setOptions({
+          gender: options.gender,
+          weight: options.weight ?? 0,
+          height: options.height ?? 0,
           is_core: options.is_core,
           is_leg: options.is_leg,
           is_back: options.is_back,
@@ -47,17 +47,17 @@ const MyPageEdit = () => {
   }, []);
 
   const handleEditUserInformation = () => {
-    const options: Options = {
-      gender: gender,
-      height: body.height,
-      weight: body.weight,
-      is_back: like.is_back,
-      is_core: like.is_core,
-      is_balance: like.is_balance,
-      is_leg: like.is_leg,
-      is_sit: like.is_sit,
-      is_stand: like.is_stand,
-    };
+    // const data: Options = {
+    //   gender: gender,
+    //   height: body.height,
+    //   weight: body.weight,
+    //   is_back: option.is_back,
+    //   is_core: option.is_core,
+    //   is_balance: option.is_balance,
+    //   is_leg: option.is_leg,
+    //   is_sit: option.is_sit,
+    //   is_stand: option.is_stand,
+    // };
     mypage
       .putUserInformation(options)
       .then((res) => console.log(res))
@@ -160,11 +160,11 @@ const MyPageEdit = () => {
                     >
                       <Button
                         size="large"
-                        onClick={() => setGender('M')}
+                        onClick={() => setOptions({ ...options, gender: 'M' })}
                         style={{
-                          borderColor: `${gender === 'M' ? '#ff7273' : 'lightgray'}`,
-                          backgroundColor: `${gender === 'M' ? '#ff7273' : 'white'}`,
-                          color: `${gender === 'M' ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.gender === 'M' ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.gender === 'M' ? '#ff7273' : 'white'}`,
+                          color: `${options.gender === 'M' ? 'white' : 'lightgray'}`,
                           width: '130px',
                           borderRadius: '5px',
                           marginRight: '80px',
@@ -174,11 +174,11 @@ const MyPageEdit = () => {
                       </Button>
                       <Button
                         size="large"
-                        onClick={() => setGender('F')}
+                        onClick={() => setOptions({ ...options, gender: 'F' })}
                         style={{
-                          borderColor: `${gender === 'F' ? '#ff7273' : 'lightgray'}`,
-                          backgroundColor: `${gender === 'F' ? '#ff7273' : 'white'}`,
-                          color: `${gender === 'F' ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.gender === 'F' ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.gender === 'F' ? '#ff7273' : 'white'}`,
+                          color: `${options.gender === 'F' ? 'white' : 'lightgray'}`,
                           width: '130px',
                           borderRadius: '5px',
                         }}
@@ -213,17 +213,14 @@ const MyPageEdit = () => {
                     >
                       <Input
                         size="large"
-                        value={body.height}
-                        onChange={
-                          (e) => {
-                            const { value } = e.target;
-                            const reg = /^-?\d*(\.\d*)?$/;
-                            if (reg.test(value) || value === '' || value === '-') {
-                              setBody({ ...body, height: Number(e.target.value) });
-                            }
+                        value={options.height}
+                        onChange={(e) => {
+                          const { value } = e.target;
+                          const reg = /^-?\d*(\.\d*)?$/;
+                          if (reg.test(value) || value === '' || value === '-') {
+                            setOptions({ ...options, height: Number(e.target.value) });
                           }
-                          // setBody({ ...body, height: Number(e.target.value) })
-                        }
+                        }}
                         suffix={'cm'}
                         style={{
                           borderRadius: '5px',
@@ -237,12 +234,12 @@ const MyPageEdit = () => {
                     >
                       <Input
                         size="large"
-                        value={body.weight}
+                        value={options.weight}
                         onChange={(e) => {
                           const { value } = e.target;
                           const reg = /^-?\d*(\.\d*)?$/;
                           if (reg.test(value) || value === '' || value === '-') {
-                            setBody({ ...body, weight: Number(e.target.value) });
+                            setOptions({ ...options, weight: Number(e.target.value) });
                           }
                         }}
                         suffix={'kg'}
@@ -272,11 +269,11 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        onClick={() => setLike({ ...like, is_core: !like.is_core })}
+                        onClick={() => setOptions({ ...options, is_core: !options.is_core })}
                         style={{
-                          backgroundColor: `${like.is_core === true ? '#ff7273' : 'white'}`,
-                          color: `${like.is_core === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${like.is_core === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_core === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_core === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_core === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
@@ -287,11 +284,11 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        onClick={() => setLike({ ...like, is_leg: !like.is_leg })}
+                        onClick={() => setOptions({ ...options, is_leg: !options.is_leg })}
                         style={{
-                          backgroundColor: `${like.is_leg === true ? '#ff7273' : 'white'}`,
-                          color: `${like.is_leg === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${like.is_leg === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_leg === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_leg === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_leg === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
@@ -302,11 +299,11 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        onClick={() => setLike({ ...like, is_back: !like.is_back })}
+                        onClick={() => setOptions({ ...options, is_back: !options.is_back })}
                         style={{
-                          backgroundColor: `${like.is_back === true ? '#ff7273' : 'white'}`,
-                          color: `${like.is_back === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${like.is_back === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_back === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_back === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_back === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
@@ -319,11 +316,11 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        onClick={() => setLike({ ...like, is_stand: !like.is_stand })}
+                        onClick={() => setOptions({ ...options, is_stand: !options.is_stand })}
                         style={{
-                          backgroundColor: `${like.is_stand === true ? '#ff7273' : 'white'}`,
-                          color: `${like.is_stand === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${like.is_stand === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_stand === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_stand === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_stand === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
@@ -334,11 +331,11 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        onClick={() => setLike({ ...like, is_sit: !like.is_sit })}
+                        onClick={() => setOptions({ ...options, is_sit: !options.is_sit })}
                         style={{
-                          backgroundColor: `${like.is_sit === true ? '#ff7273' : 'white'}`,
-                          color: `${like.is_sit === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${like.is_sit === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_sit === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_sit === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_sit === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
@@ -349,11 +346,11 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        onClick={() => setLike({ ...like, is_balance: !like.is_balance })}
+                        onClick={() => setOptions({ ...options, is_balance: !options.is_balance })}
                         style={{
-                          backgroundColor: `${like.is_balance === true ? '#ff7273' : 'white'}`,
-                          color: `${like.is_balance === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${like.is_balance === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_balance === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_balance === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_balance === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}

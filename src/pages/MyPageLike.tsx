@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import { MyPageLayout } from 'components';
@@ -8,6 +10,8 @@ import { bookmark, detailResponse } from 'api/common';
 import { CourseApi } from 'api/CourseApi';
 
 const MyPageLike = () => {
+  // const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
+  const [courseList, setCourseList] = useState([]);
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
 
