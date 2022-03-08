@@ -44,7 +44,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void
           value={textAreaValue}
           maxLength={150}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => setTextAreaValue(event.target.value)}
-          placeholder="코스 후기를 입력해주세요."
+          placeholder="수강 후기를 남겨 주세요."
         />
         <Button
           type="button"
@@ -72,7 +72,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 8em;
+  height: 6em;
 `;
 
 export const Rating = styled(Rate)`

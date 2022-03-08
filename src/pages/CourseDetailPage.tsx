@@ -1,12 +1,16 @@
+import { SmileTwoTone } from '@ant-design/icons';
 import { CourseApi } from 'api/CourseApi';
 import { Comment, ReviewDiv, CourseExplain } from 'components';
 import { ReviewType } from 'type';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { detailResponse } from 'api/common';
+
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [reviewData, setReviewData] = useState<ReviewType[]>([]);
+  const [data, setData] = useState<detailResponse | null>(null);
 
   useEffect(() => {
     const course = CourseApi();
@@ -52,8 +56,53 @@ const CourseDetailPage = () => {
   return (
     <Div>
       <CourseExplain />
-      <div className="hr-sect">
-        <h1>코스 후기</h1>
+      <div className="explain-below">
+        <div className="explain">
+          <div className="hr-exp">
+            <h1>커리큘럼</h1>
+          </div>
+          <div className="content-exp">
+            {data?.description.split('/n').map((line, i) => {
+              const title = line.split(':')[0];
+              const content = line.split(':')[1];
+              return (
+                <>
+                  <h3 key={'h - ' + { i }}>
+                    <SmileTwoTone twoToneColor="#eb2f96" />
+                    &nbsp;
+                    {title}
+                  </h3>
+                  <span key={'k - ' + { i }}>
+                    {content}
+                    <br />
+                    <br />
+                  </span>
+                </>
+              );
+            })}
+          </div>
+        </div>
+        <div className="review-sect">
+          <div className="hr-sect">
+            <h1>한줄평</h1>
+          </div>
+          <Comment onAdd={handleAddReview} />
+          <DivOrdering>
+            <button id="rating" onClick={handleReviewOrdering}>
+              평점 높은 순
+            </button>
+            <button id="-rating" onClick={handleReviewOrdering}>
+              평점 낮은 순
+            </button>
+            <button id="-created_at" onClick={handleReviewOrdering}>
+              최신 순
+            </button>
+            <button id="created_at" onClick={handleReviewOrdering}>
+              오래된 순
+            </button>
+          </DivOrdering>
+          <ReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
+        </div>
       </div>
       <Comment onAdd={handleAddReview} />
       <DivOrdering>
@@ -86,13 +135,42 @@ const Div = styled.div`
   .hr-sect {
     width: 100%;
     display: flex;
-    flex-basis: 100%;
-    align-items: center;
-    color: rgba(0, 0, 0, 0.35);
-    margin: 1em 0px;
-    h1{
-      margin : 0 2em;
+    flex-direction: row;
+    width: 100vw;
+    margin: 1em 0;
+    padding: 0 160px;
+
+    .explain {
+      width: 50%;
+      padding-right: 20px;
+      .hr-exp h1{
+        margin-bottom: 25px;
+      }
     }
+    .review-sect{
+      width: 50%;
+      padding-left: 20px;
+      .hr-sect {
+        width: 100%;
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.35);
+        h1{
+          margin-bottom: 0;
+        }
+      }
+    //   .hr-sect::before,
+    //   .hr-sect::after {
+    //     content: '';
+    //     flex-grow: 1;
+    //     background: rgba(0, 0, 0, 0.35);
+    //     height: 1px;
+    //     font-size: 0px;
+    //     line-height: 0px;
+    //     margin: 0px 16px;
+    //   }
+    // }
   }
   .hr-sect::before,
   .hr-sect::after {

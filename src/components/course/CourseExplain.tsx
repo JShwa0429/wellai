@@ -113,6 +113,9 @@ const Explain = styled.div`
     color: ${(props) => props.theme.defaultText};
     margin: 0.5em 0 0.5em 0;
   }
+  .start {
+    margin-top: 15px;
+  }
 `;
 
 // const Button = styled.button`
