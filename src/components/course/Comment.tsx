@@ -1,4 +1,4 @@
-import { Rate } from 'antd';
+import { message, Rate } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -17,7 +17,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
     course
       .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
       .then((res) => {
-        if (res.status === 429) alert('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
+        if (res.status === 429) message.info('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
         else {
           onAdd(res.data);
           setTextAreaValue('');
@@ -25,7 +25,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
         }
       })
       .catch((err) =>
-        err.response.status === 400 ? alert('이미 이 코스에 대한 리뷰가 있습니다!') : console.log(err.response),
+        err.response.status === 400 ? message.info('이미 이 코스에 대한 리뷰가 있습니다!') : console.log(err.response),
       );
   };
 
@@ -51,7 +51,7 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => voi
           disabled={Cookies.get('refresh') ? false : true}
           onClick={() => {
             if (textAreaValue) handleCommentSubmit();
-            else alert('댓글을 입력해주세요');
+            else message.info('댓글을 입력해주세요');
           }}
         >
           후기 등록
