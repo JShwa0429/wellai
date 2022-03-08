@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import { MyPageLayout } from 'components';
 import { Link } from 'react-router-dom';
 import SummaryTemp from 'components/common/SummaryTemp';
 import { useEffect, useState } from 'react';
-import { bookmark, detailResponse } from 'api/common';
+import { bookmark } from 'api/common';
 import { CourseApi } from 'api/CourseApi';
 
 const MyPageLike = () => {
   // const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
-  const [courseList, setCourseList] = useState([]);
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
 
-  const [datas, setDatas] = useState<bookmark[]>([]);
+  const [courseList, setCourseList] = useState<bookmark[]>([]);
   useEffect(() => {
     const course = CourseApi();
     course
       .getBookmark()
       .then((res) => {
-        setDatas(res.data);
+        setCourseList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -59,12 +56,12 @@ const MyPageLike = () => {
                 <Col>좋아요 보관함</Col>
               </Row>
               <CardDiv>
-                {datas
-                  ? datas.map((data: bookmark, idx: number) => {
+                {courseList
+                  ? courseList.map((course: bookmark, idx: number) => {
                       return (
                         <SummaryDiv key={idx}>
-                          <Link to={`../course/${data.id}`}>
-                            <SummaryTemp {...data.course_id} />
+                          <Link to={`../course/${course.id}`}>
+                            <SummaryTemp {...course.course_id} />
                           </Link>
                         </SummaryDiv>
                       );
