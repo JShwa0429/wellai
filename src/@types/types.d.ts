@@ -1,8 +1,8 @@
 declare module 'type' {
   export type OptionType = {
     gender: string | null;
-    height?: number;
-    weight?: number;
+    height: number;
+    weight: number;
     is_core: boolean;
     is_leg: boolean;
     is_back: boolean;
