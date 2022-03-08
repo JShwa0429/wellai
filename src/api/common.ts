@@ -111,3 +111,10 @@ export interface reportMonth {
     calories_total: number;
   }[];
 }
+
+export interface bookmark {
+  id: string;
+  course_id: detailResponse;
+  created_at: string;
+  modified_at: string;
+}

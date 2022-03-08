@@ -21,13 +21,12 @@ const MonthlyReport = () => {
     // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
     const mypage = MyPageApi();
     mypage
-      .getRecordsMonth(date.month)
+      .getRecordsMonth(date.month, date.year)
       .then((res) => {
-        console.log(res.data[0]);
         const { month_exercise_time, month_calories } = res.data[0];
         setRecord({
-          month_exercise_time: month_exercise_time ? month_exercise_time : 1,
-          month_calories: month_calories ? month_calories : 1,
+          month_exercise_time: month_exercise_time,
+          month_calories: month_calories,
         });
       })
       .catch((err) => console.log(err.response));
@@ -119,10 +118,13 @@ const MonthlyReport = () => {
             </Col>
           </Row>
           <Row>
-            <Col>122시간 45분</Col>
+            <Col>
+              {Math.floor(record.month_exercise_time / 60) ? `${Math.floor(record.month_exercise_time / 60)}시간` : ``}
+              {record.month_exercise_time % 60}분
+            </Col>
           </Row>
           <Row>
-            <Col>8123kcal을 태우셨어용</Col>
+            <Col>{record.month_calories}kcal을 태우셨어용</Col>
           </Row>
           <Row>
             <Col>목표달성률</Col>
