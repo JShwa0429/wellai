@@ -6,6 +6,7 @@ import moment, { Moment, MomentFormatSpecification } from 'moment';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
+import { MyPageApi } from 'api/MyPageApi';
 
 const MonthlyReport = () => {
   const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
@@ -17,10 +18,21 @@ const MonthlyReport = () => {
     }
   };
   const getMonthlyReport = async () => {
-    const result = await axios.get('/users/records/month/', { params: { month: date.month, year: date.year } });
-    const { month_exercise_time, month_calories } = result.data[0];
-    // setRecord({ month_exercise_time, month_calories });
+    // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
+    const mypage = MyPageApi();
+    mypage
+      .getRecordsMonth(date.month)
+      .then((res) => {
+        console.log(res.data[0]);
+        const { month_exercise_time, month_calories } = res.data[0];
+        setRecord({
+          month_exercise_time: month_exercise_time ? month_exercise_time : 1,
+          month_calories: month_calories ? month_calories : 1,
+        });
+      })
+      .catch((err) => console.log(err.response));
   };
+
   const options = {
     chart: {
       id: 'basic-bar',
