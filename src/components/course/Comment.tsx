@@ -1,7 +1,7 @@
 import { Rate } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CourseApi } from 'api/CourseApi';
 import { ReviewProps } from './Review';
 import Cookies from 'js-cookie';
@@ -92,5 +92,6 @@ const Button = styled.button`
 
   :disabled {
     background-color: ${(props) => props.theme.border};
+    border: 1px solid black;
   }
 `;
