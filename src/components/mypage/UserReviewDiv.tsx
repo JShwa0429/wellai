@@ -1,8 +1,9 @@
 import { Pagination } from 'antd';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Review from './Review';
 import { ReviewType } from 'type';
+import { UserReview } from '.';
 
 const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (id: string) => void }> = ({
   reviewData,
@@ -14,7 +15,12 @@ const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (
     <Div>
       {reviewData.map((data: ReviewType, idx: number) => {
         return (
-          pageNumber * 10 > idx && idx > (pageNumber - 1) * 10 - 1 && <Review {...data} onRemove={onRemove} key={idx} />
+          pageNumber * 10 > idx &&
+          idx > (pageNumber - 1) * 10 - 1 && (
+            <Link to={`../../course/${data.course_id}`}>
+              <UserReview {...data} onRemove={onRemove} key={idx} />
+            </Link>
+          )
         );
       })}
       <Pagination
@@ -38,4 +44,8 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  a {
+    width: 100%;
+  }
 `;

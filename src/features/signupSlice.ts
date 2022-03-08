@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Options } from 'type';
+import { OptionType } from 'type';
 
 export type Essential = {
   email: string;
@@ -9,7 +9,7 @@ export type Essential = {
 };
 
 export type SignUpState = Essential & {
-  options: Options;
+  options: OptionType;
 };
 
 const initialState: SignUpState = {
@@ -39,7 +39,7 @@ export const signUpSlice = createSlice({
       state.confirmPassword = action.payload.confirmPassword;
     },
 
-    saveOptions: (state, action: PayloadAction<Options>) => {
+    saveOptions: (state, action: PayloadAction<OptionType>) => {
       state.options.gender = action.payload?.gender;
       state.options.height = action.payload?.height;
       state.options.weight = action.payload?.weight;

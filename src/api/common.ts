@@ -1,4 +1,4 @@
-import { Options } from 'type';
+import { OptionType } from 'type';
 
 export interface validationRequest {
   email: string;
@@ -16,7 +16,7 @@ export interface validationResponse {
 export interface signupRequest {
   email: string;
   password: string;
-  options: Options;
+  options: OptionType;
 }
 
 export interface signupResponse {
@@ -119,7 +119,7 @@ export interface bookmark {
   modified_at: string;
 }
 
-export interface options extends Options {
+export interface options extends OptionType {
   modified_at: string;
   created_at: string;
 }

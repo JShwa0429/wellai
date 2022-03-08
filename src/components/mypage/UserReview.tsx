@@ -1,15 +1,30 @@
-import { Rating } from './Comment';
+import { Rating } from '../course/Comment';
 import styled from 'styled-components';
 import { FiDelete } from 'react-icons/fi';
 import { CourseApi } from 'api/CourseApi';
 import React from 'react';
-import { ReviewType } from 'type';
+export type ReviewProps = {
+  id: string;
+  user_id: string;
+  created_at: string;
+  modified_at: string;
+  content: string;
+  rating: number;
+  course_id: string;
+};
 
 export type EditReviewProps = {
   onRemove: (id: string) => void;
 };
 
-const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id, id, rating, content, onRemove }) => {
+const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({
+  course_id,
+  user_id,
+  id,
+  rating,
+  content,
+  onRemove,
+}) => {
   const removeReview = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -28,10 +43,12 @@ const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id
       </div>
 
       <div>
-        <b>{user_id}</b>
         <Rating value={rating} disabled />
       </div>
-      <div className="comment">{content}</div>
+      <div className="comment">
+        <b>{course_id}</b>
+        {content}
+      </div>
     </Div>
   );
 };
@@ -44,6 +61,7 @@ const Div = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.border};
   position: relative;
   b {
+    color: ${(props) => props.theme.main};
     font-size: 1.5em;
     margin-right: 1em;
   }

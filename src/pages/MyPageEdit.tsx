@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Row, Col, Button, Input, Card, Divider, Form, Radio } from 'antd';
 import { MyPageLayout } from 'components';
 
 import styled from 'styled-components';
 import { MyPageApi } from 'api/MyPageApi';
-import { Options } from 'type';
+import { OptionType } from 'type';
 // import { useAppSelector, useAppDispatch } from '../hooks/useStoreHooks';
 // import * as testActions from '../features/test';
 
 const MyPageEdit = () => {
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
-  const [options, setOptions] = useState<Options>({
+  const [options, setOptions] = useState<OptionType>({
     gender: null,
     height: 0,
     weight: 0,
@@ -47,6 +47,16 @@ const MyPageEdit = () => {
       .catch((err) => console.log(err.response));
   }, []);
 
+  const disabled = useMemo(() => {
+    let count = 0;
+    if (options.is_core) count += 1;
+    if (options.is_leg) count += 1;
+    if (options.is_back) count += 1;
+    if (options.is_stand) count += 1;
+    if (options.is_sit) count += 1;
+    if (options.is_balance) count += 1;
+    return count >= 2 ? true : false;
+  }, [options]);
   const handleEditUserInformation = () => {
     mypage
       .putUserInformation(options)
@@ -259,6 +269,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
+                        disabled={options.is_core ? false : disabled}
                         onClick={() => setOptions({ ...options, is_core: !options.is_core })}
                         style={{
                           backgroundColor: `${options.is_core === true ? '#ff7273' : 'white'}`,
@@ -274,6 +285,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
+                        disabled={options.is_leg ? false : disabled}
                         onClick={() => setOptions({ ...options, is_leg: !options.is_leg })}
                         style={{
                           backgroundColor: `${options.is_leg === true ? '#ff7273' : 'white'}`,
@@ -289,6 +301,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
+                        disabled={options.is_back ? false : disabled}
                         onClick={() => setOptions({ ...options, is_back: !options.is_back })}
                         style={{
                           backgroundColor: `${options.is_back === true ? '#ff7273' : 'white'}`,
@@ -306,6 +319,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
+                        disabled={options.is_stand ? false : disabled}
                         onClick={() => setOptions({ ...options, is_stand: !options.is_stand })}
                         style={{
                           backgroundColor: `${options.is_stand === true ? '#ff7273' : 'white'}`,
@@ -321,6 +335,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
+                        disabled={options.is_sit ? false : disabled}
                         onClick={() => setOptions({ ...options, is_sit: !options.is_sit })}
                         style={{
                           backgroundColor: `${options.is_sit === true ? '#ff7273' : 'white'}`,
@@ -336,6 +351,7 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
+                        disabled={options.is_balance ? false : disabled}
                         onClick={() => setOptions({ ...options, is_balance: !options.is_balance })}
                         style={{
                           backgroundColor: `${options.is_balance === true ? '#ff7273' : 'white'}`,
@@ -345,7 +361,7 @@ const MyPageEdit = () => {
                           borderRadius: '5px',
                         }}
                       >
-                        앉아서
+                        밸런스
                       </Button>
                     </Col>
                   </Row>

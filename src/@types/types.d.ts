@@ -1,5 +1,5 @@
 declare module 'type' {
-  export type Options = {
+  export type OptionType = {
     gender: string | null;
     height?: number;
     weight?: number;
@@ -9,6 +9,16 @@ declare module 'type' {
     is_sit: boolean;
     is_stand: boolean;
     is_balance: boolean;
+  };
+
+  export type ReviewType = {
+    id: string;
+    user_id: string;
+    created_at: string;
+    modified_at: string;
+    content: string;
+    rating: number;
+    course_id: string;
   };
 }
 declare module '*.png';

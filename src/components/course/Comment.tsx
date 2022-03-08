@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { CourseApi } from 'api/CourseApi';
-import { ReviewProps } from './Review';
+import { ReviewType } from 'type';
 import Cookies from 'js-cookie';
 
-const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewProps) => void }> = ({ onAdd }) => {
+const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void }> = ({ onAdd }) => {
   const { id } = useParams();
   const [rateValue, setRateValue] = useState(3);
   const [textAreaValue, setTextAreaValue] = useState('');

@@ -1,32 +1,21 @@
 import styled from 'styled-components';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Button, Rate, Card } from 'antd';
-import { MyPageLayout, ReviewDiv } from 'components';
+import { useEffect, useState } from 'react';
+import { Row, Col } from 'antd';
+import { MyPageLayout } from 'components';
 import { CourseApi } from 'api/CourseApi';
-import { reviewReponse } from 'api/common';
-import { ReviewProps } from 'components/course/Review';
-const { Meta } = Card;
+import { ReviewType } from 'type';
+import { UserReviewDiv } from 'components';
 
 const MyPageComment = () => {
-  const [review, setReview] = useState([
-    {
-      id: 25,
-      user_id: '자율적인패스트푸드원',
-      created_at: '2022-03-07T00:21:10.389824+09:00',
-      modified_at: '2022-03-07T00:21:10.390161+09:00',
-      content: '테스트 댓글 입니다',
-      rating: 4,
-      course_id: 3,
-    },
-  ]);
-
-  const [reviewData, setReviewData] = useState<ReviewProps[]>([]);
+  const [reviewData, setReviewData] = useState<ReviewType[]>([]);
   useEffect(() => {
     const course = CourseApi();
     course
       .getUserReview()
-      .then((res) => setReviewData(res.data))
+      .then((res) => {
+        console.log(res.data);
+        setReviewData(res.data);
+      })
       .catch((err) => console.log(err.reponse));
   }, []);
 
@@ -73,8 +62,8 @@ const MyPageComment = () => {
               >
                 <Col>내 댓글</Col>
               </Row>
-              <ReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
             </Col>
+            <UserReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
           </Row>
         </Col>
       </Row>

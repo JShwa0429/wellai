@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
-import { ReviewProps } from 'components/course/Review';
+import { ReviewType } from 'type';
 import type * as Api from './common';
 
 interface requestApiOptions {
@@ -9,7 +9,7 @@ interface requestApiOptions {
   readonly searchCourse: (search: string) => AxiosPromise<Api.courseList>;
   readonly getDetailInformation: (id: string | undefined) => AxiosPromise<Api.detailResponse>;
   readonly getReview: (id: string) => AxiosPromise<Api.reviewReponse>;
-  readonly getUserReview: () => AxiosPromise<ReviewProps[]>;
+  readonly getUserReview: () => AxiosPromise<ReviewType[]>;
   readonly getReviewOrdering: (id: string, ordering: string) => AxiosPromise<Api.reviewReponse>;
   postReview: (id: string, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
   putReview: (id: string, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
