@@ -38,7 +38,6 @@ const WeeklyReport = () => {
   const getMonthlyReport = async () => {
     // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
     const mypage = MyPageApi();
-    console.log(date.month, date.year);
     mypage
       .getRecordsMonth(date.month, date.year)
       .then((res) => {
@@ -48,9 +47,9 @@ const WeeklyReport = () => {
       .catch((err) => console.log(err.response));
   };
 
-  useEffect(() => {
-    console.log(monthlyRecord);
-  }, [monthlyRecord]);
+  // useEffect(() => {
+  //   console.log(monthlyRecord);
+  // }, [monthlyRecord]);
 
   const DailyRecordTime = useMemo(() => {
     let count = 0;
@@ -90,7 +89,7 @@ const WeeklyReport = () => {
         show: false,
       },
       labels: {
-        show: false,
+        show: true,
         style: {
           colors: [],
           fontSize: '12px',

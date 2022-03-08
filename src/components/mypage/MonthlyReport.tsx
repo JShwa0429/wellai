@@ -9,14 +9,16 @@ import { reportYear } from 'api/common';
 
 const MonthlyReport = () => {
   const [yearlyRecord, setYearlyRecord] = useState<reportYear>();
-  const [date, setDate] = useState({ month: Number(moment().format('MM')), year: Number(moment().format('YYYY')) });
   const [type, setType] = useState(0);
-  const handleChange = async (value: Moment | null) => {
-    if (value?.format('MM') !== undefined) {
-      setDate({ month: Number(value?.format('MM')), year: Number(value?.format('YYYY')) });
-      getYearlyReport();
+
+  const category = useMemo(() => {
+    let arr: string[] = [];
+    for (let i = 1; i <= 12; i++) {
+      arr = arr.concat(`${i}월`);
     }
-  };
+    return arr;
+  }, []);
+
   const getYearlyReport = async () => {
     // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
     const mypage = MyPageApi();
@@ -25,7 +27,6 @@ const MonthlyReport = () => {
       .then((res) => {
         const data = res.data;
         setYearlyRecord(data[0]);
-        console.log(yearlyRecord);
       })
       .catch((err) => console.log(err.response));
   };
@@ -36,6 +37,34 @@ const MonthlyReport = () => {
   useEffect(() => {
     console.log(yearlyRecord);
   }, [yearlyRecord]);
+
+  const MonthlyRecordCalories = useMemo(() => {
+    let count = 0;
+    let arr: number[] = [];
+    for (let i = 1; i <= category.length; i++) {
+      if (yearlyRecord?.months_calories[count]?.month === i) {
+        arr = arr.concat(yearlyRecord?.months_calories[count].total ?? 0);
+        count += 1;
+      } else {
+        arr = arr.concat(0);
+      }
+    }
+    return arr;
+  }, [category, yearlyRecord]);
+
+  const MonthlyRecordTime = useMemo(() => {
+    let count = 0;
+    let arr: number[] = [];
+    for (let i = 1; i <= category.length; i++) {
+      if (yearlyRecord?.months_exercise_duration[count]?.month === i) {
+        arr = arr.concat(yearlyRecord?.months_exercise_duration[count].total ?? 0);
+        count += 1;
+      } else {
+        arr = arr.concat(0);
+      }
+    }
+    return arr;
+  }, [category, yearlyRecord]);
 
   // 그래프 옵션
   const yearlyOptions: ApexOptions = {
@@ -60,7 +89,7 @@ const MonthlyReport = () => {
     },
 
     xaxis: {
-      categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      categories: category,
       tickAmount: 12,
       axisTicks: {
         show: true,
@@ -100,9 +129,9 @@ const MonthlyReport = () => {
   // 들어갈 데이터 값
   const yearlySeries = [
     {
-      name: '운동시간',
+      name: !type ? '운동시간' : '칼로리',
       // data: !type ? YearlyRecordTime : YearlyRecordCalories,
-      data: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+      data: !type ? MonthlyRecordCalories : MonthlyRecordTime,
     },
   ];
 
@@ -175,10 +204,11 @@ const MonthlyReport = () => {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                <Radio.Button style={{ marginRight: '50px' }} value="0">
+                <Radio.Button style={{ marginRight: '50px' }} value={0}>
                   운동시간
                 </Radio.Button>
-                <Radio.Button value="1">칼로리</Radio.Button>
+
+                <Radio.Button value={1}>칼로리</Radio.Button>
               </Radio.Group>
             </Row>
             <Col>
