@@ -2,8 +2,17 @@ import styled from 'styled-components';
 
 import { Row, Col, Button, Input } from 'antd';
 import { MyPageLayout, MonthlyReport, WeeklyReport } from 'components';
+import { useEffect } from 'react';
+import { MyPageApi } from 'api/MyPageApi';
 
 const MyPageReport = () => {
+  const mypage = MyPageApi();
+  useEffect(() => {
+    mypage
+      .getRecordsYear()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.response));
+  }, []);
   return (
     <Wrapper>
       <Row

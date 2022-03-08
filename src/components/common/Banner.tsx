@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from 'antd';
+import Cookies from 'js-cookie';
 
 const Banner = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
@@ -19,28 +20,32 @@ const Banner = () => {
   }, []);
   return (
     <Div>
-      <div className="banner">
-        <p>
-          {`“차차”`}님을 위한
-          <br /> 오늘의 코스
-        </p>
-        <div>
-          <Link to={`../course/${datas[0]?.id}`}>
-            <Button
-              type="primary"
-              style={{
-                marginTop: '1em',
-                width: 'max-content',
-                height: '50px',
-                borderRadius: '5px',
-                fontSize: '20px',
-              }}
-            >
-              오늘의 추천코스 보러 가기
-            </Button>
-          </Link>
+      {
+        <div className="banner">
+          <p>
+            당신을 위한
+            <br /> 오늘의 추천 코스
+          </p>
+          {Cookies.get('refresh') && (
+            <div>
+              <Link to={`../course/${datas[0]?.id}`}>
+                <Button
+                  type="primary"
+                  style={{
+                    marginTop: '1em',
+                    width: 'max-content',
+                    height: '50px',
+                    borderRadius: '5px',
+                    fontSize: '20px',
+                  }}
+                >
+                  오늘의 추천코스 보러 가기
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
-      </div>
+      }
 
       <div className="summary">
         <div className="image">

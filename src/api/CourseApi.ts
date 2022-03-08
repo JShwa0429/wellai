@@ -29,7 +29,7 @@ export const CourseApi = (): requestApiOptions => {
       course.get(`/list`, {
         params: { search: search },
       }),
-    getDetailInformation: (id) => course.get(`/${id}`),
+    getDetailInformation: (id) => axios.get(`/course/${id}`),
     getReview: (id) => course.get(`/${id}/review`),
     getReviewOrdering: (id, ordering) =>
       course.get(`/${id}/review`, {

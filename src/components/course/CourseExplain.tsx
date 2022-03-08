@@ -8,12 +8,12 @@ import Cookies from 'js-cookie';
 import { Button } from 'antd';
 import { PlayCircleOutlined } from '@ant-design/icons';
 
-type Props = {
-  id: string | undefined;
-  title: string;
-  rate: number;
-  explain: string;
-};
+// type Props = {
+//   id: string | undefined;
+//   title: string;
+//   rate: number;
+//   explain: string;
+// };
 
 const CourseExplain: React.FunctionComponent = () => {
   const { id } = useParams();
@@ -34,12 +34,10 @@ const CourseExplain: React.FunctionComponent = () => {
     <DivCourseDetail>
       <DivBanner>
         <div className="image">
-          {/* <img src={data?.img_url} alt="요가" /> */}
-          <img src="/image/course_leg.png" alt="요가" />
+          <img src={data?.img_url} alt="요가" />
         </div>
         <Explain>
           <h1>{data?.course_name}</h1>
-          <h1>안녕?</h1>
           <div className="rate">
             <Rating allowHalf disabled value={data?.avg_rating} />
             {data?.avg_rating}
