@@ -152,7 +152,7 @@ const MonthlyReport = () => {
         }}
       >
         <Col span={4}>
-          <Col style={{ marginTop: '50px' }}>
+          <Col style={{ marginTop: '60px' }}>
             <Statistic
               title="운동시간(분)"
               value={yearlyRecord?.year_exercise_duration}
@@ -165,12 +165,7 @@ const MonthlyReport = () => {
         </Col>
         <Col span={19}>
           <Row justify="center">
-            <Row
-              justify="space-around"
-              style={{
-                marginBottom: '30px',
-              }}
-            >
+            <Row justify="space-around">
               <Radio.Group
                 buttonStyle="solid"
                 // defaultValue="0"

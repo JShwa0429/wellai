@@ -143,7 +143,7 @@ const WeeklyReport = () => {
           <Col style={{ marginTop: '5px' }}>
             <DatePicker onChange={handleChange} picker="month" defaultValue={moment()} />
           </Col>
-          <Col style={{ marginTop: '50px' }}>
+          <Col style={{ marginTop: '30px' }}>
             <Statistic
               title="운동시간(분)"
               value={monthlyRecord?.month_exercise_time}
@@ -155,12 +155,7 @@ const WeeklyReport = () => {
           </Col>
         </Col>
         <Col span={19}>
-          <Row
-            justify="space-around"
-            style={{
-              marginBottom: '30px',
-            }}
-          >
+          <Row justify="space-around">
             <Radio.Group
               buttonStyle="solid"
               // defaultValue="0"
