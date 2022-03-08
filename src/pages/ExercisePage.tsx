@@ -29,7 +29,7 @@ const ExcercisePage = () => {
         setExerciseNumber(0);
       })
       .catch((err) => console.log(err.response));
-    setloading(false);
+    setTimeout(() => setloading(false), 5000);
   }, []);
 
   useEffect(() => {

@@ -27,7 +27,7 @@ export const CourseApi = (): requestApiOptions => {
   return {
     course,
     getCourse: () => course.get(`/list`),
-    recommendCourse: () => course.get(`/recommendation`),
+    recommendCourse: () => course.get(`/recommend`),
     searchCourse: (search) =>
       course.get(`/list`, {
         params: { search: search },
