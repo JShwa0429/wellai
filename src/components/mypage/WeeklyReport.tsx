@@ -90,7 +90,7 @@ const WeeklyReport = () => {
         show: false,
       },
       labels: {
-        show: true,
+        show: false,
         style: {
           colors: [],
           fontSize: '12px',
