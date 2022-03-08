@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -25,10 +25,17 @@ const MyPageLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  // const [nickname, setNickname] = useState(undefined);
   const { nickname } = useAppSelector((state) => state.myPage, shallowEqual);
   useEffect(() => {
     const getUserNickName = async () => {
-      await axios.get('/users/option').then((result) => dispatch(myPageAction.nicknameChange(result.data.nickname)));
+      if (Cookies.get('access')) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
+      }
+      await axios.get('/users/option').then(
+        (result) => dispatch(myPageAction.nicknameChange(result.data.nickname)),
+        // setNickname(result.data.nickname),
+      );
     };
     if (nickname === undefined) {
       getUserNickName();

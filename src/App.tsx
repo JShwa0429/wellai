@@ -35,11 +35,10 @@ function App() {
   let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
-  useEffect(() => {
-    if (Cookies.get('access')) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
-    }
-  }, []);
+  if (Cookies.get('access')) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}`;
+  }
+  // useEffect(() => {}, []);
 
   const signout = () => {
     Cookies.remove('access');

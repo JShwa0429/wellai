@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { Row, Col, Button, Input, Card } from 'antd';
 import { MyPageLayout } from 'components';
@@ -6,9 +8,18 @@ import { HeartFilled } from '@ant-design/icons';
 const { Meta } = Card;
 
 const MyPageLike = () => {
+  // const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
+  const [courseList, setCourseList] = useState([]);
   // const dispatch = useAppDispatch();
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
 
+  useEffect(() => {
+    // const getMonthlyReport = async () => {
+    // const result = await axios.get('/users/records/month/', { params: { month: date.month, year: date.year } });
+    // const { month_exercise_time, month_calories } = result.data[0];
+    // setRecord({ month_exercise_time, month_calories });
+    // };
+  }, []);
   return (
     <Wrapper>
       <Row
