@@ -31,22 +31,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
     { id: '4', text: '앉아서', checked: false },
     { id: '5', text: '밸런스', checked: false },
   ]);
-  const dispatch = useDispatch();
   const signUp = useSelector((state: RootState) => state.signUp);
-  const handleSaveOption = () => {
-    const options: OptionType = {
-      gender: gender,
-      weight: weight,
-      height: height,
-      is_core: preferenceList[0].checked,
-      is_leg: preferenceList[1].checked,
-      is_back: preferenceList[2].checked,
-      is_stand: preferenceList[3].checked,
-      is_sit: preferenceList[4].checked,
-      is_balance: preferenceList[5].checked,
-    };
-    dispatch(saveOptions(options));
-  };
 
   const handleCheckPreference = (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.id;
@@ -65,16 +50,34 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
   ];
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    handleSaveOption();
+    const options: OptionType = {
+      gender: gender,
+      weight: weight,
+      height: height,
+      is_core: preferenceList[0].checked,
+      is_leg: preferenceList[1].checked,
+      is_back: preferenceList[2].checked,
+      is_stand: preferenceList[3].checked,
+      is_sit: preferenceList[4].checked,
+      is_balance: preferenceList[5].checked,
+    };
+    const data = {
+      email: signUp.email,
+      password: signUp.password,
+      options: options,
+    };
+
     const signupApi = SignUpApi();
+    console.log(data);
     signupApi
-      .signUpAccount(signUp)
+      .signUpAccount(data)
       .then((res) => {
+        console.log(data);
         if (res.status === 201) handleNextPage();
         else message.info('회원가입 실패');
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
         message.info('회원가입 실패');
       });
     //handleNextPage();
