@@ -7,6 +7,7 @@ const Video: React.FunctionComponent<{ url: string }> = ({ url }) => {
         allow="autoplay; encrypted-media"
         allowFullScreen
         title="video"
+        style={{ width: '100%', height: '100%' }}
       />
     </>
   );

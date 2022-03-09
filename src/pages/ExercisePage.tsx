@@ -19,6 +19,7 @@ const ExcercisePage = () => {
   const [exerciseData, setExerciseData] = useState<exercise>();
   const navigate = useNavigate();
   const course = CourseApi();
+
   useEffect(() => {
     course
       .getDetailInformation(id as string)

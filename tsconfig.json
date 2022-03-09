@@ -18,6 +18,6 @@
     "noImplicitAny": true,
     "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/components/Webcam.js"],
+  "include": ["**/*.ts", "**/*.tsx", "src/components/Webcam.js", "src/components/exercise/TensorCam.jsx"],
   "exclude": ["node_modules"]
 }

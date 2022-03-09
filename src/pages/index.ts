@@ -6,6 +6,7 @@ export { default as MyPageLike } from './MyPageLike';
 export { default as MyPageReport } from './MyPageReport';
 export { default as MyPageComment } from './MyPageComment';
 export { default as ExercisePage } from './ExercisePage';
+export { default as ExercisePage2 } from './ExercisePage2';
 export { default as SearchPage } from './SearchPage';
 export { default as SignUpPage } from './SignUpPage';
 export { default as CoursePage } from './CoursePage';
