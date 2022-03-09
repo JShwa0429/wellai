@@ -33,11 +33,10 @@ const MyPageComment = () => {
   return (
     <Wrapper>
       <Row
+        justify="space-between"
         style={{
-          width: '100%',
           minWidth: '1350px',
-          maxWidth: '1600px',
-          margin: '0 auto',
+          maxWidth: '1350px',
         }}
       >
         <Col>
@@ -54,16 +53,12 @@ const MyPageComment = () => {
               paddingLeft: '50px',
             }}
           >
-            <Col span={22}>
-              <Row
-                style={{
-                  marginBottom: '30px',
-                }}
-              >
-                <Col>내 댓글</Col>
-              </Row>
+            <Col style={{ fontSize: '20px' }}>내 댓글 보관함</Col>
+          </Row>
+          <Row>
+            <Col style={{ width: '1000px' }}>
+              <UserReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
             </Col>
-            <UserReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
           </Row>
         </Col>
       </Row>
@@ -73,4 +68,6 @@ const MyPageComment = () => {
 
 export default MyPageComment;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;

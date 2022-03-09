@@ -66,11 +66,9 @@ const MyPageEdit = () => {
   return (
     <Wrapper>
       <Row
+        justify="space-between"
         style={{
-          width: '100%',
-          minWidth: '1350px',
-          maxWidth: '1600px',
-          margin: '0 auto',
+          width: '1350px',
         }}
       >
         <Col>
@@ -86,7 +84,6 @@ const MyPageEdit = () => {
               paddingTop: '50px',
               paddingLeft: '50px',
             }}
-            justify="center"
             align="middle"
           >
             <Col span={14}>
@@ -377,4 +374,6 @@ const MyPageEdit = () => {
 
 export default MyPageEdit;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;

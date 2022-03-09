@@ -39,7 +39,7 @@ export default ReviewDiv;
 const Div = styled.div`
   width: 100%;
   margin: 1em 0;
-  border-top: 1px solid black;
+  border-top: 1px solid ${(props) => props.theme.border};
   display: flex;
   flex-direction: column;
   justify-content: center;

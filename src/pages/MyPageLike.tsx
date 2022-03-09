@@ -78,7 +78,9 @@ const MyPageLike = () => {
 
 export default MyPageLike;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;
 const CardDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 250px);

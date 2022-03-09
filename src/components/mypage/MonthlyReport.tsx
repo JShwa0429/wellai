@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Row, Col, Radio, Statistic } from 'antd';
 import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
-import moment, { Moment } from 'moment';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import styled from 'styled-components';
