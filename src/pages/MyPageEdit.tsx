@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Row, Col, Button, Input, Card, Divider, Form, Radio } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Row, Col, Button, Input, Divider } from 'antd';
 import { MyPageLayout } from 'components';
 
 import styled from 'styled-components';

@@ -1,26 +1,15 @@
-import { Rating } from '../course/Comment';
+import React from 'react';
 import styled from 'styled-components';
+import { Rating } from '../course/Comment';
 import { FiDelete } from 'react-icons/fi';
 import { CourseApi } from 'api/CourseApi';
-import React from 'react';
-export type ReviewProps = {
-  id: string;
-  user_id: string;
-  created_at: string;
-  modified_at: string;
-  content: string;
-  rating: number;
-  course_id: {
-    id: string;
-    course_name: string;
-  };
-};
+import { UserReviewType } from 'type';
 
 export type EditReviewProps = {
   onRemove: (id: string) => void;
 };
 
-const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({
+const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
   course_id,
   id,
   rating,

@@ -2,11 +2,10 @@ import { Pagination } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReviewType } from 'type';
 import { UserReview } from '.';
-import { ReviewProps } from './UserReview';
+import { UserReviewType } from 'type';
 
-const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewProps[]; onRemove: (id: string) => void }> = ({
+const ReviewDiv: React.FunctionComponent<{ reviewData: UserReviewType[]; onRemove: (id: string) => void }> = ({
   reviewData,
   onRemove,
 }) => {
@@ -14,7 +13,7 @@ const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewProps[]; onRemove: 
 
   return (
     <Div>
-      {reviewData.map((data: ReviewProps, idx: number) => {
+      {reviewData.map((data: UserReviewType, idx: number) => {
         return (
           pageNumber * 10 > idx &&
           idx > (pageNumber - 1) * 10 - 1 && (

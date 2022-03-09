@@ -20,6 +20,19 @@ declare module 'type' {
     rating: number;
     course_id: string;
   };
+
+  export type UserReviewType = {
+    id: string;
+    user_id: string;
+    created_at: string;
+    modified_at: string;
+    content: string;
+    rating: number;
+    course_id: {
+      id: string;
+      course_name: string;
+    };
+  };
 }
 declare module '*.png';
 declare module '*.jpeg';

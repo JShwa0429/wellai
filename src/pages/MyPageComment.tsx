@@ -4,10 +4,10 @@ import { Row, Col } from 'antd';
 import { MyPageLayout } from 'components';
 import { CourseApi } from 'api/CourseApi';
 import { UserReviewDiv } from 'components';
-import { ReviewProps } from 'components/mypage/UserReview';
+import { UserReviewType } from 'type';
 
 const MyPageComment = () => {
-  const [reviewData, setReviewData] = useState<ReviewProps[]>([]);
+  const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
   useEffect(() => {
     const course = CourseApi();
     course

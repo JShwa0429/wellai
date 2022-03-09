@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, Statistic, Radio, DatePicker } from 'antd';
 import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
