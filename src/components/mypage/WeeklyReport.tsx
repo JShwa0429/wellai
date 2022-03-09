@@ -4,7 +4,7 @@ import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
-import { MyPageApi } from 'api/MyPageApi';
+import { MyPageApi } from 'api';
 import { record, reportMonth } from 'api/common';
 import moment, { Moment } from 'moment';
 
@@ -53,7 +53,7 @@ const WeeklyReport = () => {
         arr = arr.concat(records[count].exercise_duration ?? 0);
         count += 1;
       } else {
-        arr = arr.concat(1);
+        arr = arr.concat(0);
       }
     }
     return arr;
@@ -67,7 +67,7 @@ const WeeklyReport = () => {
         arr = arr.concat(records[count].calories_total ?? 0);
         count += 1;
       } else {
-        arr = arr.concat(1);
+        arr = arr.concat(0);
       }
     }
     return arr;

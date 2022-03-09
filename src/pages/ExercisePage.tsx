@@ -1,11 +1,10 @@
-import { WebCam, Video, Description } from 'components';
+import { WebCam, Video, Description, Loading } from 'components';
 import styled from 'styled-components';
 import { IoIosExit } from 'react-icons/io';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { exercise } from 'api/common';
-import { Loading } from 'components/common';
 const ExcercisePage = () => {
   // const opts = {
   //   playerVars: {

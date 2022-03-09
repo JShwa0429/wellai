@@ -3,11 +3,16 @@ import { CourseApi } from 'api';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Summary from './Summary';
+import Summary from '../common/Summary';
 
 const CourseList = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
   useEffect(() => {
+    window.addEventListener('resize', handleResize);
     const course = CourseApi();
     course
       .getCourse()
@@ -16,12 +21,15 @@ const CourseList = () => {
         setDatas(res.data.results);
       })
       .catch((err) => console.log(err));
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
     <Div>
-      <h2>코스 추천</h2>
-      <CardDiv>
+      <h2>코스 탐색</h2>
+      <CardDiv count={Math.floor(width / 350)}>
         {datas.map((data: detailResponse, idx: number) => {
           return (
             <SummaryDiv key={idx}>
@@ -39,7 +47,6 @@ const CourseList = () => {
 export default CourseList;
 const Div = styled.div`
   width: 100%;
-  margin: 0 5vw;
   font-size: 1.5em;
   h2 {
     color: ${(props) => props.theme.defaultText};
@@ -48,16 +55,19 @@ const Div = styled.div`
     padding-top: 25px;
     margin-top: 25px;
     font-size: 1.2em;
+    text-align: center;
   }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
-const CardDiv = styled.div`
+const CardDiv = styled.div<{ count: number }>`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  gap: 2%;
+  grid-template-columns: repeat(${(props) => props.count}, 250px);
+  gap: 50px;
   margin: auto;
-  align-items: center;
-  justify-content: left;
+  place-items: center;
 `;
 
 const SummaryDiv = styled.div`

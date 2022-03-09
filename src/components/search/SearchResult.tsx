@@ -13,7 +13,8 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
       .searchCourse(keyword)
       .then((res) => setDatas(res.data.results))
       .catch((err) => console.log(err.response));
-  }, []);
+  }, [keyword]);
+
   return (
     <Div>
       <h2>검색 결과</h2>

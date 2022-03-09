@@ -46,10 +46,10 @@ const MyPageLayout = () => {
       <Row
         style={{
           height: '100px',
-          fontSize: '25px',
+          fontSize: '20px',
           color: '#574240',
           fontWeight: 'bold',
-          paddingLeft: '30px',
+          paddingLeft: '20px',
           borderRight: '1px solid #f0f0f0',
           borderLeft: '1px solid #f0f0f0',
         }}
