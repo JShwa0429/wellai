@@ -1,55 +1,100 @@
-import { useEffect, useState } from 'react';
-import { Row, Col, DatePicker } from 'antd';
-import moment, { Moment } from 'moment';
+import { useEffect, useState, useMemo } from 'react';
+import { Row, Col, Radio, Statistic } from 'antd';
+import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
-
+import { ApexOptions } from 'apexcharts';
 import styled from 'styled-components';
 import { MyPageApi } from 'api/MyPageApi';
+import { reportYear } from 'api/common';
 
 const MonthlyReport = () => {
-  const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
-  const [date, setDate] = useState({ month: Number(moment().format('MM')), year: Number(moment().format('YYYY')) });
-  const handleChange = async (value: Moment | null) => {
-    if (value?.format('MM') !== undefined) {
-      setDate({ month: Number(value?.format('MM')), year: Number(value?.format('YYYY')) });
-      getMonthlyReport();
+  const [yearlyRecord, setYearlyRecord] = useState<reportYear>();
+  const [type, setType] = useState(0);
+
+  const category = useMemo(() => {
+    let arr: string[] = [];
+    for (let i = 1; i <= 12; i++) {
+      arr = arr.concat(`${i}월`);
     }
-  };
-  const getMonthlyReport = async () => {
-    // const result = await axios.get('/users/records', { params: { month: date.month, year: date.year } });
+    return arr;
+  }, []);
+
+  const getYearlyReport = async () => {
     const mypage = MyPageApi();
     mypage
-      .getRecordsMonth(date.month, date.year)
+      .getRecordsYear()
       .then((res) => {
-        const { month_exercise_time, month_calories } = res.data[0];
-        setRecord({
-          month_exercise_time: month_exercise_time,
-          month_calories: month_calories,
-        });
+        const data = res.data;
+        setYearlyRecord(data[0]);
       })
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => {
-    getMonthlyReport();
+    getYearlyReport();
   }, []);
+  useEffect(() => {
+    console.log(yearlyRecord);
+  }, [yearlyRecord]);
 
-  const options = {
+  const MonthlyRecordCalories = useMemo(() => {
+    let count = 0;
+    let arr: number[] = [];
+    for (let i = 1; i <= category.length; i++) {
+      if (yearlyRecord?.months_calories[count]?.month === i) {
+        arr = arr.concat(yearlyRecord?.months_calories[count].total ?? 0);
+        count += 1;
+      } else {
+        arr = arr.concat(0);
+      }
+    }
+    return arr;
+  }, [category, yearlyRecord]);
+
+  const MonthlyRecordTime = useMemo(() => {
+    let count = 0;
+    let arr: number[] = [];
+    for (let i = 1; i <= category.length; i++) {
+      if (yearlyRecord?.months_exercise_duration[count]?.month === i) {
+        arr = arr.concat(yearlyRecord?.months_exercise_duration[count].total ?? 0);
+        count += 1;
+      } else {
+        arr = arr.concat(0);
+      }
+    }
+    return arr;
+  }, [category, yearlyRecord]);
+
+  const yearlyOptions: ApexOptions = {
     chart: {
-      id: 'basic-bar',
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
+      width: '100%',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
       },
+      toolbar: {
+        show: false,
+      },
+    },
+    stroke: {
+      width: 4,
+      curve: 'smooth',
+    },
+    markers: {
+      size: 1,
     },
     xaxis: {
-      categories: ['운동시간', '칼로리'],
+      categories: category,
+      tickAmount: 12,
       axisTicks: {
-        show: false,
+        show: true,
       },
       labels: {
-        show: false,
+        show: true,
         style: {
           colors: [],
           fontSize: '12px',
@@ -59,21 +104,16 @@ const MonthlyReport = () => {
         },
       },
       axisBorder: {
-        show: false,
+        show: true,
       },
     },
     grid: {
       borderColor: 'transparent',
-      lines: {
-        show: false,
-      },
     },
     yaxis: {
       tickAmount: 1,
-      min: 0,
-      max: 100,
       labels: {
-        show: true,
+        show: false,
         style: {
           colors: [],
           fontSize: '12px',
@@ -85,10 +125,10 @@ const MonthlyReport = () => {
     },
     colors: ['#ff7273'],
   };
-  const series = [
+  const yearlySeries = [
     {
-      name: '운동시간',
-      data: [record.month_exercise_time, record.month_calories],
+      name: !type ? '운동시간' : '칼로리',
+      data: !type ? MonthlyRecordTime : MonthlyRecordCalories,
     },
   ];
 
@@ -96,41 +136,51 @@ const MonthlyReport = () => {
     <Wrapper>
       <Row
         style={{
-          marginBottom: '20px',
+          marginTop: '10px',
+          marginBottom: '5px',
           fontSize: '20px',
         }}
       >
-        <Col>월간 레포트</Col>
+        <Col>올해의 피 땀 눈물</Col>
       </Row>
-      <Row>
-        <Col
-          span={24}
-          style={{
-            backgroundColor: 'rgb(247, 247, 247)',
-            padding: '30px 30px',
-            height: '500px',
-          }}
-        >
-          <Row justify="center" style={{ marginBottom: '20px' }}>
+      <Row
+        style={{
+          backgroundColor: 'rgb(247, 247, 247)',
+          padding: '10px 30px',
+          height: '260px',
+        }}
+      >
+        <Col span={4}>
+          <Col style={{ marginTop: '60px' }}>
+            <Statistic
+              title="운동시간(분)"
+              value={yearlyRecord?.year_exercise_duration}
+              prefix={<ClockCircleOutlined />}
+            />
+          </Col>
+          <Col style={{ marginTop: '15px' }}>
+            <Statistic title="칼로리" value={yearlyRecord?.year_calories} prefix={<DashboardOutlined />} />
+          </Col>
+        </Col>
+        <Col span={19}>
+          <Row justify="center">
+            <Row justify="space-around">
+              <Radio.Group
+                buttonStyle="solid"
+                // defaultValue="0"
+                size="middle"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+              >
+                <Radio.Button style={{ marginRight: '50px' }} value={0}>
+                  운동시간
+                </Radio.Button>
+
+                <Radio.Button value={1}>칼로리</Radio.Button>
+              </Radio.Group>
+            </Row>
             <Col>
-              <DatePicker onChange={handleChange} picker="month" defaultValue={moment()} />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              {Math.floor(record.month_exercise_time / 60) ? `${Math.floor(record.month_exercise_time / 60)}시간` : ``}
-              {record.month_exercise_time % 60}분
-            </Col>
-          </Row>
-          <Row>
-            <Col>{record.month_calories}kcal을 태우셨어용</Col>
-          </Row>
-          <Row>
-            <Col>목표달성률</Col>
-          </Row>
-          <Row>
-            <Col>
-              <ReactApexChart options={options} series={series} type="bar" height={150} width={340} />
+              <ReactApexChart options={yearlyOptions} series={yearlySeries} type="line" width={750} height={180} />
             </Col>
           </Row>
         </Col>
@@ -142,5 +192,5 @@ const MonthlyReport = () => {
 export default MonthlyReport;
 
 const Wrapper = styled.div`
-  width: 450px;
+  width: 1000px;
 `;

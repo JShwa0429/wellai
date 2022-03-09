@@ -1,25 +1,16 @@
-import { Rating } from '../course/Comment';
+import React from 'react';
 import styled from 'styled-components';
+import { Rating } from '../course/Comment';
 import { FiDelete } from 'react-icons/fi';
 import { CourseApi } from 'api/CourseApi';
-import React from 'react';
-export type ReviewProps = {
-  id: string;
-  user_id: string;
-  created_at: string;
-  modified_at: string;
-  content: string;
-  rating: number;
-  course_id: string;
-};
+import { UserReviewType } from 'type';
 
 export type EditReviewProps = {
   onRemove: (id: string) => void;
 };
 
-const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({
+const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
   course_id,
-  user_id,
   id,
   rating,
   content,
@@ -46,7 +37,7 @@ const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({
         <Rating value={rating} disabled />
       </div>
       <div className="comment">
-        <b>{course_id}</b>
+        <b>{course_id.course_name}</b>
         {content}
       </div>
     </Div>

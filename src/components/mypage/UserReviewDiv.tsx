@@ -2,10 +2,10 @@ import { Pagination } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReviewType } from 'type';
 import { UserReview } from '.';
+import { UserReviewType } from 'type';
 
-const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (id: string) => void }> = ({
+const ReviewDiv: React.FunctionComponent<{ reviewData: UserReviewType[]; onRemove: (id: string) => void }> = ({
   reviewData,
   onRemove,
 }) => {
@@ -13,11 +13,11 @@ const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (
 
   return (
     <Div>
-      {reviewData.map((data: ReviewType, idx: number) => {
+      {reviewData.map((data: UserReviewType, idx: number) => {
         return (
           pageNumber * 10 > idx &&
           idx > (pageNumber - 1) * 10 - 1 && (
-            <Link to={`../../course/${data.course_id}`}>
+            <Link to={`../../course/${data.course_id.id}`}>
               <UserReview {...data} onRemove={onRemove} key={idx} />
             </Link>
           )
@@ -39,7 +39,7 @@ export default ReviewDiv;
 const Div = styled.div`
   width: 100%;
   margin: 1em 0;
-  border-top: 1px solid black;
+  border-top: 1px solid ${(props) => props.theme.border};
   display: flex;
   flex-direction: column;
   justify-content: center;

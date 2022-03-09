@@ -16,11 +16,11 @@ const MyPageReport = () => {
   return (
     <Wrapper>
       <Row
+        justify="space-between"
         style={{
           width: '100%',
           minWidth: '1350px',
           maxWidth: '1600px',
-          margin: '0 auto',
         }}
       >
         <Col>
@@ -31,19 +31,13 @@ const MyPageReport = () => {
             width: 'calc(100% - 332px)',
           }}
         >
-          <Row
-            justify="space-around"
-            align="middle"
-            style={{
-              paddingTop: '60px',
-            }}
-          >
-            <Col>
+          <Row justify="space-around" align="middle">
+            <Row style={{ marginTop: '25px' }}>
               <MonthlyReport />
-            </Col>
-            <Col>
+            </Row>
+            <Row style={{ marginTop: '25px' }}>
               <WeeklyReport />
-            </Col>
+            </Row>
           </Row>
         </Col>
       </Row>

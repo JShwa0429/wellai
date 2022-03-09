@@ -1,25 +1,84 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Row, Col, Button, Radio } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Row, Col, Statistic, Radio, DatePicker } from 'antd';
+import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
+import { MyPageApi } from 'api/MyPageApi';
+import { record, reportMonth } from 'api/common';
+import moment, { Moment } from 'moment';
 
 const WeeklyReport = () => {
-  const [type, setType] = useState('0');
-  const [records, setRecords] = useState({ '0': [], '1': [] });
-  const getWeeklyReport = async () => {
-    const result = await axios.get('/users/records/month/');
-    const { month_exercise_time, month_calories } = result.data[0];
-    // setRecords({ month_exercise_time, month_calories });
+  const [monthlyRecord, setMonthlyRecord] = useState<reportMonth>();
+  const [records, setRecords] = useState<record[]>([]);
+  const [date, setDate] = useState({ month: Number(moment().format('MM')), year: Number(moment().format('YYYY')) });
+
+  const [type, setType] = useState(0);
+
+  const handleChange = async (value: Moment | null) => {
+    if (value as Moment) {
+      setDate({ month: Number(value?.format('M')), year: Number(value?.format('YYYY')) });
+    }
   };
+
+  useEffect(() => {
+    getMonthlyReport();
+  }, [date]);
+
+  const category = useMemo(() => {
+    const month = new Date(date.year, date.month, 0).getDate();
+    let arr: number[] = [];
+    for (let i = 1; i <= month; i++) {
+      arr = arr.concat(i);
+    }
+    return arr;
+  }, [date]);
+
+  const getMonthlyReport = async () => {
+    const mypage = MyPageApi();
+    mypage
+      .getRecordsMonth(date.month, date.year)
+      .then((res) => {
+        setMonthlyRecord(res.data[0]);
+        setRecords(res.data[0].records);
+      })
+      .catch((err) => console.log(err.response));
+  };
+
+  const DailyRecordTime = useMemo(() => {
+    let count = 0;
+    let arr: number[] = [];
+    for (let i = 1; i <= category.length; i++) {
+      if (records[count]?.day === i) {
+        arr = arr.concat(records[count].exercise_duration ?? 0);
+        count += 1;
+      } else {
+        arr = arr.concat(1);
+      }
+    }
+    return arr;
+  }, [category, records]);
+
+  const DailyRecordCalories = useMemo(() => {
+    let count = 0;
+    let arr: number[] = [];
+    for (let i = 1; i <= category.length; i++) {
+      if (records[count]?.day === i) {
+        arr = arr.concat(records[count].calories_total ?? 0);
+        count += 1;
+      } else {
+        arr = arr.concat(1);
+      }
+    }
+    return arr;
+  }, [category, records]);
+
   const options = {
     chart: {
       id: 'basic-bar',
     },
     xaxis: {
-      categories: ['월', '화', '수', '목', '금', '토', '일'],
+      categories: category,
       axisTicks: {
         show: false,
       },
@@ -48,61 +107,69 @@ const WeeklyReport = () => {
       labels: {
         show: false,
       },
-      tickAmount: 1,
+      tickAmount: !type ? 1 : 50,
       min: 0,
-      max: 26,
+      max: !type ? 24 : 500,
     },
     colors: ['#ff7273'],
   };
   const series = [
     {
       name: '운동시간',
-      data: [24, 8, 10, 24, 15, 18, 20],
+      data: !type ? DailyRecordTime : DailyRecordCalories,
     },
   ];
   return (
     <Wrapper>
       <Row
         style={{
-          marginBottom: '20px',
+          marginTop: '10px',
+          marginBottom: '5px',
           fontSize: '20px',
         }}
       >
-        <Col>주간 레포트</Col>
+        <Col>{date.month}월 운동 기록</Col>
       </Row>
-      <Row>
-        <Col
-          span={24}
-          style={{
-            backgroundColor: 'rgb(247, 247, 247)',
-            padding: '20px 30px',
-            height: '500px',
-          }}
-        >
-          <Row
-            justify="space-around"
-            style={{
-              marginBottom: '30px',
-            }}
-          >
+      <Row
+        style={{
+          backgroundColor: 'rgb(247, 247, 247)',
+          padding: '10px 30px',
+          height: '300px',
+        }}
+      >
+        <Col span={4}>
+          <Col style={{ marginTop: '5px' }}>
+            <DatePicker onChange={handleChange} picker="month" defaultValue={moment()} />
+          </Col>
+          <Col style={{ marginTop: '30px' }}>
+            <Statistic
+              title="운동시간(분)"
+              value={monthlyRecord?.month_exercise_time}
+              prefix={<ClockCircleOutlined />}
+            />
+          </Col>
+          <Col style={{ marginTop: '15px' }}>
+            <Statistic title="칼로리" value={monthlyRecord?.month_calories} prefix={<DashboardOutlined />} />
+          </Col>
+        </Col>
+        <Col span={19}>
+          <Row justify="space-around">
             <Radio.Group
               buttonStyle="solid"
               // defaultValue="0"
-              size="large"
+              size="middle"
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
-              <Radio.Button style={{ marginRight: '50px' }} value="0">
+              <Radio.Button style={{ marginRight: '50px' }} value={0}>
                 운동시간
               </Radio.Button>
-
-              <Radio.Button value="1">칼로리</Radio.Button>
+              <Radio.Button value={1}>칼로리</Radio.Button>
             </Radio.Group>
           </Row>
           <Row justify="center">
             <Col>
-              {' '}
-              <ReactApexChart options={options} series={series} type="bar" height={350} width={390} />
+              <ReactApexChart options={options} series={series} type="bar" width={750} height={200} />
             </Col>
           </Row>
         </Col>
@@ -114,5 +181,6 @@ const WeeklyReport = () => {
 export default WeeklyReport;
 
 const Wrapper = styled.div`
-  width: 450px;
+  width: 1000px;
+  height: 300px;
 `;

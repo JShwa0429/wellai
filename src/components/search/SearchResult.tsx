@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { CourseApi } from 'api/CourseApi';
-import SummaryTemp from 'components/common/SummaryTemp';
+import { CourseApi } from 'api';
+import Summary from 'components/common/Summary';
 import { detailResponse } from 'api/common';
 
 const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
@@ -22,7 +22,7 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
           return (
             <SummaryDiv key={idx}>
               <Link to={`../course/${data.id}`}>
-                <SummaryTemp {...data} />
+                <Summary {...data} />
               </Link>
             </SummaryDiv>
           );

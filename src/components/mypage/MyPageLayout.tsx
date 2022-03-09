@@ -42,11 +42,11 @@ const MyPageLayout = () => {
     }
   }, []);
   return (
-    <Wrapper style={{ width: 332, height: 'max-content' }}>
+    <Wrapper style={{ width: 280, height: 'max-content', position: 'fixed', left: 0 }}>
       <Row
         style={{
           height: '100px',
-          fontSize: '30px',
+          fontSize: '25px',
           color: '#574240',
           fontWeight: 'bold',
           paddingLeft: '30px',
@@ -75,7 +75,7 @@ const MyPageLayout = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              height: '50px',
+              height: '40px',
               fontSize: '18px',
               fontWeight: 'bold',
             }}

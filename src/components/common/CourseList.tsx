@@ -1,9 +1,9 @@
 import { detailResponse } from 'api/common';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SummaryTemp from './SummaryTemp';
+import Summary from './Summary';
 
 const CourseList = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
@@ -26,7 +26,7 @@ const CourseList = () => {
           return (
             <SummaryDiv key={idx}>
               <Link to={`../course/${data.id}`}>
-                <SummaryTemp {...data} />
+                <Summary {...data} />
               </Link>
             </SummaryDiv>
           );
