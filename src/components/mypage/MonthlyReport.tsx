@@ -128,7 +128,7 @@ const MonthlyReport = () => {
   const yearlySeries = [
     {
       name: !type ? '운동시간' : '칼로리',
-      data: !type ? MonthlyRecordCalories : MonthlyRecordTime,
+      data: !type ? MonthlyRecordTime : MonthlyRecordCalories,
     },
   ];
 
