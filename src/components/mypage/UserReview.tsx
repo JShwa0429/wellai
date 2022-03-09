@@ -10,7 +10,10 @@ export type ReviewProps = {
   modified_at: string;
   content: string;
   rating: number;
-  course_id: string;
+  course_id: {
+    id: string;
+    course_name: string;
+  };
 };
 
 export type EditReviewProps = {
@@ -19,7 +22,6 @@ export type EditReviewProps = {
 
 const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({
   course_id,
-  user_id,
   id,
   rating,
   content,
@@ -46,7 +48,7 @@ const Review: React.FunctionComponent<ReviewProps & EditReviewProps> = ({
         <Rating value={rating} disabled />
       </div>
       <div className="comment">
-        <b>{course_id}</b>
+        <b>{course_id.course_name}</b>
         {content}
       </div>
     </Div>

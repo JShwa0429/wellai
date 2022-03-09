@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReviewType } from 'type';
 import { UserReview } from '.';
+import { ReviewProps } from './UserReview';
 
-const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (id: string) => void }> = ({
+const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewProps[]; onRemove: (id: string) => void }> = ({
   reviewData,
   onRemove,
 }) => {
@@ -13,11 +14,11 @@ const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (
 
   return (
     <Div>
-      {reviewData.map((data: ReviewType, idx: number) => {
+      {reviewData.map((data: ReviewProps, idx: number) => {
         return (
           pageNumber * 10 > idx &&
           idx > (pageNumber - 1) * 10 - 1 && (
-            <Link to={`../../course/${data.course_id}`}>
+            <Link to={`../../course/${data.course_id.id}`}>
               <UserReview {...data} onRemove={onRemove} key={idx} />
             </Link>
           )

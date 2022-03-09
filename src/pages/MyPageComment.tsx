@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import { MyPageLayout } from 'components';
 import { CourseApi } from 'api/CourseApi';
-import { ReviewType } from 'type';
 import { UserReviewDiv } from 'components';
+import { ReviewProps } from 'components/mypage/UserReview';
 
 const MyPageComment = () => {
-  const [reviewData, setReviewData] = useState<ReviewType[]>([]);
+  const [reviewData, setReviewData] = useState<ReviewProps[]>([]);
   useEffect(() => {
     const course = CourseApi();
     course
