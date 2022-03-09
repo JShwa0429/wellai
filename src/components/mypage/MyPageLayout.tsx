@@ -46,18 +46,23 @@ const MyPageLayout = () => {
       <Row
         style={{
           height: '100px',
-          fontSize: '20px',
+          fontSize: '24px',
           color: '#574240',
           fontWeight: 'bold',
-          paddingLeft: '20px',
           borderRight: '1px solid #f0f0f0',
           borderLeft: '1px solid #f0f0f0',
+          display: 'flex',
+          justifyContent: 'center',
         }}
         justify="start"
         align="middle"
       >
-        <Col style={{ marginRight: '5px' }}>🧘‍♀️</Col>
-        <Col style={{ letterSpacing: '1.5px' }}>{nickname} 님</Col>
+        <Col>
+          <div>
+            <span style={{ marginLeft: '-10px', marginRight: '5px' }}>🧘‍♀️</span>
+            <span style={{ letterSpacing: '1.5px' }}>{nickname}</span>
+          </div>
+        </Col>
       </Row>
       <Menu
         defaultSelectedKeys={[location.pathname]}

@@ -4,7 +4,7 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveEssential } from 'features/signupSlice';
 import styled from 'styled-components';
-import { SignUpApi } from 'api';
+import { UserApi } from 'api';
 
 type RegisterUserForm = {
   email: string;
@@ -86,7 +86,7 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   const handleSaveEssential = (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(saveEssential(userAccountInfo));
-    const signupApi = SignUpApi();
+    const signupApi = UserApi();
     signupApi
       .checkValidation(userAccountInfo)
       .then((res) => {
