@@ -2,7 +2,7 @@ import { message, Rate } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { ReviewType } from 'type';
 import Cookies from 'js-cookie';
 
@@ -24,9 +24,9 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void
           setRateValue(3);
         }
       })
-      .catch((err) =>
-        err.response.status === 400 ? message.info('이미 이 코스에 대한 리뷰가 있습니다!') : console.log(err.response),
-      );
+      .catch((err) => {
+        if (err.response.status === 400) message.info('이미 이 코스에 대한 리뷰가 있습니다!');
+      });
   };
 
   return (

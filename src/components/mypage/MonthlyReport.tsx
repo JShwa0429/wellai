@@ -4,7 +4,7 @@ import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import styled from 'styled-components';
-import { MyPageApi } from 'api/MyPageApi';
+import { MyPageApi } from 'api';
 import { reportYear } from 'api/common';
 
 const MonthlyReport = () => {
@@ -21,21 +21,15 @@ const MonthlyReport = () => {
 
   const getYearlyReport = async () => {
     const mypage = MyPageApi();
-    mypage
-      .getRecordsYear()
-      .then((res) => {
-        const data = res.data;
-        setYearlyRecord(data[0]);
-      })
-      .catch((err) => console.log(err.response));
+    mypage.getRecordsYear().then((res) => {
+      const data = res.data;
+      setYearlyRecord(data[0]);
+    });
   };
 
   useEffect(() => {
     getYearlyReport();
   }, []);
-  useEffect(() => {
-    console.log(yearlyRecord);
-  }, [yearlyRecord]);
 
   const MonthlyRecordCalories = useMemo(() => {
     let count = 0;

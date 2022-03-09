@@ -101,8 +101,6 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
             password: err.response.data.password,
             confirmPassword: err.response.data.confirm_password,
           });
-        } else {
-          console.log(err.response);
         }
       });
   };

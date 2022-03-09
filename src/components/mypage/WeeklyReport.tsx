@@ -36,13 +36,10 @@ const WeeklyReport = () => {
 
   const getMonthlyReport = async () => {
     const mypage = MyPageApi();
-    mypage
-      .getRecordsMonth(date.month, date.year)
-      .then((res) => {
-        setMonthlyRecord(res.data[0]);
-        setRecords(res.data[0].records);
-      })
-      .catch((err) => console.log(err.response));
+    mypage.getRecordsMonth(date.month, date.year).then((res) => {
+      setMonthlyRecord(res.data[0]);
+      setRecords(res.data[0].records);
+    });
   };
 
   const DailyRecordTime = useMemo(() => {

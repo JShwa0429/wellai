@@ -14,13 +14,9 @@ const CourseList = () => {
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     const course = CourseApi();
-    course
-      .getCourse()
-      .then((res) => {
-        console.log(res);
-        setDatas(res.data.results);
-      })
-      .catch((err) => console.log(err));
+    course.getCourse().then((res) => {
+      setDatas(res.data.results);
+    });
     return () => {
       window.removeEventListener('resize', handleResize);
     };

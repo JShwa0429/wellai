@@ -20,9 +20,9 @@ const Summary: React.FunctionComponent<detailResponse> = ({ id, course_name, img
       course
         .postBookmark(id as string)
         .then(() => setToggle(true))
-        .catch((err) =>
-          err.response.status === 400 ? message.info('이미 북마크된 코스입니다.') : console.log(err.response),
-        );
+        .catch((err) => {
+          if (err.response.status === 400) message.info('이미 북마크된 코스입니다.');
+        });
     }
   };
   return (

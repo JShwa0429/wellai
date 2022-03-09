@@ -9,13 +9,9 @@ const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
   useEffect(() => {
     const course = CourseApi();
-    course
-      .getUserReview()
-      .then((res) => {
-        console.log(res.data);
-        setReviewData(res.data);
-      })
-      .catch((err) => console.log(err.reponse));
+    course.getUserReview().then((res) => {
+      setReviewData(res.data);
+    });
   }, []);
 
   const handleRemoveReview = (id: string) => {

@@ -4,14 +4,6 @@ import { CourseApi } from 'api';
 import { CourseList, Banner } from 'components';
 
 const CoursePage: React.FunctionComponent = () => {
-  useEffect(() => {
-    const course = CourseApi();
-    course
-      .getCourse()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
-
   return (
     <DivCourse>
       <Banner />

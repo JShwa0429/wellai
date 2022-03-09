@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Rating } from '../course/Comment';
 import { FiDelete } from 'react-icons/fi';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
 
 export type EditReviewProps = {
@@ -20,10 +20,7 @@ const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
     event.preventDefault();
     event.stopPropagation();
     const course = CourseApi();
-    course
-      .deleteReview(id)
-      .then(() => onRemove(id))
-      .catch((err) => console.log(err.response));
+    course.deleteReview(id).then(() => onRemove(id));
   };
   return (
     <Div>

@@ -3,7 +3,7 @@ import { Row, Col, Button, Input, Divider } from 'antd';
 import { MyPageLayout } from 'components';
 
 import styled from 'styled-components';
-import { MyPageApi } from 'api/MyPageApi';
+import { MyPageApi } from 'api';
 import { OptionType } from 'type';
 // import { useAppSelector, useAppDispatch } from '../hooks/useStoreHooks';
 // import * as testActions from '../features/test';
@@ -25,26 +25,22 @@ const MyPageEdit = () => {
   const [user, setUser] = useState({ email: '아이디', nickname: '닉네임' });
   const mypage = MyPageApi();
   useEffect(() => {
-    mypage
-      .getUserInformation()
-      .then((res) => {
-        console.log(res);
-        const data = res.data;
-        const options = data.options;
-        setUser({ email: data.email, nickname: data.nickname });
-        setOptions({
-          gender: options.gender,
-          height: options.height ?? 0,
-          weight: options.weight ?? 0,
-          is_core: options.is_core,
-          is_leg: options.is_leg,
-          is_back: options.is_back,
-          is_stand: options.is_stand,
-          is_sit: options.is_sit,
-          is_balance: options.is_balance,
-        });
-      })
-      .catch((err) => console.log(err.response));
+    mypage.getUserInformation().then((res) => {
+      const data = res.data;
+      const options = data.options;
+      setUser({ email: data.email, nickname: data.nickname });
+      setOptions({
+        gender: options.gender,
+        height: options.height ?? 0,
+        weight: options.weight ?? 0,
+        is_core: options.is_core,
+        is_leg: options.is_leg,
+        is_back: options.is_back,
+        is_stand: options.is_stand,
+        is_sit: options.is_sit,
+        is_balance: options.is_balance,
+      });
+    });
   }, []);
 
   const disabled = useMemo(() => {
@@ -58,10 +54,7 @@ const MyPageEdit = () => {
     return count >= 2 ? true : false;
   }, [options]);
   const handleEditUserInformation = () => {
-    mypage
-      .putUserInformation(options)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err.response));
+    mypage.putUserInformation(options);
   };
   return (
     <Wrapper>

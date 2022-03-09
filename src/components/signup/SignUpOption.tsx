@@ -67,16 +67,13 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
     };
 
     const signupApi = SignUpApi();
-    console.log(data);
     signupApi
       .signUpAccount(data)
       .then((res) => {
-        console.log(data);
         if (res.status === 201) handleNextPage();
         else message.info('회원가입 실패');
       })
       .catch((err) => {
-        console.log(err.response);
         message.info('회원가입 실패');
       });
     //handleNextPage();

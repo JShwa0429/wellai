@@ -96,7 +96,6 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
               <KakaoLogin
                 token={String(process.env.REACT_APP_KAKAO_APP_KEY)}
                 onSuccess={(result) => {
-                  console.log(result);
                   setIsModalVisible(false);
                 }}
                 onFail={() => {
