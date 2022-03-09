@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { Row, Col, Button, Input } from 'antd';
+import { Row, Col, Button, Input, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,14 +14,19 @@ const Header = () => {
   const access = Cookies.get('refresh');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [search, setSearch] = useState('');
   const handleSignOut = () => {
     Cookies.remove('access');
     Cookies.remove('refresh');
     navigate('/');
   };
-  const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
-    navigate('/search', { state: e.currentTarget.value });
+  const onSearch = () => {
+    if (search.length) {
+      navigate('/search', { state: search });
+      setSearch('');
+    } else {
+      message.info('검색어를 입력해주세요');
+    }
   };
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -76,7 +81,9 @@ const Header = () => {
                 suffix={<SearchOutlined />}
                 placeholder="검색"
                 allowClear
-                onPressEnter={onSearch}
+                value={search}
+                onPressEnter={() => onSearch()}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.currentTarget.value)}
                 style={{ width: 170, borderRadius: '20px' }}
               />
             </Col>
