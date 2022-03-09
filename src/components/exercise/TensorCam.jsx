@@ -20,6 +20,7 @@ const detectorConfig = {
 
 const fps = 10;
 var iterationCounter = 0;
+// let exerciseCounter = 60;
 var errorCounter = 0;
 
 export default function TempComp({
@@ -34,6 +35,13 @@ export default function TempComp({
   setCourseList,
   courseList,
   id,
+  timeLimitRef,
+  userPoseIndexRef,
+  timeCounterRef,
+  totalTimeCounterRef,
+  courseListRef,
+  setIsLoading,
+  isLoading,
 }) {
   // const [userPoseIndex, setUserPoseIndex] = useState(0);
   // const [timeCounter, setTimeCounter] = useState(userPoseIndex === 0 ? 5 : 60); //
@@ -43,14 +51,13 @@ export default function TempComp({
   const navigate = useNavigate();
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-
-  const [a, setA] = useState(null);
-  const [b, setB] = useState(null);
   const runMovenet = async () => {
     const detector = await poseDetection.createDetector(poseDetection.SupportedModels.MoveNet, detectorConfig);
     const dnn76 = await loadGraphModel(url);
-    setA(detector);
-    setB(dnn76);
+
+    const interval2 = setInterval(() => {
+      detect(detector, dnn76);
+    }, 1000 / fps);
   };
 
   //30fps 250 frame 평균: 19.507200004000165
@@ -58,18 +65,15 @@ export default function TempComp({
     runMovenet();
   }, []);
   useEffect(() => {
-    setTimeout(() => setTimeLimit(timeLimit - 1), 1000);
-  }, [timeLimit]);
-  useEffect(() => {
-    if (timeLimit >= -1) {
-      setTimeout(() => {
-        setPoseTimeLimit(poseTimeLimit - 1);
-        if (a !== null && b !== null) {
-          detect(a, b);
-        }
-      }, 1000 / fps);
-    }
-  }, [poseTimeLimit]);
+    // setTimeLimit(timeLimit - 1);
+    setInterval(() => {
+      setTimeLimit((timeLimitRef.current -= 1));
+      if (timeLimitRef.current < 0) {
+        setTimeLimit((timeLimitRef.current = 5));
+      }
+    }, 1000);
+    return;
+  }, []);
 
   const detect = async (detector, dnn76) => {
     if (
@@ -92,24 +96,24 @@ export default function TempComp({
 
   function calWorkouttime2(poseIndex, accuracy) {
     // 한 자세가 끝나는 경우 -> 1. 코스종료 2. 다음자세로 변경
-    console.log(timeLimit);
-    if (timeCounter <= 0 || timeLimit < 0) {
+
+    if (timeCounterRef.current <= 0 || timeLimitRef.current <= 0) {
+      console.log('다음자세');
       nextPose();
     } else {
       //제한시간 끝나지 않고 진행되는 경우
       if (accuracy >= 0.8) {
-        if (poseIndex === courseList[userPoseIndex]) {
+        if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
           iterationCounter += 1;
+          console.log('자세합격');
           // 유저 운동시간 1초 조건 만족하는 경우
           if (iterationCounter == fps) {
             iterationCounter = 0;
-            setTimeCounter(timeCounter - 1);
-            setTotalTimeCounter(totalTimeCounter + 1);
+            setTimeCounter((timeCounterRef.current -= 1));
+            setTotalTimeCounter((totalTimeCounterRef.current += 1));
             console.log('1초가 된 견우 초기화 하고 시간 1초 빼기', timeCounter, 'sec left');
           }
-          if (timeCounter == 0) {
-            iterationCounter += 1;
-            setTimeCounter(userPoseIndex === 0 ? 5 : 60);
+          if (timeCounterRef.current == 0) {
             nextPose();
             console.log('요가동작 모두 완료한 경우 다음넘어가면서 초기화');
           }
@@ -131,14 +135,14 @@ export default function TempComp({
     console.log('다음자세 함수');
     iterationCounter = 0;
     errorCounter = 0;
-    setUserPoseIndex(userPoseIndex + 1);
-    setTimeCounter(userPoseIndex === 0 ? 5 : 5);
-    setTimeLimit(userPoseIndex === 0 ? 5 : 5);
-    console.log(userPoseIndex, '번째 운동 다음운동 시간~');
+    setIsLoading(true);
+    setUserPoseIndex((userPoseIndexRef.current += 1));
+    setTimeCounter(userPoseIndexRef.current === 0 ? (timeCounterRef.current = 60) : (timeCounterRef.current = 60));
+    setTimeLimit(userPoseIndexRef.current === 0 ? (timeLimitRef.current = 60) : (timeLimitRef.current = 60));
+    console.log(userPoseIndexRef.current, '번째 운동 다음운동 시간~');
     // 코스의 마지막 운동인 경우
-    if (userPoseIndex >= courseList.length - 1) {
+    if (userPoseIndexRef.current >= courseListRef.current.length - 1) {
       alert('운동 끝났습니다');
-
       navigate(`../course/${id}`);
       // window.location.reload();
     }
@@ -146,7 +150,7 @@ export default function TempComp({
   }
 
   function classifyPose(dnn76, pose) {
-    if (pose) {
+    if (pose.length > 0) {
       let inputs = [];
 
       for (let i = 0; i < pose[0].keypoints.length; i++) {
@@ -164,9 +168,10 @@ export default function TempComp({
       const accuracy = Math.round(predict[poseIndex] * 100);
 
       return [poseIndex, accuracy];
-    } else {
-      setTimeout(classifyPose(dnn76, pose), 1000 / fps); //30fps 250 frame 평균: 12.356800036000372
     }
+    // else {
+    //   setTimeout(classifyPose(dnn76, pose), 1000 / fps); //30fps 250 frame 평균: 12.356800036000372
+    // }
   }
 
   const drawCanvas = (pose, poseIndex, accuracy, video, videoWidth, videoHeight, canvas) => {
@@ -203,26 +208,5 @@ export default function TempComp({
         }}
       />
     </>
-    //   <div>
-    //   <div
-    //     style={{
-    //       backgroundColor: 'red',
-    //       zindex: 999,
-    //       fontSize: '30px',
-    //     }}
-    //   >
-    //     총운동시간
-    //     {totalTimeCounter}
-    //     <br />
-    //     해당자세에서 한 운동시간
-    //     {timeCounter}
-    //     <br />
-    //     제한시간
-    //     {timeLimit}
-    //     <br />
-    //     자세교정
-    //     {iterationCounter}
-    //   </div>
-    // </div>
   );
 }
