@@ -50,13 +50,13 @@ const MyPageComment = () => {
           <Row
             style={{
               paddingTop: '30px',
-              paddingLeft: '50px',
+              marginLeft: '47px',
             }}
           >
             <Col style={{ fontSize: '20px' }}>내 댓글 보관함</Col>
           </Row>
           <Row>
-            <Col style={{ width: '1000px' }}>
+            <Col style={{ width: '800px', marginLeft: '47px' }}>
               <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
             </Col>
           </Row>
