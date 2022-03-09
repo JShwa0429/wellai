@@ -83,12 +83,13 @@ export const Rating = styled(Rate)`
 
 const TextArea = styled.textarea`
   width: 90%;
-  border: 0.5px solid black;
+  border: 0.1px solid black;
   padding: 2%;
   resize: none;
   ::placeholder {
     color: ${(props) => props.theme.border};
   }
+  outline-color: #888;
 `;
 const Button = styled.button`
   width: 10%;

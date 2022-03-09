@@ -17,7 +17,7 @@ type menu = {
 const MenuList: menu[] = [
   { name: '운동리포트', menuKey: '/mypage/report', icon: <PieChartOutlined /> },
   { name: '좋아요', menuKey: '/mypage/like', icon: <LikeOutlined /> },
-  { name: '내 댓글', menuKey: '/mypage/comment', icon: <CommentOutlined /> },
+  { name: '내 수강 후기', menuKey: '/mypage/comment', icon: <CommentOutlined /> },
   { name: '내 정보 변경', menuKey: '/mypage/edit', icon: <EditOutlined /> },
 ];
 

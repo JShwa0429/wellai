@@ -120,7 +120,7 @@ const SummaryDiv = styled.div`
   .bookmark {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
     width: 30px;
   }
   .explain {

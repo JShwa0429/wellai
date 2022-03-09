@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Row, Col, Statistic, Radio, DatePicker } from 'antd';
-import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined, DashboardOutlined, FastForwardFilled } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
@@ -76,6 +76,9 @@ const WeeklyReport = () => {
   const options = {
     chart: {
       id: 'basic-bar',
+    },
+    dataLabels: {
+      enabled: false,
     },
     xaxis: {
       categories: category,
