@@ -8,10 +8,13 @@ import { UserReviewType } from 'type';
 const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
   useEffect(() => {
-    const course = CourseApi();
-    course.getUserReview().then((res) => {
-      setReviewData(res.data);
-    });
+    async function getUserReview() {
+      const course = CourseApi();
+      await course.getUserReview().then((res) => {
+        setReviewData(res.data);
+      });
+    }
+    getUserReview();
   }, []);
 
   const handleRemoveReview = (id: string) => {

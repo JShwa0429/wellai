@@ -2,9 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Modal, Form, Button, Input, Divider, Image } from 'antd';
+import { Row, Col, Modal, Form, Button, Input, Divider } from 'antd';
 import styled from 'styled-components';
-import KakaoLogin from 'react-kakao-login';
 type Props = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -91,41 +90,6 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
               </Form.Item>
             </Form>
             <Divider />
-
-            <Row>
-              <KakaoLogin
-                token={String(process.env.REACT_APP_KAKAO_APP_KEY)}
-                onSuccess={(result) => {
-                  setIsModalVisible(false);
-                }}
-                onFail={() => {
-                  console.log('로그인실패');
-                }}
-                onLogout={() => {
-                  console.log('로그아웃');
-                }}
-                render={({ onClick }) => (
-                  <Col>
-                    <Image
-                      style={{
-                        cursor: 'pointer',
-                      }}
-                      preview={false}
-                      src={'/image/kakao_login_large_wide.png'}
-                      alt="asdasd"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onClick();
-                      }}
-                      onKeyDown={(e) => {
-                        e.preventDefault();
-                        onClick();
-                      }}
-                    />
-                  </Col>
-                )}
-              />
-            </Row>
           </Col>
         </Row>
       </Wrapper>

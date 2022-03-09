@@ -14,10 +14,13 @@ const MyPageLike = () => {
 
   const [courseList, setCourseList] = useState<bookmark[]>([]);
   useEffect(() => {
-    const course = CourseApi();
-    course.getBookmark().then((res) => {
-      setCourseList(res.data);
-    });
+    async function getBookmark() {
+      const course = CourseApi();
+      await course.getBookmark().then((res) => {
+        setCourseList(res.data);
+      });
+    }
+    getBookmark();
   }, []);
 
   return (

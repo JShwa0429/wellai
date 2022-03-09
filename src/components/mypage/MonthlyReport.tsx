@@ -20,11 +20,14 @@ const MonthlyReport = () => {
   }, []);
 
   const getYearlyReport = async () => {
-    const mypage = MyPageApi();
-    mypage.getRecordsYear().then((res) => {
-      const data = res.data;
-      setYearlyRecord(data[0]);
-    });
+    async function getRecordsYear() {
+      const mypage = MyPageApi();
+      await mypage.getRecordsYear().then((res) => {
+        const data = res.data;
+        setYearlyRecord(data[0]);
+      });
+    }
+    getRecordsYear();
   };
 
   useEffect(() => {

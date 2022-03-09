@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
-import { CourseApi } from 'api';
 import { CourseList, Banner } from 'components';
 
 const CoursePage: React.FunctionComponent = () => {

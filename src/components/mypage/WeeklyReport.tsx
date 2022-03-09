@@ -35,11 +35,14 @@ const WeeklyReport = () => {
   }, [date]);
 
   const getMonthlyReport = async () => {
-    const mypage = MyPageApi();
-    mypage.getRecordsMonth(date.month, date.year).then((res) => {
-      setMonthlyRecord(res.data[0]);
-      setRecords(res.data[0].records);
-    });
+    async function getRecordsMonth() {
+      const mypage = MyPageApi();
+      await mypage.getRecordsMonth(date.month, date.year).then((res) => {
+        setMonthlyRecord(res.data[0]);
+        setRecords(res.data[0].records);
+      });
+    }
+    getRecordsMonth();
   };
 
   const DailyRecordTime = useMemo(() => {

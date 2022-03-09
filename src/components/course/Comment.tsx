@@ -12,21 +12,23 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void
   const [textAreaValue, setTextAreaValue] = useState('');
 
   const handleCommentSubmit = () => {
-    const course = CourseApi();
-
-    course
-      .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
-      .then((res) => {
-        if (res.status === 429) message.info('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
-        else {
-          onAdd(res.data);
-          setTextAreaValue('');
-          setRateValue(3);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) message.info('이미 이 코스에 대한 리뷰가 있습니다!');
-      });
+    async function PostReview() {
+      const course = CourseApi();
+      await course
+        .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
+        .then((res) => {
+          if (res.status === 429) message.info('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
+          else {
+            onAdd(res.data);
+            setTextAreaValue('');
+            setRateValue(3);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 400) message.info('이미 이 코스에 대한 리뷰가 있습니다!');
+        });
+    }
+    PostReview();
   };
 
   return (

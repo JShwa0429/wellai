@@ -86,23 +86,27 @@ const SignUpEssential: React.FunctionComponent<Props> = ({ pageNumber, handleNex
   const handleSaveEssential = (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(saveEssential(userAccountInfo));
-    const signupApi = UserApi();
-    signupApi
-      .checkValidation(userAccountInfo)
-      .then((res) => {
-        if (res.status === 200) {
-          handleNextPage();
-        }
-      })
-      .catch((err) => {
-        if (err.response.data.status_code === 400) {
-          setUserAccountMessage({
-            email: err.response.data.email,
-            password: err.response.data.password,
-            confirmPassword: err.response.data.confirm_password,
-          });
-        }
-      });
+
+    async function CheckValidation() {
+      const user = UserApi();
+      await user
+        .checkValidation(userAccountInfo)
+        .then((res) => {
+          if (res.status === 200) {
+            handleNextPage();
+          }
+        })
+        .catch((err) => {
+          if (err.response.data.status_code === 400) {
+            setUserAccountMessage({
+              email: err.response.data.email,
+              password: err.response.data.password,
+              confirmPassword: err.response.data.confirm_password,
+            });
+          }
+        });
+    }
+    CheckValidation();
   };
 
   return (

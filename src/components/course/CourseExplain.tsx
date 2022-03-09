@@ -20,10 +20,13 @@ const CourseExplain: React.FunctionComponent = () => {
   const [data, setData] = useState<detailResponse | null>(null);
 
   useEffect(() => {
-    const course = CourseApi();
-    course.getDetailInformation(id).then((res) => {
-      setData(res.data);
-    });
+    async function getDetailInformation() {
+      const course = CourseApi();
+      await course.getDetailInformation(id).then((res) => {
+        setData(res.data);
+      });
+    }
+    getDetailInformation();
   }, []);
 
   return (

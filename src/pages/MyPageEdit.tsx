@@ -25,22 +25,25 @@ const MyPageEdit = () => {
   const [user, setUser] = useState({ email: '아이디', nickname: '닉네임' });
   const mypage = MyPageApi();
   useEffect(() => {
-    mypage.getUserInformation().then((res) => {
-      const data = res.data;
-      const options = data.options;
-      setUser({ email: data.email, nickname: data.nickname });
-      setOptions({
-        gender: options.gender,
-        height: options.height ?? 0,
-        weight: options.weight ?? 0,
-        is_core: options.is_core,
-        is_leg: options.is_leg,
-        is_back: options.is_back,
-        is_stand: options.is_stand,
-        is_sit: options.is_sit,
-        is_balance: options.is_balance,
+    async function getUserInformation() {
+      await mypage.getUserInformation().then((res) => {
+        const data = res.data;
+        const options = data.options;
+        setUser({ email: data.email, nickname: data.nickname });
+        setOptions({
+          gender: options.gender,
+          height: options.height ?? 0,
+          weight: options.weight ?? 0,
+          is_core: options.is_core,
+          is_leg: options.is_leg,
+          is_back: options.is_back,
+          is_stand: options.is_stand,
+          is_sit: options.is_sit,
+          is_balance: options.is_balance,
+        });
       });
-    });
+    }
+    getUserInformation();
   }, []);
 
   const disabled = useMemo(() => {

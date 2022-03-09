@@ -12,16 +12,22 @@ const CourseDetailPage = () => {
   const [data, setData] = useState<detailResponse | null>(null);
 
   useEffect(() => {
-    const course = CourseApi();
-    course.getReview(id as string).then((res) => {
-      setReviewData(res.data.results);
-    });
+    async function getReview() {
+      const course = CourseApi();
+      await course.getReview(id as string).then((res) => {
+        setReviewData(res.data.results);
+      });
+    }
+    getReview();
   }, []);
   useEffect(() => {
-    const course = CourseApi();
-    course.getDetailInformation(id).then((res) => {
-      setData(res.data);
-    });
+    async function getDetailInformation() {
+      const course = CourseApi();
+      await course.getDetailInformation(id).then((res) => {
+        setData(res.data);
+      });
+    }
+    getDetailInformation();
   }, []);
   const handleAddReview = (Review: ReviewType) => {
     setReviewData((current) => {
@@ -44,10 +50,13 @@ const CourseDetailPage = () => {
 
   const handleReviewOrdering = (event: React.MouseEvent<HTMLButtonElement>) => {
     const ordering = event.currentTarget.id;
-    const course = CourseApi();
-    course.getReviewOrdering(id as string, ordering).then((res) => {
-      setReviewData(res.data.results);
-    });
+    async function getReviewOrdering(ordering: string) {
+      const course = CourseApi();
+      await course.getReviewOrdering(id as string, ordering).then((res) => {
+        setReviewData(res.data.results);
+      });
+    }
+    getReviewOrdering(ordering);
   };
 
   return (

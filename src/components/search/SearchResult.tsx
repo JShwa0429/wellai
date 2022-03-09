@@ -8,8 +8,11 @@ import { detailResponse } from 'api/common';
 const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
   useEffect(() => {
-    const course = CourseApi();
-    course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+    async function searchCourse() {
+      const course = CourseApi();
+      await course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+    }
+    searchCourse();
   }, [keyword]);
 
   return (

@@ -22,10 +22,13 @@ const ExcercisePage = () => {
   const navigate = useNavigate();
   const course = CourseApi();
   useEffect(() => {
-    course.getDetailInformation(id as string).then((res) => {
-      setExercises(res.data.exercises);
-      setExerciseNumber(0);
-    });
+    async function getDetailInformation() {
+      await course.getDetailInformation(id as string).then((res) => {
+        setExercises(res.data.exercises);
+        setExerciseNumber(0);
+      });
+    }
+    getDetailInformation();
     setTimeout(() => setloading(false), 5000);
   }, []);
 

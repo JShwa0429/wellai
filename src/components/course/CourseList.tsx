@@ -13,10 +13,13 @@ const CourseList = () => {
   };
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    const course = CourseApi();
-    course.getCourse().then((res) => {
-      setDatas(res.data.results);
-    });
+    async function getCourse() {
+      const course = CourseApi();
+      await course.getCourse().then((res) => {
+        setDatas(res.data.results);
+      });
+    }
+    getCourse();
     return () => {
       window.removeEventListener('resize', handleResize);
     };

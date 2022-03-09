@@ -19,8 +19,11 @@ const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
   const removeReview = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    const course = CourseApi();
-    course.deleteReview(id).then(() => onRemove(id));
+    async function deleteReview() {
+      const course = CourseApi();
+      await course.deleteReview(id).then(() => onRemove(id));
+    }
+    deleteReview();
   };
   return (
     <Div>
