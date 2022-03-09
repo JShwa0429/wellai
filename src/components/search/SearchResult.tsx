@@ -9,11 +9,9 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
   const [datas, setDatas] = useState<detailResponse[]>([]);
   useEffect(() => {
     const course = CourseApi();
-    course
-      .searchCourse(keyword)
-      .then((res) => setDatas(res.data.results))
-      .catch((err) => console.log(err.response));
-  }, []);
+    course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+  }, [keyword]);
+
   return (
     <Div>
       <h2>검색 결과</h2>

@@ -1,22 +1,17 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
-import { MyPageLayout } from 'components';
-import { CourseApi } from 'api/CourseApi';
-import { UserReviewDiv } from 'components';
+import { MyPageLayout, UserReviewDiv } from 'components';
+import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
 
 const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
   useEffect(() => {
     const course = CourseApi();
-    course
-      .getUserReview()
-      .then((res) => {
-        console.log(res.data);
-        setReviewData(res.data);
-      })
-      .catch((err) => console.log(err.reponse));
+    course.getUserReview().then((res) => {
+      setReviewData(res.data);
+    });
   }, []);
 
   const handleRemoveReview = (id: string) => {

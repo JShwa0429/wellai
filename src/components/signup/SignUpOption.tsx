@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { OptionType } from 'type';
-import { SignUpApi } from 'api';
+import { UserApi } from 'api';
 import { message } from 'antd';
 
 type Props = {
@@ -66,17 +66,14 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
       options: options,
     };
 
-    const signupApi = SignUpApi();
-    console.log(data);
+    const signupApi = UserApi();
     signupApi
       .signUpAccount(data)
       .then((res) => {
-        console.log(data);
         if (res.status === 201) handleNextPage();
         else message.info('회원가입 실패');
       })
       .catch((err) => {
-        console.log(err.response);
         message.info('회원가입 실패');
       });
     //handleNextPage();

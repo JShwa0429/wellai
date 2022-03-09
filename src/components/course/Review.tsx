@@ -1,7 +1,7 @@
 import { Rating } from './Comment';
 import styled from 'styled-components';
 import { FiDelete } from 'react-icons/fi';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import React from 'react';
 import { ReviewType } from 'type';
 
@@ -14,10 +14,7 @@ const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id
     event.preventDefault();
     event.stopPropagation();
     const course = CourseApi();
-    course
-      .deleteReview(id)
-      .then(() => onRemove(id))
-      .catch((err) => console.log(err.response));
+    course.deleteReview(id).then(() => onRemove(id));
   };
   return (
     <Div>

@@ -28,12 +28,8 @@ const req = (
       return cb(res);
     })
     .catch((e) => {
-      // for development
-      // console.log(e);
-      // console.log(e.response);
       const { status, data, config } = e.response;
       if (!e.response || e.message === 'Network Error') {
-        console.log('Server Error!');
         return { status, data, config };
       }
       if (status === 401) {

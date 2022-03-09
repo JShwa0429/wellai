@@ -9,7 +9,7 @@ const MainRenderPageTemp = () => {
             집에서도 지키는
             <br /> 나만의 건강
           </h1>
-          <p>
+          <p style={{ color: '#4e5968' }}>
             언제 어디서나 당신의 건강을 책임지는 AI홈트 서비스,
             <br />
             웰라이
@@ -100,7 +100,7 @@ const SectionOne = styled.section`
     color: transparent;
     -webkit-background-clip: text;
 
-    margin: 1em 0 0 0;
+    margin: 1em 0 0.5em 0;
     margin-right: auto;
   }
 

@@ -1,11 +1,11 @@
-import { WebCam, Video, Description } from 'components';
+import { WebCam, Video, Description, Loading } from 'components';
 import styled from 'styled-components';
 import { IoIosExit } from 'react-icons/io';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { exercise } from 'api/common';
-import { Loading } from 'components/common';
+
 const ExcercisePage = () => {
   // const opts = {
   //   playerVars: {
@@ -22,22 +22,16 @@ const ExcercisePage = () => {
   const navigate = useNavigate();
   const course = CourseApi();
   useEffect(() => {
-    course
-      .getDetailInformation(id as string)
-      .then((res) => {
-        setExercises(res.data.exercises);
-        setExerciseNumber(0);
-      })
-      .catch((err) => console.log(err.response));
+    course.getDetailInformation(id as string).then((res) => {
+      setExercises(res.data.exercises);
+      setExerciseNumber(0);
+    });
     setTimeout(() => setloading(false), 5000);
   }, []);
 
   useEffect(() => {
     setTimeout(() => {
-      course
-        .getExercise(exercises[exerciseNumber as number])
-        .then((res) => setExerciseData(res.data))
-        .catch((err) => console.log(err.response));
+      course.getExercise(exercises[exerciseNumber as number]).then((res) => setExerciseData(res.data));
     }, 5000);
     setTimeout(() => setloading(false), 5000);
   }, [exerciseNumber]);

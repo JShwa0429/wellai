@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Rating } from 'components/course/Comment';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { detailResponse } from 'api/common';
 import Cookies from 'js-cookie';
 import { Button, Tag, Space } from 'antd';
@@ -21,13 +21,9 @@ const CourseExplain: React.FunctionComponent = () => {
 
   useEffect(() => {
     const course = CourseApi();
-    course
-      .getDetailInformation(id)
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
+    course.getDetailInformation(id).then((res) => {
+      setData(res.data);
+    });
   }, []);
 
   return (

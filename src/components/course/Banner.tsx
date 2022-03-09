@@ -10,13 +10,9 @@ const Banner = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
   useEffect(() => {
     const course = CourseApi();
-    course
-      .recommendCourse()
-      .then((res) => {
-        console.log(res.data);
-        setDatas(res.data);
-      })
-      .catch((err) => console.log(err.response));
+    course.recommendCourse().then((res) => {
+      setDatas(res.data);
+    });
   }, []);
   return (
     <Div>

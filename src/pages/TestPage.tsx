@@ -1,10 +1,6 @@
 import { Row, Col, Form, Input, Button } from 'antd';
 
 const TestPage = () => {
-  const onFinish = () => {
-    console.log('끝');
-  };
-
   return (
     <Row
       style={{
@@ -19,7 +15,6 @@ const TestPage = () => {
           name="basic"
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
-          onFinish={onFinish}
           autoComplete="off"
           style={{
             width: '350px',

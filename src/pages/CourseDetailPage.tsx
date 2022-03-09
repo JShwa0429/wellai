@@ -1,5 +1,5 @@
 import { SmileTwoTone } from '@ant-design/icons';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { Comment, ReviewDiv, CourseExplain } from 'components';
 import { ReviewType } from 'type';
 import { detailResponse } from 'api/common';
@@ -13,22 +13,15 @@ const CourseDetailPage = () => {
 
   useEffect(() => {
     const course = CourseApi();
-    course
-      .getReview(id as string)
-      .then((res) => {
-        setReviewData(res.data.results);
-      })
-      .catch((err) => console.log(err.response));
+    course.getReview(id as string).then((res) => {
+      setReviewData(res.data.results);
+    });
   }, []);
   useEffect(() => {
     const course = CourseApi();
-    course
-      .getDetailInformation(id)
-      .then((res) => {
-        console.log(res.data);
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
+    course.getDetailInformation(id).then((res) => {
+      setData(res.data);
+    });
   }, []);
   const handleAddReview = (Review: ReviewType) => {
     setReviewData((current) => {
@@ -52,13 +45,9 @@ const CourseDetailPage = () => {
   const handleReviewOrdering = (event: React.MouseEvent<HTMLButtonElement>) => {
     const ordering = event.currentTarget.id;
     const course = CourseApi();
-    course
-      .getReviewOrdering(id as string, ordering)
-      .then((res) => {
-        setReviewData(res.data.results);
-        console.log(res.data.results);
-      })
-      .catch((err) => console.log(err.response));
+    course.getReviewOrdering(id as string, ordering).then((res) => {
+      setReviewData(res.data.results);
+    });
   };
 
   return (

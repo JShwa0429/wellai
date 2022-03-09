@@ -4,7 +4,7 @@ import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
-import { MyPageApi } from 'api/MyPageApi';
+import { MyPageApi } from 'api';
 import { record, reportMonth } from 'api/common';
 import moment, { Moment } from 'moment';
 
@@ -36,13 +36,10 @@ const WeeklyReport = () => {
 
   const getMonthlyReport = async () => {
     const mypage = MyPageApi();
-    mypage
-      .getRecordsMonth(date.month, date.year)
-      .then((res) => {
-        setMonthlyRecord(res.data[0]);
-        setRecords(res.data[0].records);
-      })
-      .catch((err) => console.log(err.response));
+    mypage.getRecordsMonth(date.month, date.year).then((res) => {
+      setMonthlyRecord(res.data[0]);
+      setRecords(res.data[0].records);
+    });
   };
 
   const DailyRecordTime = useMemo(() => {
@@ -53,7 +50,7 @@ const WeeklyReport = () => {
         arr = arr.concat(records[count].exercise_duration ?? 0);
         count += 1;
       } else {
-        arr = arr.concat(1);
+        arr = arr.concat(0);
       }
     }
     return arr;
@@ -67,7 +64,7 @@ const WeeklyReport = () => {
         arr = arr.concat(records[count].calories_total ?? 0);
         count += 1;
       } else {
-        arr = arr.concat(1);
+        arr = arr.concat(0);
       }
     }
     return arr;
