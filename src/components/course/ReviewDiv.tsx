@@ -1,13 +1,14 @@
-import { Pagination } from 'antd';
+import { Empty, Pagination } from 'antd';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Review from './Review';
 import { ReviewType } from 'type';
 
-const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (id: string) => void }> = ({
-  reviewData,
-  onRemove,
-}) => {
+const ReviewDiv: React.FunctionComponent<{
+  loading: boolean;
+  reviewData: ReviewType[];
+  onRemove: (id: string) => void;
+}> = ({ reviewData, onRemove, loading }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   return (
@@ -17,14 +18,25 @@ const ReviewDiv: React.FunctionComponent<{ reviewData: ReviewType[]; onRemove: (
           pageNumber * 10 > idx && idx > (pageNumber - 1) * 10 - 1 && <Review {...data} onRemove={onRemove} key={idx} />
         );
       })}
-      <Pagination
-        current={pageNumber}
-        onChange={(page) => setPageNumber(page)}
-        defaultCurrent={1}
-        total={reviewData.length}
-        pageSize={10}
-        style={{ margin: '2em 0' }}
-      />
+      {!loading && reviewData.length < 1 && (
+        <>
+          <Empty style={{ marginTop: '20px' }} description={``} />
+          <p style={{ textAlign: 'center' }}>
+            등록된 강의 리뷰가 없습니다
+            <br /> 첫 리뷰를 남겨주세요
+          </p>
+        </>
+      )}
+      {reviewData.length > 0 && (
+        <Pagination
+          current={pageNumber}
+          onChange={(page) => setPageNumber(page)}
+          defaultCurrent={1}
+          total={reviewData.length}
+          pageSize={10}
+          style={{ margin: '2em 0' }}
+        />
+      )}
     </Div>
   );
 };

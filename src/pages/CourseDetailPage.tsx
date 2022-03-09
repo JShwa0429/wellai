@@ -10,7 +10,7 @@ const CourseDetailPage = () => {
   const { id } = useParams();
   const [reviewData, setReviewData] = useState<ReviewType[]>([]);
   const [data, setData] = useState<detailResponse | null>(null);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getReview() {
       const course = CourseApi();
@@ -25,6 +25,7 @@ const CourseDetailPage = () => {
       const course = CourseApi();
       await course.getDetailInformation(id).then((res) => {
         setData(res.data);
+        setLoading(false);
       });
     }
     getDetailInformation();
@@ -50,10 +51,12 @@ const CourseDetailPage = () => {
 
   const handleReviewOrdering = (event: React.MouseEvent<HTMLButtonElement>) => {
     const ordering = event.currentTarget.id;
+    setLoading(true);
     async function getReviewOrdering(ordering: string) {
       const course = CourseApi();
       await course.getReviewOrdering(id as string, ordering).then((res) => {
         setReviewData(res.data.results);
+        setLoading(false);
       });
     }
     getReviewOrdering(ordering);
@@ -107,7 +110,7 @@ const CourseDetailPage = () => {
               오래된 순
             </button>
           </DivOrdering>
-          <ReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
+          <ReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
         </div>
       </div>
     </Div>

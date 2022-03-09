@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import { MyPageLayout, UserReviewDiv } from 'components';
 import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
 
 const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getUserReview() {
       const course = CourseApi();
       await course.getUserReview().then((res) => {
         setReviewData(res.data);
+        setLoading(false);
       });
     }
     getUserReview();
@@ -55,7 +57,7 @@ const MyPageComment = () => {
           </Row>
           <Row>
             <Col style={{ width: '1000px' }}>
-              <UserReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
+              <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
             </Col>
           </Row>
         </Col>
