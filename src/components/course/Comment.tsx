@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { CourseApi } from 'api';
 import { ReviewType } from 'type';
 import Cookies from 'js-cookie';
+import { WindowsFilled } from '@ant-design/icons';
 
 const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void }> = ({ onAdd }) => {
   const { id } = useParams();
@@ -19,9 +20,9 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void
         .then((res) => {
           if (res.status === 429) message.info('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
           else {
-            onAdd(res.data);
             setTextAreaValue('');
             setRateValue(3);
+            location.reload();
           }
         })
         .catch((err) => {
@@ -35,7 +36,6 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void
     <Div>
       <Rating
         disabled={Cookies.get('refresh') ? false : true}
-        allowHalf
         defaultValue={rateValue}
         onChange={setRateValue}
         style={{ marginRight: 'auto' }}

@@ -15,7 +15,8 @@ const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id
     event.stopPropagation();
     async function deleteReview() {
       const course = CourseApi();
-      await course.deleteReview(id).then(() => onRemove(id));
+      await course.deleteReview(id);
+      location.reload();
     }
     deleteReview();
   };
