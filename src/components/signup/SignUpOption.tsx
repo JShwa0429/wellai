@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import React, { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { saveOptions } from 'features/signupSlice';
 import { OptionType } from 'type';
 import { SignUpApi } from 'api';
 import { message } from 'antd';

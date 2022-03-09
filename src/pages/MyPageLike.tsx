@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import { MyPageLayout } from 'components';
 import { Link } from 'react-router-dom';
-import SummaryTemp from 'components/common/SummaryTemp';
+import Summary from 'components/common/Summary';
 import { useEffect, useState } from 'react';
 import { bookmark } from 'api/common';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 
 const MyPageLike = () => {
   // const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
@@ -61,7 +61,7 @@ const MyPageLike = () => {
                       return (
                         <SummaryDiv key={idx}>
                           <Link to={`../course/${course.id}`}>
-                            <SummaryTemp {...course.course_id} />
+                            <Summary {...course.course_id} />
                           </Link>
                         </SummaryDiv>
                       );

@@ -1,4 +1,3 @@
-import { Options } from 'http-proxy-middleware';
 import { OptionType } from 'type';
 
 export interface validationRequest {

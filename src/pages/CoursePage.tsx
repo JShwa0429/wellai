@@ -1,8 +1,7 @@
-import { SearchResult } from 'components/search';
 import styled from 'styled-components';
 import { Banner } from 'components';
 import { useEffect } from 'react';
-import { CourseApi } from 'api/CourseApi';
+import { CourseApi } from 'api';
 import { CourseList } from 'components/common';
 const CoursePage: React.FunctionComponent = () => {
   useEffect(() => {
