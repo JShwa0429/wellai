@@ -6,14 +6,22 @@ const GuidePage = () => {
   return (
     <Div>
       <div className="image">
-        <img alt="회원가입 사진" src="/image/signup2.jpg" />
+        <img alt="회원가입 사진" src="/image/before_course.jpg" />
         <DivEllipse>
           <DivIntroduce>
             <h1>나마스떼!</h1>
-            <h2>잠시 후 수업이 시작됩니다</h2>
-            <h2>원활한 수업 진행을 위해</h2>
-            <h2>우측의 안내사항을 숙지한 뒤</h2>
-            <h2>수업에 참여해주세요:)</h2>
+            <div className="left-detail">
+              <h2>
+                잠시 후 수업이 시작됩니다.
+                <br />
+                <br />
+                원활한 수업 진행을 위해
+                <br />
+                우측의 안내사항을 숙지한 뒤
+                <br />
+                수업에 참여해 주세요:)
+              </h2>
+            </div>
           </DivIntroduce>
           <img alt="원" src="/image/ellipse.png" />
         </DivEllipse>
@@ -25,25 +33,20 @@ const GuidePage = () => {
         </DivTitle>
         <ol type="1">
           <li>
-            각 자세 별로 <b>순 운동시간 1분</b>을 채워 주세요.
-            <br />
-            (자세를 정확하게 수행했을 시 운동 시간 카운트 시작)
+            <b>전신이 카메라에 담길 수 있는 거리</b>에서 운동을 시작해 주세요.
           </li>
           <li>
             정확한 자세로 운동을 하실 때는 카메라 화면 속 운동 자세가 <b style={{ color: '#00C9A7' }}>초록색</b>
             으로 보이게 됩니다.
           </li>
           <li>
-            요가 운동 특성 상 자세를 많은 횟수로 반복하시기보다 천천히, 호흡을 고르며 해당 자세를 일정 시간 유지하시는
-            것을 추천 드려요.
+            각 자세 별로 <b>순 운동시간 1분</b>을 채워 주세요. (정확한 자세 수행 시 운동 시간 카운트 시작)
           </li>
           <li>
             각 <b>자세 별 운동 시간은 최대 4분</b>입니다. 4분 이후에는 순 운동시간을 채우지 못하셨더라도 다음 자세로
             넘어가게 됩니다.
           </li>
-          <li>
-            카메라에 <b>전신이 나올 수 있는 거리</b>에서 운동을 시작해 주세요.
-          </li>
+          <li>요가 특성 상 많은 횟수로 자세를 반복하시기보다 천천히, 호흡을 고르며 일정 시간 자세를 유지해 주세요.</li>
           <li>카메라가 전신을 명확히 인식할 수 없는 경우 안내 메세지로 알려 드립니다.</li>
         </ol>
         <div>
@@ -102,10 +105,17 @@ const DivIntroduce = styled.div`
   z-index: 90;
   display: flex;
   align-items: center;
-  h1,
-  h2 {
+  h1 {
     margin: 0;
     color: white;
+    line-height: 10px;
+    font-size: 2.5em;
+  }
+  .left-detail {
+    margin-top: 5vh;
+    h2 {
+      color: white;
+    }
   }
 `;
 const DivNotification = styled.div`
@@ -128,6 +138,7 @@ const DivNotification = styled.div`
     list-style-position: inside;
     word-break: keep-all;
     margin-right: auto;
+    line-height: 2em;
   }
 
   ol {
