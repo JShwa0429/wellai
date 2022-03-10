@@ -44,8 +44,8 @@ const ExcercisePage = () => {
     course
       .getDetailInformation(id as string)
       .then((res) => {
-        // setCourseList((courseListRef.current = res.data.exercises));
-        setCourseList((courseListRef.current = ['58', '58', '58']));
+        setCourseList((courseListRef.current = res.data.exercises));
+        // setCourseList((courseListRef.current = ['58', '58', '58']));
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
       .catch((err) => console.log(err.response));
