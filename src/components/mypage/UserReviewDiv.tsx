@@ -11,13 +11,13 @@ const ReviewDiv: React.FunctionComponent<{
   onRemove: (id: string) => void;
 }> = ({ reviewData, onRemove, loading }) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
-
+  const cut = 5;
   return (
     <Div>
       {reviewData.map((data: UserReviewType, idx: number) => {
         return (
-          pageNumber * 10 > idx &&
-          idx > (pageNumber - 1) * 10 - 1 && (
+          pageNumber * cut > idx &&
+          idx > (pageNumber - 1) * cut - 1 && (
             <Link to={`../../course/${data.course_id.id}`}>
               <UserReview {...data} onRemove={onRemove} key={idx} />
             </Link>
@@ -39,7 +39,7 @@ const ReviewDiv: React.FunctionComponent<{
           onChange={(page) => setPageNumber(page)}
           defaultCurrent={1}
           total={reviewData.length}
-          pageSize={10}
+          pageSize={cut}
           style={{ margin: '2em 0' }}
         />
       )}

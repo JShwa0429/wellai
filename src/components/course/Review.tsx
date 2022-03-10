@@ -4,6 +4,7 @@ import { FiDelete } from 'react-icons/fi';
 import { CourseApi } from 'api';
 import React from 'react';
 import { ReviewType } from 'type';
+import Cookies from 'js-cookie';
 
 export type EditReviewProps = {
   onRemove: (id: string) => void;
@@ -22,11 +23,13 @@ const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id
   };
   return (
     <Div>
-      <div className="close">
-        <button onClick={removeReview}>
-          <FiDelete size="1.5em" />
-        </button>
-      </div>
+      {user_id === Cookies.get('nickname') && (
+        <div className="close">
+          <button onClick={removeReview}>
+            <FiDelete size="1.5em" />
+          </button>
+        </div>
+      )}
 
       <div>
         <b>{user_id}</b>
