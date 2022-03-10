@@ -8,9 +8,9 @@ interface requestApiOptions {
   readonly getCourse: () => AxiosPromise<Api.courseList>;
   readonly searchCourse: (search: string) => AxiosPromise<Api.courseList>;
   readonly getDetailInformation: (id: string | undefined) => AxiosPromise<Api.detailResponse>;
-  readonly getReview: (id: string) => AxiosPromise<Api.reviewReponse>;
+  readonly getReview: (id: string, pageNumber: number, ordering: string) => AxiosPromise<Api.reviewReponse>;
   readonly getUserReview: () => AxiosPromise<UserReviewType[]>;
-  readonly getReviewOrdering: (id: string, ordering: string) => AxiosPromise<Api.reviewReponse>;
+  // readonly getReviewOrdering: (id: string, ordering: string) => AxiosPromise<Api.reviewReponse>;
   postReview: (id: string, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
   putReview: (id: string, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
   readonly deleteReview: (id: string) => AxiosPromise<void>;
@@ -33,12 +33,14 @@ export const CourseApi = (): requestApiOptions => {
         params: { search: search },
       }),
     getDetailInformation: (id) => axios.get(`/course/${id}`),
-    getReview: (id) => course.get(`/${id}/review`),
-    getUserReview: () => course.get(`/review/collection`),
-    getReviewOrdering: (id, ordering) =>
+    getReview: (id, pageNumber, ordering) =>
       course.get(`/${id}/review`, {
-        params: { ordering: ordering },
+        params: {
+          page: pageNumber,
+          ordering: ordering,
+        },
       }),
+    getUserReview: () => course.get(`/review/collection`),
     postReview: (id, reviewData) =>
       course.post(`/${id}/review`, {
         content: reviewData.content,

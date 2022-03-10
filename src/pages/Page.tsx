@@ -21,6 +21,8 @@ const Div = styled.div`
     display: none;
   }
   section {
+    width: 100vw;
+    min-width: 1000px;
     padding-top: 80px;
     display: flex;
     justify-content: center;

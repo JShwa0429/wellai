@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { SignUpInfo } from '.';
 import SignUpEssential from './SignUpEssential';
 import SignUpOption from './SignUpOption';
-import SignUpLogin from './SignUpLogin';
 const SignUp = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
@@ -20,10 +19,7 @@ const SignUp = () => {
       <SignUpInfo pageNumber={pageNumber} />
       <Div>
         {pageNumber === 1 && <SignUpEssential pageNumber={pageNumber} handleNextPage={handleNextPage} />}
-        {pageNumber === 2 && (
-          <SignUpOption pageNumber={pageNumber} handlePrevPage={handlePrevPage} handleNextPage={handleNextPage} />
-        )}
-        {pageNumber === 3 && <SignUpLogin />}
+        {pageNumber === 2 && <SignUpOption pageNumber={pageNumber} />}
       </Div>
     </>
   );

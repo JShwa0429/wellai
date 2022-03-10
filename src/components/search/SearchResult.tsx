@@ -39,7 +39,7 @@ export default SearchResult;
 
 const Div = styled.div`
   width: 90%;
-  margin: 0 5vw;
+  margin: 0 0 0 180px;
   font-size: 1.5em;
   h2 {
     color: ${(props) => props.theme.defaultText};
@@ -83,7 +83,7 @@ const SummaryDiv = styled.div`
   .bookmark {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
     width: 30px;
   }
   .explain {

@@ -6,20 +6,28 @@ import { detailResponse } from 'api/common';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { Pagination } from 'antd';
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [reviewData, setReviewData] = useState<ReviewType[]>([]);
   const [data, setData] = useState<detailResponse | null>(null);
+  const [ordering, setOrdering] = useState<string>('-created_at');
   const [loading, setLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const cut = 5;
+
+  async function getReview() {
+    const course = CourseApi();
+    await course.getReview(id as string, pageNumber, ordering).then((res) => {
+      console.log(res.data);
+      setReviewData(res.data.results);
+    });
+  }
+
   useEffect(() => {
-    async function getReview() {
-      const course = CourseApi();
-      await course.getReview(id as string).then((res) => {
-        setReviewData(res.data.results);
-      });
-    }
     getReview();
-  }, []);
+  }, [pageNumber, ordering]);
+
   useEffect(() => {
     async function getDetailInformation() {
       const course = CourseApi();
@@ -50,16 +58,8 @@ const CourseDetailPage = () => {
   };
 
   const handleReviewOrdering = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const ordering = event.currentTarget.id;
-    setLoading(true);
-    async function getReviewOrdering(ordering: string) {
-      const course = CourseApi();
-      await course.getReviewOrdering(id as string, ordering).then((res) => {
-        setReviewData(res.data.results);
-        setLoading(false);
-      });
-    }
-    getReviewOrdering(ordering);
+    setPageNumber(1);
+    setOrdering(event.currentTarget.id);
   };
 
   return (
@@ -97,10 +97,10 @@ const CourseDetailPage = () => {
           </div>
           <Comment onAdd={handleAddReview} />
           <DivOrdering>
-            <button id="rating" onClick={handleReviewOrdering}>
+            <button id="-rating" onClick={handleReviewOrdering}>
               평점 높은 순
             </button>
-            <button id="-rating" onClick={handleReviewOrdering}>
+            <button id="rating" onClick={handleReviewOrdering}>
               평점 낮은 순
             </button>
             <button id="-created_at" onClick={handleReviewOrdering}>
@@ -111,6 +111,18 @@ const CourseDetailPage = () => {
             </button>
           </DivOrdering>
           <ReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {reviewData.length > 0 && (
+              <Pagination
+                current={pageNumber}
+                onChange={(page) => setPageNumber(page)}
+                defaultCurrent={1}
+                total={data?.count_review}
+                pageSize={cut}
+                style={{ margin: '2em 0' }}
+              />
+            )}
+          </div>
         </div>
       </div>
     </Div>
@@ -119,6 +131,7 @@ const CourseDetailPage = () => {
 
 export default CourseDetailPage;
 const Div = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,7 +139,7 @@ const Div = styled.div`
   .explain-below {
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    width: 100%;
     margin: 1em 0;
     padding: 0 160px;
   }
@@ -165,8 +178,8 @@ const Div = styled.div`
   }
 `;
 const DivOrdering = styled.div`
+  width: 300px;
   margin-right: auto;
   display: flex;
   justify-content: space-between;
-  width: 50%;
 `;

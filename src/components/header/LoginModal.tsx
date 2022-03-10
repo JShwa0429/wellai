@@ -3,7 +3,9 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, Modal, Form, Button, Input, Divider, message } from 'antd';
 import styled from 'styled-components';
-import { MyPageApi, UserApi } from 'api';
+import { UserApi } from 'api';
+import { useDispatch } from 'react-redux';
+import { nicknameChange } from 'features/myPageSlice';
 type Props = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,32 +19,28 @@ const LOGONAME = 'WellAi.';
 
 const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
   const navigate = useNavigate();
-  const onFinish = async ({ email, password }: LoginForm) => {
+  const dispatch = useDispatch();
+  const onFinish = ({ email, password }: LoginForm) => {
     const user = UserApi();
-    const mypage = MyPageApi();
-    await user
+    user
       .logIn(email, password)
       .then((res) => {
-        const { refresh, access } = res.data;
+        const { refresh, access, nickname } = res.data;
         Cookies.set('access', access, { path: '/', expires: 1 });
         Cookies.set('refresh', refresh, { path: '/', expires: 7 });
-        mypage.getUserInformation().then((res) => {
-          const { nickname } = res.data;
-          Cookies.set('nickname', nickname, { path: '/', expires: 7 });
-          message.success(`${nickname}님 환영합니다.`);
-        });
+        message.success(`${nickname}님 환영합니다.`);
+        dispatch(nicknameChange(nickname));
         setIsModalVisible(false);
         navigate('/');
       })
       .catch(() => message.info('아이디와 패스워드를 확인해주세요.'));
+
     // const result = await axios.post('/users/login', { email, password });
     // // const { refresh, access } = result.data;
     // // Cookies.set('access', access, { path: '/', expires: 1 });
     // // Cookies.set('refresh', refresh, { path: '/', expires: 7 });
     // // setIsModalVisible(false);
     // // navigate('/');
-
-    return;
   };
   return (
     <Modal width="450px" visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>

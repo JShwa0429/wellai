@@ -57,7 +57,7 @@ const CourseExplain: React.FunctionComponent = () => {
               </svg>
             </div>
             <div className="star-rate">
-              <p>{data?.avg_rating}</p>
+              <p style={{ paddingBottom: '5px' }}>{data?.avg_rating}</p>
             </div>
           </div>
           <div className="start">
@@ -87,7 +87,7 @@ const CourseExplain: React.FunctionComponent = () => {
 export default CourseExplain;
 
 const DivCourseDetail = styled.div`
-  width: 100vw;
+  width: 100%;
   // background: linear-gradient(to right, rgba(255, 114, 114, 0.3), rgba(255, 114, 114, 0.1));
 
   background: #fbeaeb;
@@ -97,6 +97,7 @@ const DivCourseDetail = styled.div`
   align-items: center;
 `;
 const DivBanner = styled.div`
+  min-height: 250px;
   height: 30vh;
   margin: 2em 0;
   display: flex;
@@ -104,7 +105,7 @@ const DivBanner = styled.div`
   .image {
     width: 50%;
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     overflow: hidden;
   }
@@ -132,7 +133,6 @@ const Explain = styled.div`
   .rate {
     display: flex;
     align-items: center;
-    vertical-align: middle;
     .star-rate {
       font-size: 23px;
     }
