@@ -32,7 +32,6 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
           message.info(`${nickname}님 환영합니다.`);
         });
         setIsModalVisible(false);
-
         navigate('/');
       })
       .catch(() => message.info('아이디와 패스워드를 확인해주세요.'));

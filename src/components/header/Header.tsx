@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Cookies from 'js-cookie';
 import { Row, Col, Button, Input, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
@@ -37,6 +37,10 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   });
+
+  const nickname = useMemo(() => {
+    return Cookies.get('nickname');
+  }, [Cookies]);
   return (
     <Wrapper scrollLocation={scrollPosition}>
       <Row justify="space-between" align="middle">
@@ -141,21 +145,23 @@ const Header = () => {
                     로그아웃
                   </Button>
                 </Col>
-                <Col
-                  style={{
-                    position: 'absolute',
-                    right: '-45px',
-                    width: '33px',
-                    height: '33px',
-                    borderRadius: '75px',
-                    backgroundColor: '#8aaae5',
-                    textAlign: 'center',
-                    lineHeight: '33px',
-                    color: 'white',
-                  }}
-                >
-                  닉
-                </Col>
+                {nickname && (
+                  <Col
+                    style={{
+                      position: 'absolute',
+                      right: '-45px',
+                      width: '33px',
+                      height: '33px',
+                      borderRadius: '75px',
+                      backgroundColor: '#8aaae5',
+                      textAlign: 'center',
+                      lineHeight: '33px',
+                      color: 'white',
+                    }}
+                  >
+                    {nickname?.slice(0, 1)}
+                  </Col>
+                )}
               </>
             )}
           </Row>
