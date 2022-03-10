@@ -6,6 +6,7 @@ import {
   AuthPage,
   TestPage,
   ExercisePage,
+  ExercisePage2,
   SearchPage,
   CoursePage,
   MainRenderPage,
@@ -33,10 +34,10 @@ function App() {
   let isAlreadyFetchingAccessToken = false;
   axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
+
   if (Cookies.get('access')) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}`;
   }
-  // useEffect(() => {}, []);
 
   const signout = () => {
     Cookies.remove('access');
@@ -67,8 +68,8 @@ function App() {
       // 엑세스토큰 만료된 경우
       if (
         !isAlreadyFetchingAccessToken &&
-        fromWhere !== '/users/token/refresh' &&
-        error.response.data.code === 'token_not_valid'
+        fromWhere !== '/users/token/refresh'
+        // error.response.data.code === 'token_not_valid'
       ) {
         isAlreadyFetchingAccessToken = true;
         try {
@@ -115,10 +116,12 @@ function App() {
           <Route path="/mypage/edit" element={<AuthRoute element={MyPageEdit} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
+
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/exercise/:id" element={<AuthRoute element={ExercisePage} />} />
-        <Route path="/private" element={<AuthRoute element={AuthPage} />} />
-        <Route path="/test" element={<PublicRoute element={TestPage} />} />
+
+        <Route path="/exercise/:id" element={<ExercisePage2 />} />
+        <Route path="/exercise/:id/2" element={<ExercisePage />} />
       </Routes>
     </>
     // </BrowserRouter>

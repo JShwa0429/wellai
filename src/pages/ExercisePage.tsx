@@ -21,6 +21,7 @@ const ExcercisePage = () => {
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
   const course = CourseApi();
+
   useEffect(() => {
     async function getDetailInformation() {
       await course.getDetailInformation(id as string).then((res) => {
