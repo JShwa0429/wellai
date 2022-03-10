@@ -108,6 +108,7 @@ function App() {
 
           <Route path="/search" element={<SearchPage />} />
           <Route path="/guide/:id" element={<AuthRoute element={GuidePage} />} />
+          <Route path="/mypage" element={<Navigate to="/mypage/report" />} />
           <Route path="/mypage/report" element={<AuthRoute element={MyPageReport} />} />
           <Route path="/mypage/like" element={<AuthRoute element={MyPageLike} />} />
           <Route path="/mypage/comment" element={<AuthRoute element={MyPageComment} />} />
