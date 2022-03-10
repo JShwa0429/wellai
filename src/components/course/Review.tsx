@@ -4,7 +4,6 @@ import { FiDelete } from 'react-icons/fi';
 import { CourseApi } from 'api';
 import React from 'react';
 import { ReviewType } from 'type';
-import Cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 
@@ -12,7 +11,7 @@ export type EditReviewProps = {
   onRemove: (id: string) => void;
 };
 
-const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id, id, rating, content, onRemove }) => {
+const Review: React.FunctionComponent<ReviewType & EditReviewProps> = ({ user_id, id, rating, content }) => {
   const nickname = useSelector((state: RootState) => state.myPage.nickname);
   const removeReview = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

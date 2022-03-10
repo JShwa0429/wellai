@@ -11,8 +11,6 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = {
   pageNumber: number;
-  handlePrevPage: () => void;
-  handleNextPage: () => void;
 };
 
 type Preference = {
@@ -21,7 +19,7 @@ type Preference = {
   checked: boolean;
 };
 
-const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPage }) => {
+const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber }) => {
   const [gender, setGender] = useState<string | null>(null);
   const [weight, setWeight] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);

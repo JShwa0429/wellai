@@ -3,9 +3,8 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, Modal, Form, Button, Input, Divider, message } from 'antd';
 import styled from 'styled-components';
-import { MyPageApi, UserApi } from 'api';
+import { UserApi } from 'api';
 import { useDispatch } from 'react-redux';
-import { RootState } from 'store';
 import { nicknameChange } from 'features/myPageSlice';
 type Props = {
   isModalVisible: boolean;
