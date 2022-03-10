@@ -131,6 +131,7 @@ const CourseDetailPage = () => {
 
 export default CourseDetailPage;
 const Div = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,7 +139,7 @@ const Div = styled.div`
   .explain-below {
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    width: 100%;
     margin: 1em 0;
     padding: 0 160px;
   }
