@@ -2,28 +2,34 @@ import axios, { AxiosInstance, AxiosPromise } from 'axios';
 import type * as Api from './common';
 
 interface requestApiOptions {
-  readonly signup: AxiosInstance;
+  readonly user: AxiosInstance;
   checkValidation: (userAccountInfo: Api.validationRequest) => AxiosPromise<Api.validationResponse>;
   signUpAccount: (signUp: Api.signupRequest) => AxiosPromise<Api.signupResponse>;
+  logIn: (email: string, password: string) => AxiosPromise<{ refresh: string; access: string }>;
 }
 
 export const UserApi = (): requestApiOptions => {
-  const signup = axios.create({
+  const user = axios.create({
     baseURL: '/api/users',
   });
   return {
-    signup,
+    user,
     checkValidation: (userAccountInfo) =>
-      signup.post('/check', {
+      user.post('/check', {
         email: userAccountInfo.email,
         password: userAccountInfo.password,
         confirm_password: userAccountInfo.confirmPassword,
       }),
     signUpAccount: (signUp) =>
-      signup.post('/register', {
+      user.post('/register', {
         email: signUp.email,
         password: signUp.password,
         options: signUp.options,
+      }),
+    logIn: (email, password) =>
+      user.post('/login', {
+        email: email,
+        password: password,
       }),
   };
 };

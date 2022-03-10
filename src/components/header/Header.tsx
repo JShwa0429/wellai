@@ -18,6 +18,7 @@ const Header = () => {
   const handleSignOut = () => {
     Cookies.remove('access');
     Cookies.remove('refresh');
+    Cookies.remove('nickname');
     navigate('/');
   };
   const onSearch = () => {
