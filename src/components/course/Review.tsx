@@ -45,15 +45,14 @@ const Div = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.border};
   position: relative;
   b {
-    font-size: 1.5em;
+    font-size: 1.3em;
     margin-right: 1em;
   }
-
   .comment {
-    margin-top: 1em;
+    color: grey;
   }
-
   .close {
+    padding-top: 1%;
     position: absolute;
     right: 3%;
   }
