@@ -58,7 +58,7 @@ const Div = styled.div`
   }
 
   .comment {
-    margin-top: 1em;
+    margin-top: 0.5em;
   }
 
   .close {
