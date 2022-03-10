@@ -12,7 +12,7 @@ interface requestApiOptions {
 
 export const MyPageApi = (): requestApiOptions => {
   const mypage = axios.create({
-    baseURL: '/api/users',
+    baseURL: 'http://127.0.0.1:8000/api/users',
   });
   return {
     mypage,

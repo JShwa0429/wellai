@@ -22,7 +22,7 @@ interface requestApiOptions {
 
 export const CourseApi = (): requestApiOptions => {
   const course = axios.create({
-    baseURL: '/api/course',
+    baseURL: `${process.env.REACT_APP_NEXT_PUBLIC_BASE_URL}/course`,
   });
   return {
     course,
