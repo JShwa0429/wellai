@@ -63,4 +63,12 @@ export default Summary;
 const Div = styled.div`
   height: 250px;
   object-fit: cover;
+  .explain {
+    .title {
+      font-size: 18px;
+    }
+    .hashTag {
+      font-size: 13px;
+    }
+  }
 `;
