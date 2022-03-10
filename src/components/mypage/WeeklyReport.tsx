@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Row, Col, Statistic, Radio, DatePicker } from 'antd';
-import { ClockCircleOutlined, DashboardOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined, DashboardOutlined, FastForwardFilled } from '@ant-design/icons';
 import ReactApexChart from 'react-apexcharts';
 
 import styled from 'styled-components';
@@ -35,11 +35,14 @@ const WeeklyReport = () => {
   }, [date]);
 
   const getMonthlyReport = async () => {
-    const mypage = MyPageApi();
-    mypage.getRecordsMonth(date.month, date.year).then((res) => {
-      setMonthlyRecord(res.data[0]);
-      setRecords(res.data[0].records);
-    });
+    async function getRecordsMonth() {
+      const mypage = MyPageApi();
+      await mypage.getRecordsMonth(date.month, date.year).then((res) => {
+        setMonthlyRecord(res.data[0]);
+        setRecords(res.data[0].records);
+      });
+    }
+    getRecordsMonth();
   };
 
   const DailyRecordTime = useMemo(() => {
@@ -73,6 +76,9 @@ const WeeklyReport = () => {
   const options = {
     chart: {
       id: 'basic-bar',
+    },
+    dataLabels: {
+      enabled: false,
     },
     xaxis: {
       categories: category,

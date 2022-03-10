@@ -9,10 +9,12 @@ import Cookies from 'js-cookie';
 const Banner = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
   useEffect(() => {
-    const course = CourseApi();
-    course.recommendCourse().then((res) => {
+    async function getRecommendCourse() {
+      const course = CourseApi();
+      const res = await course.recommendCourse();
       setDatas(res.data);
-    });
+    }
+    getRecommendCourse();
   }, []);
   return (
     <Div>

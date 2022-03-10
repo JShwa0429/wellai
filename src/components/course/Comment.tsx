@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { CourseApi } from 'api';
 import { ReviewType } from 'type';
 import Cookies from 'js-cookie';
+import { WindowsFilled } from '@ant-design/icons';
 
 const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void }> = ({ onAdd }) => {
   const { id } = useParams();
@@ -12,28 +13,29 @@ const Comment: React.FunctionComponent<{ onAdd: (reviewData: ReviewType) => void
   const [textAreaValue, setTextAreaValue] = useState('');
 
   const handleCommentSubmit = () => {
-    const course = CourseApi();
-
-    course
-      .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
-      .then((res) => {
-        if (res.status === 429) message.info('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
-        else {
-          onAdd(res.data);
-          setTextAreaValue('');
-          setRateValue(3);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) message.info('이미 이 코스에 대한 리뷰가 있습니다!');
-      });
+    async function PostReview() {
+      const course = CourseApi();
+      await course
+        .postReview(id as string, { rating: rateValue, content: textAreaValue.trim(), course_id: id })
+        .then((res) => {
+          if (res.status === 429) message.info('방금 전에 댓글을 달았습니다. 잠시 후에 시도 해주세요.');
+          else {
+            setTextAreaValue('');
+            setRateValue(3);
+            location.reload();
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 400) message.info('이미 이 코스에 대한 리뷰가 있습니다!');
+        });
+    }
+    PostReview();
   };
 
   return (
     <Div>
       <Rating
         disabled={Cookies.get('refresh') ? false : true}
-        allowHalf
         defaultValue={rateValue}
         onChange={setRateValue}
         style={{ marginRight: 'auto' }}
@@ -81,12 +83,13 @@ export const Rating = styled(Rate)`
 
 const TextArea = styled.textarea`
   width: 90%;
-  border: 0.5px solid black;
+  border: 0.1px solid black;
   padding: 2%;
   resize: none;
   ::placeholder {
     color: ${(props) => props.theme.border};
   }
+  outline-color: #888;
 `;
 const Button = styled.button`
   width: 10%;

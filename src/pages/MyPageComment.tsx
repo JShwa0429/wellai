@@ -1,17 +1,22 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import { MyPageLayout, UserReviewDiv } from 'components';
 import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
 
 const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const course = CourseApi();
-    course.getUserReview().then((res) => {
-      setReviewData(res.data);
-    });
+    async function getUserReview() {
+      const course = CourseApi();
+      await course.getUserReview().then((res) => {
+        setReviewData(res.data);
+        setLoading(false);
+      });
+    }
+    getUserReview();
   }, []);
 
   const handleRemoveReview = (id: string) => {
@@ -45,14 +50,14 @@ const MyPageComment = () => {
           <Row
             style={{
               paddingTop: '30px',
-              paddingLeft: '50px',
+              marginLeft: '47px',
             }}
           >
             <Col style={{ fontSize: '20px' }}>내 댓글 보관함</Col>
           </Row>
           <Row>
-            <Col style={{ width: '1000px' }}>
-              <UserReviewDiv reviewData={reviewData} onRemove={handleRemoveReview} />
+            <Col style={{ width: '800px', marginLeft: '47px' }}>
+              <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
             </Col>
           </Row>
         </Col>

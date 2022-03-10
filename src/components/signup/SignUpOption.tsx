@@ -66,17 +66,20 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
       options: options,
     };
 
-    const signupApi = UserApi();
-    signupApi
-      .signUpAccount(data)
-      .then((res) => {
-        if (res.status === 201) handleNextPage();
-        else message.info('회원가입 실패');
-      })
-      .catch((err) => {
-        message.info('회원가입 실패');
-      });
-    //handleNextPage();
+    const user = UserApi();
+    async function signupAccount() {
+      await user
+        .signUpAccount(data)
+        .then((res) => {
+          if (res.status === 201) handleNextPage();
+          else message.info('회원가입 실패');
+        })
+        .catch(() => {
+          message.info('회원가입 실패');
+        });
+      //handleNextPage();
+    }
+    signupAccount();
   };
 
   const checkboxDisable = useMemo(() => {
@@ -204,7 +207,7 @@ const InputDiv = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-  margin-top: auto;
+  margin-top: 2em;
   width: 100%;
   heigt: 100%;
   display: flex;

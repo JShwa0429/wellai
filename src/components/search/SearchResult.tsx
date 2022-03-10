@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import { CourseApi } from 'api';
 import Summary from 'components/common/Summary';
 import { detailResponse } from 'api/common';
+import { Empty } from 'antd';
 
 const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
   useEffect(() => {
-    const course = CourseApi();
-    course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+    async function searchCourse() {
+      const course = CourseApi();
+      await course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+    }
+    searchCourse();
   }, [keyword]);
 
   return (
@@ -26,6 +30,7 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
           );
         })}
       </CardDiv>
+      {datas.length < 1 && <Empty description={'검색 결과가 없습니다'} />}
     </Div>
   );
 };

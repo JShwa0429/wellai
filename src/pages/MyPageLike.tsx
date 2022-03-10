@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row, Col } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import { MyPageLayout } from 'components';
 import { Link } from 'react-router-dom';
 import Summary from 'components/common/Summary';
@@ -13,11 +13,16 @@ const MyPageLike = () => {
   // const { value } = useAppSelector((state) => state.test, shallowEqual);
 
   const [courseList, setCourseList] = useState<bookmark[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    const course = CourseApi();
-    course.getBookmark().then((res) => {
-      setCourseList(res.data);
-    });
+    async function getBookmark() {
+      const course = CourseApi();
+      await course.getBookmark().then((res) => {
+        setCourseList(res.data);
+        setLoading(false);
+      });
+    }
+    getBookmark();
   }, []);
 
   return (
@@ -47,7 +52,7 @@ const MyPageLike = () => {
             <Col>
               <Row
                 style={{
-                  marginBottom: '30px',
+                  marginBottom: '10px',
                 }}
               >
                 <Col style={{ fontSize: '20px' }}>좋아요 보관함</Col>
@@ -66,6 +71,11 @@ const MyPageLike = () => {
                   : ``}
               </CardDiv>
             </Col>
+            {!loading && courseList.length < 1 && (
+              <Col style={{ width: '80%' }}>
+                <Empty style={{ marginTop: '40px' }} description={'좋아요한 코스가 없습니다'} />
+              </Col>
+            )}
           </Row>
         </Col>
       </Row>
@@ -80,6 +90,7 @@ const Wrapper = styled.div`
 `;
 const CardDiv = styled.div`
   display: grid;
+  margin: 1em 0;
   grid-template-columns: repeat(3, 250px);
   gap: 2%;
   margin: auto;
@@ -109,7 +120,7 @@ const SummaryDiv = styled.div`
   .bookmark {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
     width: 30px;
   }
   .explain {

@@ -1,10 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Modal, Form, Button, Input, Divider, Image } from 'antd';
+import { Row, Col, Modal, Form, Button, Input, Divider, message } from 'antd';
 import styled from 'styled-components';
-import KakaoLogin from 'react-kakao-login';
+import { MyPageApi, UserApi } from 'api';
 type Props = {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,18 +18,34 @@ const LOGONAME = 'WellAi.';
 const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
   const navigate = useNavigate();
   const onFinish = async ({ email, password }: LoginForm) => {
-    const result = await axios.post('/users/login', { email, password });
-
-    const { refresh, access } = result.data;
-    Cookies.set('access', access, { path: '/', expires: 1 });
-    Cookies.set('refresh', refresh, { path: '/', expires: 7 });
-    setIsModalVisible(false);
-    navigate('/');
+    const user = UserApi();
+    const mypage = MyPageApi();
+    await user
+      .logIn(email, password)
+      .then((res) => {
+        const { refresh, access } = res.data;
+        Cookies.set('access', access, { path: '/', expires: 1 });
+        Cookies.set('refresh', refresh, { path: '/', expires: 7 });
+        mypage.getUserInformation().then((res) => {
+          const { nickname } = res.data;
+          Cookies.set('nickname', nickname, { path: '/', expires: 7 });
+          message.success(`${nickname}님 환영합니다.`);
+        });
+        setIsModalVisible(false);
+        navigate('/');
+      })
+      .catch(() => message.info('아이디와 패스워드를 확인해주세요.'));
+    // const result = await axios.post('/users/login', { email, password });
+    // // const { refresh, access } = result.data;
+    // // Cookies.set('access', access, { path: '/', expires: 1 });
+    // // Cookies.set('refresh', refresh, { path: '/', expires: 7 });
+    // // setIsModalVisible(false);
+    // // navigate('/');
 
     return;
   };
   return (
-    <Modal visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
+    <Modal width="450px" visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
       <Wrapper>
         <Row justify="center">
           <Col>
@@ -91,41 +106,6 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
               </Form.Item>
             </Form>
             <Divider />
-
-            <Row>
-              <KakaoLogin
-                token={String(process.env.REACT_APP_KAKAO_APP_KEY)}
-                onSuccess={(result) => {
-                  setIsModalVisible(false);
-                }}
-                onFail={() => {
-                  console.log('로그인실패');
-                }}
-                onLogout={() => {
-                  console.log('로그아웃');
-                }}
-                render={({ onClick }) => (
-                  <Col>
-                    <Image
-                      style={{
-                        cursor: 'pointer',
-                      }}
-                      preview={false}
-                      src={'/image/kakao_login_large_wide.png'}
-                      alt="asdasd"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onClick();
-                      }}
-                      onKeyDown={(e) => {
-                        e.preventDefault();
-                        onClick();
-                      }}
-                    />
-                  </Col>
-                )}
-              />
-            </Row>
           </Col>
         </Row>
       </Wrapper>
@@ -144,5 +124,5 @@ const Wrapper = styled.div`
   div.ant-form-item-label {
     padding-bottom: 0;
   }
-  padding: 0 10% 10% 10%;
+  // padding: 0 10% 10% 10%;
 `;

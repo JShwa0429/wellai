@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Cookies from 'js-cookie';
 import { Row, Col, Button, Input, message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
@@ -18,6 +18,7 @@ const Header = () => {
   const handleSignOut = () => {
     Cookies.remove('access');
     Cookies.remove('refresh');
+    Cookies.remove('nickname');
     navigate('/');
   };
   const onSearch = () => {
@@ -36,6 +37,10 @@ const Header = () => {
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   });
+
+  const nickname = useMemo(() => {
+    return Cookies.get('nickname');
+  }, [Cookies]);
   return (
     <Wrapper scrollLocation={scrollPosition}>
       <Row justify="space-between" align="middle">
@@ -123,22 +128,41 @@ const Header = () => {
                 </Col>
               </>
             ) : (
-              <Col
-                style={{
-                  marginLeft: '30px',
-                }}
-              >
-                <Button
-                  type="primary"
+              <>
+                <Col
                   style={{
-                    width: '100px',
-                    borderRadius: '5px',
+                    marginLeft: '30px',
                   }}
-                  onClick={handleSignOut}
                 >
-                  로그아웃
-                </Button>
-              </Col>
+                  <Button
+                    type="primary"
+                    style={{
+                      width: '100px',
+                      borderRadius: '5px',
+                    }}
+                    onClick={handleSignOut}
+                  >
+                    로그아웃
+                  </Button>
+                </Col>
+                {nickname && (
+                  <Col
+                    style={{
+                      position: 'absolute',
+                      right: '-45px',
+                      width: '33px',
+                      height: '33px',
+                      borderRadius: '75px',
+                      backgroundColor: '#8aaae5',
+                      textAlign: 'center',
+                      lineHeight: '33px',
+                      color: 'white',
+                    }}
+                  >
+                    {nickname?.slice(0, 1)}
+                  </Col>
+                )}
+              </>
             )}
           </Row>
         </Col>
@@ -162,6 +186,12 @@ const Wrapper = styled.div<WrapperProps>`
   background-color: ${({ scrollLocation }) => (scrollLocation > 1 ? 'white' : 'transparent')};
   transition: background 0.5s, border 0.5s;
   z-index: 999;
+  // background: #2d2926;
+  // // background: #fce77d;
+  // // background: #ffb259;
+  // // background: #ffcf98;
+  // // background: #4a171e;
+  // // background: #8aaae5;
 `;
 
 export default Header;

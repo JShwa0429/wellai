@@ -10,20 +10,23 @@ const Summary: React.FunctionComponent<detailResponse> = ({ id, course_name, img
   const handleBookmark = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    const course = CourseApi();
-    if (toggle) {
-      course
-        .deleteBookmark(id as string)
-        .then(() => setToggle(false))
-        .catch(() => message.info('북마크 삭제가 실패했습니다.'));
-    } else if (!toggle) {
-      course
-        .postBookmark(id as string)
-        .then(() => setToggle(true))
-        .catch((err) => {
-          if (err.response.status === 400) message.info('이미 북마크된 코스입니다.');
-        });
+    async function editBookmark() {
+      const course = CourseApi();
+      if (toggle) {
+        await course
+          .deleteBookmark(id as string)
+          .then(() => setToggle(false))
+          .catch(() => message.info('북마크 삭제가 실패했습니다.'));
+      } else if (!toggle) {
+        await course
+          .postBookmark(id as string)
+          .then(() => setToggle(true))
+          .catch((err) => {
+            if (err.response.status === 400) message.info('이미 북마크된 코스입니다.');
+          });
+      }
     }
+    editBookmark();
   };
   return (
     <Div>
