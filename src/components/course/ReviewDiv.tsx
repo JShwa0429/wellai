@@ -9,15 +9,10 @@ const ReviewDiv: React.FunctionComponent<{
   reviewData: ReviewType[];
   onRemove: (id: string) => void;
 }> = ({ reviewData, onRemove, loading }) => {
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const cut = 5;
   return (
     <Div>
       {reviewData.map((data: ReviewType, idx: number) => {
-        return (
-          pageNumber * cut > idx &&
-          idx > (pageNumber - 1) * cut - 1 && <Review {...data} onRemove={onRemove} key={idx} />
-        );
+        return <Review {...data} onRemove={onRemove} key={idx} />;
       })}
       {!loading && reviewData.length < 1 && (
         <>
@@ -27,16 +22,6 @@ const ReviewDiv: React.FunctionComponent<{
             <br /> 첫 리뷰를 남겨주세요
           </p>
         </>
-      )}
-      {reviewData.length > 0 && (
-        <Pagination
-          current={pageNumber}
-          onChange={(page) => setPageNumber(page)}
-          defaultCurrent={1}
-          total={reviewData.length}
-          pageSize={cut}
-          style={{ margin: '2em 0' }}
-        />
       )}
     </Div>
   );

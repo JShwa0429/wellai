@@ -29,10 +29,10 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
         const { refresh, access, nickname } = res.data;
         Cookies.set('access', access, { path: '/', expires: 1 });
         Cookies.set('refresh', refresh, { path: '/', expires: 7 });
-        message.info(`${nickname}님 환영합니다.`);
+        message.success(`${nickname}님 환영합니다.`);
         dispatch(nicknameChange(nickname));
         setIsModalVisible(false);
-        // navigate('/');
+        navigate('/');
       })
       .catch(() => message.info('아이디와 패스워드를 확인해주세요.'));
 
@@ -42,8 +42,6 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
     // // Cookies.set('refresh', refresh, { path: '/', expires: 7 });
     // // setIsModalVisible(false);
     // // navigate('/');
-
-    return;
   };
   return (
     <Modal width="450px" visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>

@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { OptionType } from 'type';
 import { UserApi } from 'api';
 import { message } from 'antd';
+import Cookies from 'js-cookie';
+import { nicknameChange } from 'features/myPageSlice';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   pageNumber: number;
@@ -31,6 +34,8 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
     { id: '5', text: '밸런스', checked: false },
   ]);
   const signUp = useSelector((state: RootState) => state.signUp);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCheckPreference = (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.id;
@@ -47,6 +52,29 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
     { id: 'M', text: '남' },
     { id: 'F', text: '여' },
   ];
+
+  const onFinish = () => {
+    const user = UserApi();
+    user
+      .logIn(signUp.email, signUp.password)
+      .then((res) => {
+        const { refresh, access, nickname } = res.data;
+        Cookies.set('access', access, { path: '/', expires: 1 });
+        Cookies.set('refresh', refresh, { path: '/', expires: 7 });
+        message.success(`${nickname}님 환영합니다.`);
+        dispatch(nicknameChange(nickname));
+        navigate('/');
+      })
+      .catch(() => message.info('아이디와 패스워드를 확인해주세요.'));
+
+    // const result = await axios.post('/users/login', { email, password });
+    // // const { refresh, access } = result.data;
+    // // Cookies.set('access', access, { path: '/', expires: 1 });
+    // // Cookies.set('refresh', refresh, { path: '/', expires: 7 });
+    // // setIsModalVisible(false);
+    // // navigate('/');
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const options: OptionType = {
@@ -71,7 +99,7 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber, handleNextPa
       await user
         .signUpAccount(data)
         .then((res) => {
-          if (res.status === 201) handleNextPage();
+          if (res.status === 201) onFinish();
           else message.info('회원가입 실패');
         })
         .catch(() => {

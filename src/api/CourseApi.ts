@@ -8,7 +8,7 @@ interface requestApiOptions {
   readonly getCourse: () => AxiosPromise<Api.courseList>;
   readonly searchCourse: (search: string) => AxiosPromise<Api.courseList>;
   readonly getDetailInformation: (id: string | undefined) => AxiosPromise<Api.detailResponse>;
-  readonly getReview: (id: string) => AxiosPromise<Api.reviewReponse>;
+  readonly getReview: (id: string, pageNumber: number) => AxiosPromise<Api.reviewReponse>;
   readonly getUserReview: () => AxiosPromise<UserReviewType[]>;
   readonly getReviewOrdering: (id: string, ordering: string) => AxiosPromise<Api.reviewReponse>;
   postReview: (id: string, reviewData: Api.reviewRequest) => AxiosPromise<Api.review>;
@@ -33,7 +33,12 @@ export const CourseApi = (): requestApiOptions => {
         params: { search: search },
       }),
     getDetailInformation: (id) => axios.get(`/course/${id}`),
-    getReview: (id) => course.get(`/${id}/review`),
+    getReview: (id, pageNumber: number) =>
+      course.get(`/${id}/review`, {
+        params: {
+          page: pageNumber,
+        },
+      }),
     getUserReview: () => course.get(`/review/collection`),
     getReviewOrdering: (id, ordering) =>
       course.get(`/${id}/review`, {
