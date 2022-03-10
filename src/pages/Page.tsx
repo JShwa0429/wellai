@@ -12,14 +12,20 @@ const Page = () => {
 };
 
 const Div = styled.div`
-  font-family: 'Noto Sans KR', 'sans-serif';
   width: 100vw;
-  height: 100vh;
+  height: max-content;
   overflow: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
     display: none;
+  }
+  section {
+    width: 100vw;
+    min-width: 1000px;
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
   }
 `;
 export default Page;

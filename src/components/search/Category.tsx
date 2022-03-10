@@ -25,6 +25,6 @@ const Div = styled.div`
   flex-direction: column;
   justity-content: center;
 
-  height: 30vh;
+  height: 40vh;
   width: 100%;
 `;

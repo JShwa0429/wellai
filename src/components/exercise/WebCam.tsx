@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import styled from 'styled-components';
 const WebCam = () => {
   const CONSTRAINTS = { video: true };
   const videoRef = useRef<HTMLVideoElement>(null);

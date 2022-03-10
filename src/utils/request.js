@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const BASE_URL = 'http://localhost:3000';
-const DOMAIN = 'http://localhost:8030';
+const BASE_URL = 'http://127.0.0.1:3000';
+const DOMAIN = 'http://127.0.0.1:8030';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = `http://localhost:3000`;
+axios.defaults.baseURL = `http://127.0.0.1:3000`;
 
 const req = (
   method,
@@ -28,12 +28,8 @@ const req = (
       return cb(res);
     })
     .catch((e) => {
-      // for development
-      // console.log(e);
-      // console.log(e.response);
       const { status, data, config } = e.response;
       if (!e.response || e.message === 'Network Error') {
-        console.log('Server Error!');
         return { status, data, config };
       }
       if (status === 401) {

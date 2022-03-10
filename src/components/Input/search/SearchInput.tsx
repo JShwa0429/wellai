@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
 import React, { useRef } from 'react';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 const SearchInput = () => {
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -16,7 +17,7 @@ const SearchInput = () => {
     event.preventDefault();
     const keyword = searchRef.current?.value;
     if (keyword) navigate('/search', { state: keyword });
-    else alert('검색어를 입력해주세요');
+    else message.info('검색어를 입력해주세요');
   };
   return (
     <Form onSubmit={handleSubmit} name="form" ref={formRef}>

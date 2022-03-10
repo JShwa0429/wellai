@@ -1,50 +1,36 @@
-import Summary from 'components/common/Summary';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { SummaryProps } from 'components/common/Summary';
 import { Link } from 'react-router-dom';
+import { CourseApi } from 'api';
+import Summary from 'components/common/Summary';
+import { detailResponse } from 'api/common';
+import { Empty } from 'antd';
 
-const SearchResult: React.FunctionComponent<{ searchTitle: string }> = ({ searchTitle }) => {
-  const [cardData, setCardData] = useState<SummaryProps[]>([
-    {
-      id: '0',
-      title: '절대 빠진다, 하루 1시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-    {
-      id: '1',
-      title: '절대 빠진다, 하루 3시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-    {
-      id: '2',
-      title: '절대 빠진다, 하루 5시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-    {
-      id: '3',
-      title: '절대 빠진다, 하루 7시간! 복부 군살 제거 홈트',
-      duration: ['3주', '주3회', '60분'],
-      hashTags: ['#초중급', '#군살', '#다이어트'],
-    },
-  ]);
+const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
+  const [datas, setDatas] = useState<detailResponse[]>([]);
+  useEffect(() => {
+    async function searchCourse() {
+      const course = CourseApi();
+      await course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+    }
+    searchCourse();
+  }, [keyword]);
+
   return (
     <Div>
-      <h2>{searchTitle}</h2>
+      <h2>검색 결과</h2>
       <CardDiv>
-        {cardData.map((data: SummaryProps, idx: number) => {
+        {datas.map((data: detailResponse, idx: number) => {
           return (
             <SummaryDiv key={idx}>
-              <Link to={`${data.id}`}>
+              <Link to={`../course/${data.id}`}>
                 <Summary {...data} />
               </Link>
             </SummaryDiv>
           );
         })}
       </CardDiv>
+      {datas.length < 1 && <Empty description={'검색 결과가 없습니다'} />}
     </Div>
   );
 };
@@ -52,59 +38,65 @@ const SearchResult: React.FunctionComponent<{ searchTitle: string }> = ({ search
 export default SearchResult;
 
 const Div = styled.div`
-  padding: 0 5vw;
+  width: 90%;
+  margin: 0 5vw;
   font-size: 1.5em;
-  width: 100%;
   h2 {
     color: ${(props) => props.theme.defaultText};
     width: 100%;
-    border-bottom: 1px solid #888;
-    padding: 25px 0;
-    margin: 25px 0;
+    //border-bottom: 1px solid #888;
+    padding-top: 25px;
+    margin-top: 25px;
+    font-size: 1.2em;
   }
 `;
 
 const CardDiv = styled.div`
+  width: 100%;
   display: grid;
-
-  grid-template-columns: repeat(auto-fill, 20%);
-  gap: 5%;
-  padding-left: 5%;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 2%;
+  margin: auto;
+  align-items: center;
+  justify-content: left;
 `;
 
 const SummaryDiv = styled.div`
-display: flex;
-flex-direction: column;
-border 1px solid #BDBDBD;
-overflow: hidden;
-margin:4%;
-font-size:1rem;
-font-weight:bold;
-a{
-  text-decoration:none;
-}
-.image {
-    background-color:#F5F5F5;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid #bdbdbd;
+  overflow: hidden;
+  margin: 4%;
+  font-size: 1rem;
+  font-weight: bold;
+  a {
+    text-decoration: none;
+  }
+  .image {
+    background-color: #f5f5f5;
     img {
-      width:100%;
-      object-fit:cover;
+      width: 100%;
+      object-fit: cover;
     }
-}
-
-
-
-.explain {
-    display:flex;
-    flex-direction:column;
-    padding : 1%;
-    padding-left:3%;
-    text-align:left;
-    background-color:white;
-    div{
-        margin:0.5%;
+  }
+  .bookmark {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+  }
+  .explain {
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    padding-left: 3%;
+    text-align: left;
+    background-color: white;
+    div {
+      margin: 0.5%;
     }
-    float:bottom;
-    
+    float: bottom;
   }
 
   font-weight: bold;

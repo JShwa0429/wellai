@@ -1,5 +1,7 @@
 export { Header } from './header';
-export { default as PublicRoute } from './PublicRoute';
-export { default as AuthRoute } from './AuthRoute';
-export { WebCam } from './course';
-export { Banner, Summary } from './common';
+// export { HeaderTemp } from './headerTemp';
+export { WebCam, Video, Description } from './exercise';
+export { Summary, Loading } from './common';
+export { SignUp, SignUpInfo } from './signup';
+export { MyPageLayout, MonthlyReport, WeeklyReport, UserReview, UserReviewDiv } from './mypage';
+export { Comment, ReviewDiv, CourseExplain, Banner, CourseList } from './course';

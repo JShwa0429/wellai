@@ -1,45 +1,31 @@
 // eslint-disable-next-line
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Option } from 'rc-select';
-
-export type Option = {
-  gender: string | null;
-  height?: number;
-  weight?: number;
-  core: boolean;
-  leg: boolean;
-  back: boolean;
-  sit: boolean;
-  stand: boolean;
-  balance: boolean;
-};
+import { OptionType } from 'type';
 
 export type Essential = {
-  userId: string;
-  nickname: string;
+  email: string;
   password: string;
-  passwordCheck: string;
+  confirmPassword: string;
 };
 
 export type SignUpState = Essential & {
-  option: Option;
+  options: OptionType;
 };
 
 const initialState: SignUpState = {
-  userId: '',
-  nickname: '',
+  email: '',
   password: '',
-  passwordCheck: '',
-  option: {
+  confirmPassword: '',
+  options: {
     gender: null,
     height: 0,
     weight: 0,
-    core: false,
-    leg: false,
-    back: false,
-    sit: false,
-    stand: false,
-    balance: false,
+    is_core: false,
+    is_leg: false,
+    is_back: false,
+    is_sit: false,
+    is_stand: false,
+    is_balance: false,
   },
 };
 
@@ -47,40 +33,25 @@ export const signUpSlice = createSlice({
   name: 'signUp',
   initialState,
   reducers: {
-    emailChange: (state, action: PayloadAction<string>) => {
-      state.userId = action.payload;
-    },
-    nicknameChange: (state, action: PayloadAction<string>) => {
-      state.nickname = action.payload;
-    },
-    passwordChange: (state, action: PayloadAction<string>) => {
-      state.password = action.payload;
-    },
-    passwordCheckChange: (state, action: PayloadAction<string>) => {
-      state.passwordCheck = action.payload;
-    },
-
     saveEssential: (state, action: PayloadAction<Essential>) => {
-      state.userId = action.payload.userId;
-      state.nickname = action.payload.nickname;
+      state.email = action.payload.email;
       state.password = action.payload.password;
-      state.passwordCheck = action.payload.passwordCheck;
+      state.confirmPassword = action.payload.confirmPassword;
     },
 
-    saveOption: (state, action: PayloadAction<Option>) => {
-      state.option.gender = action.payload?.gender;
-      state.option.height = action.payload?.height;
-      state.option.weight = action.payload?.weight;
-      state.option.back = action.payload.back;
-      state.option.core = action.payload.core;
-      state.option.leg = action.payload.leg;
-      state.option.balance = action.payload.balance;
-      state.option.stand = action.payload.stand;
-      state.option.sit = action.payload.sit;
+    saveOptions: (state, action: PayloadAction<OptionType>) => {
+      state.options.gender = action.payload?.gender;
+      state.options.height = action.payload?.height;
+      state.options.weight = action.payload?.weight;
+      state.options.is_back = action.payload.is_back;
+      state.options.is_core = action.payload.is_core;
+      state.options.is_leg = action.payload.is_leg;
+      state.options.is_balance = action.payload.is_balance;
+      state.options.is_stand = action.payload.is_stand;
+      state.options.is_sit = action.payload.is_sit;
     },
   },
 });
 
-export const { emailChange, nicknameChange, passwordChange, passwordCheckChange, saveEssential, saveOption } =
-  signUpSlice.actions;
+export const { saveEssential, saveOptions } = signUpSlice.actions;
 export default signUpSlice.reducer;
