@@ -5,11 +5,11 @@ import { TensorCam, Loading } from 'components/exercise';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { CourseApi } from 'api/CourseApi';
+import { UserApi } from 'api/UserApi';
 import { exercise } from 'api/common';
 import { ImportOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
-// const TARGET_TIME = userPoseIndex === 0 ? 5 : 60;
-const FPS = 10;
 const EXERCISE_TIME = 5;
 const TIME_LIMIT = EXERCISE_TIME * 4;
 
@@ -22,12 +22,11 @@ const ExcercisePage = () => {
   // };
 
   const { id } = useParams();
-  // console.log(id);
-  // const [exercises, setExercises] = useState<string[]>([]);
-  // const [exerciseNumber, setExerciseNumber] = useState<number>();
+
   const [exerciseData, setExerciseData] = useState<exercise>();
   const navigate = useNavigate();
   const course = CourseApi();
+  const user = UserApi();
   const [userPoseIndex, setUserPoseIndex] = useState(-1);
   const userPoseIndexRef = useRef(-1);
   const [timeLimit, setTimeLimit] = useState(TIME_LIMIT);
@@ -40,34 +39,28 @@ const ExcercisePage = () => {
   const courseListRef = useRef(['58']);
 
   const [isLoading, setIsLoading] = useState(true);
-  // const handleStartExercise = () => {
-  //   setInterval(() => setTimeLimit(timeLimit - 1), 1000);
-  // };
+
   useEffect(() => {
-    // console.log(id, 'sadasdas');
     course
       .getDetailInformation(id as string)
       .then((res) => {
-        console.log('운동자세들', res.data.exercises);
         // setCourseList((courseListRef.current = res.data.exercises));
         setCourseList((courseListRef.current = ['58', '58', '58']));
-
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
       .catch((err) => console.log(err.response));
+    return () => user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
   }, []);
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 3000);
-    console.log(courseListRef.current);
-    course
-      .getExercise(courseListRef.current[userPoseIndexRef.current as number])
-      .then((res) => setExerciseData(res.data))
-      .catch((err) => console.log(err.response));
+    if (userPoseIndexRef.current !== -1) {
+      course
+        .getExercise(courseListRef.current[userPoseIndexRef.current as number])
+        .then((res) => setExerciseData(res.data))
+        .catch((err) => console.log(err.response));
+    }
   }, [userPoseIndex]);
-  // useEffect(() => {
-  //   setTimeout(() => setIsLoading(!false), 3000);
-  // }, [isLoading]);
 
   const handleNextExercise = () => {
     if (userPoseIndex === courseList.length - 1) {
@@ -85,15 +78,22 @@ const ExcercisePage = () => {
       );
     }
   };
-
+  if (isLoading) {
+    return <Loading isLoading={isLoading} />;
+  }
   return (
     <Wrapper>
-      <Loading isLoading={isLoading} />
+      {/* <Loading isLoading={isLoading} /> */}
       <Row justify="space-between" style={{ padding: '30px 30px' }}>
         <Col span={12}>
           <Row>
             <Col style={{ marginRight: '30px' }}>
-              <Button style={{ borderRadius: '5px' }} type="primary" size="large" onClick={() => navigate('/')}>
+              <Button
+                style={{ borderRadius: '5px' }}
+                type="primary"
+                size="large"
+                onClick={() => navigate(`/course/${id}`)}
+              >
                 <ImportOutlined />
                 강의실 나가기
               </Button>
@@ -178,11 +178,11 @@ const ExcercisePage = () => {
                               '100%': '#ff7273',
                             }}
                             type="circle"
-                            percent={((EXERCISE_TIME - timeCounterRef.current) / 100) * 100}
+                            percent={((EXERCISE_TIME - timeCounter) / EXERCISE_TIME) * 100}
                             format={(percent) => (
                               <>
                                 <div>운동시간</div>
-                                <div>{Number(percent).toFixed()}</div>
+                                <div>{((EXERCISE_TIME * Number(percent)) / 100).toFixed()}</div>
                               </>
                             )}
                           />
@@ -198,7 +198,8 @@ const ExcercisePage = () => {
       </Row>
       <Row style={{ height: '65vh', marginTop: '30px', backgroundColor: 'black' }} align="middle">
         <Col span={12} style={{ height: '100%' }}>
-          <Video url={exerciseData?.youtube_key as string} />
+          {exerciseData?.youtube_key ? <Video url={exerciseData?.youtube_key as string} /> : null}
+          {/* <Video url={exerciseData?.youtube_key as string} /> */}
         </Col>
         <Col span={12} style={{ height: '100%' }}>
           <TensorCam
@@ -220,6 +221,8 @@ const ExcercisePage = () => {
             courseListRef={courseListRef}
             setIsLoading={setIsLoading}
             isLoading={isLoading}
+            EXERCISE_TIME={EXERCISE_TIME}
+            TIME_LIMIT={TIME_LIMIT}
           />
         </Col>
       </Row>

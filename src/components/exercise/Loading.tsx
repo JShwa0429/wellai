@@ -41,7 +41,6 @@ interface Wrapper {
 }
 const Wrapper = styled.div<Wrapper>`
   display: ${(props) => {
-    console.log(props.isLoading, '머임');
     return props.isLoading ? 'block' : 'none';
   }};
   width: 100vw;
