@@ -6,19 +6,23 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginModal from './LoginModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { nicknameChange } from 'features/myPageSlice';
 
 const logoName = 'WellAi.';
 
 const Header = () => {
   const navigate = useNavigate();
   const access = Cookies.get('refresh');
-
+  const nickname = useSelector((state: RootState) => state.myPage.nickname);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [search, setSearch] = useState('');
+  const dispatch = useDispatch();
   const handleSignOut = () => {
     Cookies.remove('access');
     Cookies.remove('refresh');
-    Cookies.remove('nickname');
+    dispatch(nicknameChange(''));
     navigate('/');
   };
   const onSearch = () => {
@@ -38,9 +42,6 @@ const Header = () => {
     window.addEventListener('scroll', updateScroll);
   });
 
-  const nickname = useMemo(() => {
-    return Cookies.get('nickname');
-  }, [Cookies]);
   return (
     <Wrapper scrollLocation={scrollPosition}>
       <Row justify="space-between" align="middle">

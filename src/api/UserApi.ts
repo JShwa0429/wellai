@@ -5,7 +5,7 @@ interface requestApiOptions {
   readonly user: AxiosInstance;
   checkValidation: (userAccountInfo: Api.validationRequest) => AxiosPromise<Api.validationResponse>;
   signUpAccount: (signUp: Api.signupRequest) => AxiosPromise<Api.signupResponse>;
-  logIn: (email: string, password: string) => AxiosPromise<{ refresh: string; access: string }>;
+  logIn: (email: string, password: string) => AxiosPromise<{ refresh: string; access: string; nickname: string }>;
 }
 
 export const UserApi = (): requestApiOptions => {
