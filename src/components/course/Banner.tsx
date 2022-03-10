@@ -22,7 +22,7 @@ const Banner = () => {
         <div className="banner">
           <p>
             당신을 위한
-            <br /> 오늘의 추천 코스
+            <br /> 1:1 AI 홈트레이닝 코스
           </p>
           {Cookies.get('refresh') && (
             <div>
