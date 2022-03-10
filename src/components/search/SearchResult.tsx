@@ -39,7 +39,7 @@ export default SearchResult;
 
 const Div = styled.div`
   width: 90%;
-  margin: 0 5vw;
+  margin: 0 0 0 180px;
   font-size: 1.5em;
   h2 {
     color: ${(props) => props.theme.defaultText};
