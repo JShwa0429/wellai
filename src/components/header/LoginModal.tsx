@@ -29,7 +29,7 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
         mypage.getUserInformation().then((res) => {
           const { nickname } = res.data;
           Cookies.set('nickname', nickname, { path: '/', expires: 7 });
-          message.info(`${nickname}님 환영합니다.`);
+          message.success(`${nickname}님 환영합니다.`);
         });
         setIsModalVisible(false);
         navigate('/');
@@ -45,7 +45,7 @@ const LoginModal = ({ setIsModalVisible, isModalVisible }: Props) => {
     return;
   };
   return (
-    <Modal visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
+    <Modal width="450px" visible={isModalVisible} footer={null} onCancel={() => setIsModalVisible(false)}>
       <Wrapper>
         <Row justify="center">
           <Col>
@@ -124,5 +124,5 @@ const Wrapper = styled.div`
   div.ant-form-item-label {
     padding-bottom: 0;
   }
-  padding: 0 10% 10% 10%;
+  // padding: 0 10% 10% 10%;
 `;
