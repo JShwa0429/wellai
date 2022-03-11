@@ -62,7 +62,7 @@ const Div = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  color: #444;
   background: linear-gradient(rgba(255, 114, 114, 0.6), rgba(255, 114, 114, 0.2));
   overflow: hidden;
   .banner {

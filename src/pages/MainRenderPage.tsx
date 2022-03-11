@@ -9,7 +9,7 @@ const MainRenderPageTemp = () => {
             집에서도 지키는
             <br /> 나만의 건강
           </h1>
-          <p style={{ color: '#4e5968' }}>
+          <p style={{ color: '#444' }}>
             언제 어디서나 당신의 건강을 책임지는 AI홈트 서비스,
             <br />
             웰라이
@@ -24,8 +24,8 @@ const MainRenderPageTemp = () => {
       </SectionOne>
       <SectionTwo>
         <div className="introduce">
-          <h1>당신의 퍼스널 AI트레이너</h1>
-          <p>
+          <h1 style={{ color: '#444' }}>당신의 퍼스널 AI트레이너</h1>
+          <p style={{ color: '#444' }}>
             AI트레이너의 실시간 운동자세 피드백,
             <br />
             혼자서 하는 운동도 이젠 두렵지 않아!
@@ -38,12 +38,12 @@ const MainRenderPageTemp = () => {
       <SectionThree>
         <div className="introduce">
           <div className="contents">
-            <h1>
+            <h1 style={{ color: '#444' }}>
               한 눈에 보는
               <br />
               스마트한 건강 관리
             </h1>
-            <p>
+            <p style={{ color: '#444' }}>
               당신의 노력을 한 눈에 보기 쉽게.
               <br />
               마이 리포트로 주간/월간 운동 기록을 체크해보세요.
@@ -161,6 +161,7 @@ const SectionTwo = styled.section`
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     text-align: center;
+    color: '#444';
     h1 {
       font-size: 65px;
       font-weight: 800;
@@ -172,7 +173,7 @@ const SectionTwo = styled.section`
       font-color: ${(props) => props.theme.defaultText};
       font-size: 20px;
       font-weight: 100;
-      line-height: 110%;
+      line-height: 140%;
       margin: 1em 0;
     }
     margin-bottom: 2em;
@@ -184,7 +185,7 @@ const SectionThree = styled.section`
   display: flex;
   flex-direction: row;
   min-width: 1200px;
-
+  color: '#444';
   .introduce {
     position: relative;
     width: 60%;
@@ -204,7 +205,7 @@ const SectionThree = styled.section`
         font-family: 'Noto Sans KR';
         font-weight: 100;
         font-size: 20px;
-        line-height: 110%;
+        line-height: 140%;
       }
     }
     img {

@@ -129,7 +129,7 @@ sup {
   top: -0.5em;
 }
 a {
-  color: #574240;
+  color: #444;
   text-decoration: none;
   background-color: transparent;
   outline: none;
@@ -2666,7 +2666,7 @@ html {
   content: '';
 }
 .ant-btn-link {
-  color: #574240;
+  color: #444;
   border-color: transparent;
   background: transparent;
   box-shadow: none;
@@ -6314,7 +6314,7 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   text-align: left;
 }
 .ant-picker-today-btn {
-  color: #574240;
+  color: #444;
 }
 .ant-picker-today-btn:hover {
   color: #635b5a;
@@ -17687,7 +17687,7 @@ textarea.ant-mentions {
   line-height: 1;
 }
 .ant-page-header-back-button {
-  color: #574240;
+  color: #444;
   text-decoration: none;
   outline: none;
   transition: color 0.3s;
@@ -22382,7 +22382,7 @@ table tr th.ant-table-selection-column::after {
   height: 1px;
 }
 .ant-table-row-expand-icon {
-  color: #574240;
+  color: #444;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s;
@@ -24154,7 +24154,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   text-overflow: ellipsis;
 }
 .ant-transfer-list-content-item-remove {
-  color: #574240;
+  color: #444;
   text-decoration: none;
   outline: none;
   cursor: pointer;
@@ -25365,7 +25365,7 @@ span.ant-typography-ellipsis {
 }
 a.ant-typography,
 .ant-typography a {
-  color: #574240;
+  color: #444;
   outline: none;
   cursor: pointer;
   transition: color 0.3s;
@@ -25446,7 +25446,7 @@ a.ant-typography.ant-typography-disabled:active,
 .ant-typography-expand,
 .ant-typography-edit,
 .ant-typography-copy {
-  color: #574240;
+  color: #444;
   text-decoration: none;
   outline: none;
   cursor: pointer;
