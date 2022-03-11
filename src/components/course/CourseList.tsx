@@ -50,8 +50,9 @@ const CourseList = () => {
 export default CourseList;
 const Div = styled.div`
   width: 100%;
-  height: 100vh;
+  // height: 100vh;
   font-size: 1.5em;
+  padding: 1em 0 5em 0;
   h2 {
     color: ${(props) => props.theme.defaultText};
     width: 100%;
