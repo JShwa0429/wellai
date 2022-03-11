@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Row, Col, Button, Input, Divider } from 'antd';
+import { Row, Col, Button, Input, Divider, message } from 'antd';
 import { MyPageLayout } from 'components';
 
 import styled from 'styled-components';
@@ -58,6 +58,7 @@ const MyPageEdit = () => {
   }, [options]);
   const handleEditUserInformation = () => {
     mypage.putUserInformation(options);
+    message.success('저장 되었습니다!');
   };
   return (
     <Wrapper>
