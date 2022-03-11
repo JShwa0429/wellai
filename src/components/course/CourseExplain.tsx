@@ -105,11 +105,10 @@ const DivBanner = styled.div`
   .image {
     width: 50%;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     overflow: hidden;
   }
-
   img {
     margin-right: 5%;
     height: 100%;
