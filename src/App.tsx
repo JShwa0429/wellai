@@ -32,8 +32,8 @@ function App() {
   const dispatch = useAppDispatch();
   // const { token } = useAppSelector((state) => state.myPage, shallowEqual);
   let isAlreadyFetchingAccessToken = false;
-  // axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
-  axios.defaults.baseURL = 'http://localhost:8000/api';
+  axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
+  // axios.defaults.baseURL = 'http://localhost:8000/api';
   axios.defaults.withCredentials = true;
 
   if (Cookies.get('access')) {
