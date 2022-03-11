@@ -1,29 +1,27 @@
-import { loadGraphModel } from '@tensorflow/tfjs-converter';
-import { Row, Col, DatePicker } from 'antd';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Webcam from 'react-webcam';
-import { drawSkeleton, putText } from './util';
-import { average, argMax } from './setup';
-import { UserApi } from 'api/UserApi';
-import * as tf from '@tensorflow/tfjs-core';
-import '@tensorflow/tfjs-backend-webgl';
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
 import moment from 'moment';
+import Webcam from 'react-webcam';
+import { argMax } from './setup';
+import { UserApi } from 'api/UserApi';
+import '@tensorflow/tfjs-backend-webgl';
+import { loadGraphModel } from '@tensorflow/tfjs-converter';
+import * as poseDetection from '@tensorflow-models/pose-detection';
+import * as tf from '@tensorflow/tfjs-core';
+import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+import * as constants from './constants';
 
 tfjsWasm.setWasmPaths(`https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`);
 
-//TODO : 백으로부터 운동 값 가져오기
 const url = 'https://raw.githubusercontent.com/yeseulKIM00/test/main/graph/model.json';
 const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_THUNDER,
-}; //SINGLEPOSE_LIGHTNING
+};
 
-const fps = 10;
+const FPS = 10;
 let iterationCounter = 0;
 let errorCounter = 0;
-
+const LINE_WIDTH = 8;
 export default function TempComp({
   setTimeLimit,
   timeLimit,
@@ -63,7 +61,7 @@ export default function TempComp({
     runMovenet().then((result) => {
       interval1 = setInterval(() => {
         detect(result.detector, result.dnn76);
-      }, 1000 / fps);
+      }, 1000 / FPS);
       return;
     });
 
@@ -94,23 +92,19 @@ export default function TempComp({
       const pose = await detector.estimatePoses(video);
       const result = await classifyPose(dnn76, pose);
       drawCanvas(pose, result[0], result[1], video, videoWidth, videoHeight, canvasRef);
-      putText(result[0], canvasRef, 50, 30);
+      // putText(result[0], canvasRef, 50, 30);
       calWorkouttime2(result[0], result[1]);
     }
   };
 
   function calWorkouttime2(poseIndex, accuracy) {
-    // 한 자세가 끝나는 경우 -> 1. 코스종료 2. 다음자세로 변경
-
     if (timeCounterRef.current <= 0 || timeLimitRef.current <= 0) {
       nextPose();
     } else {
-      //제한시간 끝나지 않고 진행되는 경우
       if (accuracy >= 0.8) {
         if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
           iterationCounter += 1;
-          // 유저 운동시간 1초 조건 만족하는 경우
-          if (iterationCounter == fps) {
+          if (iterationCounter == FPS) {
             iterationCounter = 0;
             setTimeCounter((timeCounterRef.current -= 1));
             setTotalTimeCounter((totalTimeCounterRef.current += 1));
@@ -119,13 +113,9 @@ export default function TempComp({
             nextPose();
           }
         }
-      }
-      //정확도 낮은 경우 프레임당 에러 횟수 세어 반영(초당 patience 20%)
-      else {
+      } else {
         errorCounter = errorCounter + 1;
-        // console.log('==========errorCounter:', errorCounter, 'accuracy:', accuracy);
         if (errorCounter >= 6) {
-          //20%
           iterationCounter -= errorCounter;
           errorCounter = 0;
         }
@@ -145,13 +135,10 @@ export default function TempComp({
     setTimeLimit(
       userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
     );
-
-    // 코스의 마지막 운동인 경우
     if (userPoseIndexRef.current >= courseListRef.current.length) {
       alert('운동 끝났습니다');
       navigate(`../course/${id}`);
       user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
-      // window.location.reload();
     }
     return userPoseIndex, totalTimeCounter;
   }
@@ -177,12 +164,48 @@ export default function TempComp({
       return [poseIndex, accuracy];
     }
   }
+  function toTuple({ y, x }) {
+    return [y, x];
+  }
+  function setColor(index, accuracy) {
+    return index === courseList[userPoseIndex] - 1
+      ? accuracy >= 0.9
+        ? 'rgb(119,198,110)'
+        : 'rgb(128,128,128)'
+      : 'rgb(128,128,128)';
+  }
 
   const drawCanvas = (pose, poseIndex, accuracy, video, videoWidth, videoHeight, canvas) => {
     const ctx = canvas.current.getContext('2d');
     canvas.current.width = videoWidth;
     canvas.current.height = videoHeight;
-    drawSkeleton(pose[0]['keypoints'], 0.5, poseIndex, accuracy, ctx, 50, 480 / 2);
+    // drawSkeleton(pose[0]['keypoints'], 0.5, poseIndex, accuracy, ctx, 50, 480 / 2);
+    const adjacentKeyPoints = constants.COCO_CONNECTED_KEYPOINTS_PAIRS;
+    let noKeypoints = 0;
+    adjacentKeyPoints.slice(4).forEach((line) => {
+      if (pose[0]['keypoints'][adjacentKeyPoints.indexOf(line)].score > 0.5) {
+        noKeypoints += 1;
+
+        // drawSegment(toTuple(keypoints[line[0]]), toTuple(keypoints[line[1]]), setColor(index, accuracy), 1, ctx);
+        const [ay, ax] = toTuple(pose[0]['keypoints'][line[0]]);
+        const [by, bx] = toTuple(pose[0]['keypoints'][line[1]]);
+        ctx.beginPath();
+        ctx.moveTo(ax * 1, ay * 1);
+        ctx.lineTo(bx * 1, by * 1);
+        ctx.lineWidth = LINE_WIDTH;
+        ctx.strokeStyle = setColor(poseIndex, accuracy);
+        ctx.stroke();
+      }
+    });
+    if (noKeypoints <= 10) {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(1, 1, 1, 0.5)';
+      ctx.rect(10, 20, 150, 100);
+
+      ctx.font = 'bold 30px Arial';
+      ctx.fillStyle = 'rgb(255,144,144)';
+      ctx.fillText('화면에 전신이 나오도록 물러서 주세요.', 50, 480 / 2);
+    }
   };
 
   return (

@@ -10,7 +10,7 @@ import { exercise } from 'api/common';
 import { ImportOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
-const EXERCISE_TIME = 5;
+const EXERCISE_TIME = 60;
 const TIME_LIMIT = EXERCISE_TIME * 4;
 
 const ExcercisePage = () => {
@@ -83,7 +83,6 @@ const ExcercisePage = () => {
   }
   return (
     <Wrapper>
-      {/* <Loading isLoading={isLoading} /> */}
       <Row justify="space-between" style={{ padding: '30px 30px' }}>
         <Col span={12}>
           <Row>
