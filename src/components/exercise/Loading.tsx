@@ -17,6 +17,10 @@ export type LoadingProps = {
 };
 
 const Review: React.FunctionComponent<LoadingProps> = ({ isLoading }) => {
+  const [countDown, setCountDown] = useState(3);
+  useEffect(() => {
+    if (countDown > 0) setTimeout(() => setCountDown((current) => current - 1), 1000);
+  }, [countDown]);
   return (
     <Wrapper isLoading={isLoading}>
       <Row style={{ height: '100vh' }} justify="center" align="middle">
@@ -27,7 +31,7 @@ const Review: React.FunctionComponent<LoadingProps> = ({ isLoading }) => {
             </Col>
           </Row>
           <Row>
-            <Col style={{ fontSize: '30px', marginTop: '50px' }}>3초 뒤에 운동이 시작됩니다 !</Col>
+            <Col style={{ fontSize: '30px', marginTop: '50px' }}>{countDown}초 뒤에 운동이 시작됩니다 !</Col>
           </Row>
         </Col>
       </Row>
