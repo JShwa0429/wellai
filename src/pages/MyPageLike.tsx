@@ -87,6 +87,7 @@ export default MyPageLike;
 
 const Wrapper = styled.div`
   width: 100%;
+  height: 100vh;
 `;
 const CardDiv = styled.div`
   display: grid;

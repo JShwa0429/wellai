@@ -136,6 +136,7 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10em;
   .explain-below {
     display: flex;
     flex-direction: row;

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Summary from '../common/Summary';
+import { Footer } from 'components';
 
 const CourseList = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
@@ -26,33 +27,34 @@ const CourseList = () => {
   }, []);
 
   return (
-    <Div>
-      <h2>코스 탐색</h2>
-      <CardDiv count={Math.floor(width / 350)}>
-        {datas.map((data: detailResponse, idx: number) => {
-          return (
-            <SummaryDiv key={idx}>
-              <Link to={`../course/${data.id}`}>
-                <Summary {...data} />
-              </Link>
-            </SummaryDiv>
-          );
-        })}
-      </CardDiv>
-    </Div>
+    <>
+      <Div>
+        <h2>코스 탐색</h2>
+        <CardDiv count={Math.floor(width / 350)}>
+          {datas.map((data: detailResponse, idx: number) => {
+            return (
+              <SummaryDiv key={idx}>
+                <Link to={`../course/${data.id}`}>
+                  <Summary {...data} />
+                </Link>
+              </SummaryDiv>
+            );
+          })}
+        </CardDiv>
+      </Div>
+      <Footer />
+    </>
   );
 };
 
 export default CourseList;
 const Div = styled.div`
   width: 100%;
+  height: 100vh;
   font-size: 1.5em;
   h2 {
     color: ${(props) => props.theme.defaultText};
     width: 100%;
-    //border-bottom: 1px solid #888;
-    padding-top: 25px;
-    margin-top: 25px;
     font-size: 1.2em;
     text-align: center;
   }
@@ -65,7 +67,7 @@ const CardDiv = styled.div<{ count: number }>`
   display: grid;
   grid-template-columns: repeat(${(props) => props.count}, 250px);
   gap: 50px;
-  margin: auto;
+  margin: 0 auto 0 auto;
   place-items: center;
 `;
 

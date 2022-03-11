@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useOutlet } from 'react-router-dom';
-import { Header } from 'components';
+import { Header, Footer } from 'components';
 const Page = () => {
   const outlet = useOutlet();
   return (
     <Div>
       <Header />
       <section>{outlet}</section>
+      <Footer />
     </Div>
   );
 };

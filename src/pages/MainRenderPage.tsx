@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ReactApexChart from 'react-apexcharts';
+import { Footer } from 'components';
 
 const MainRenderPageTemp = () => {
   const options = {

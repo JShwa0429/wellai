@@ -1,4 +1,5 @@
 export { Header } from './header';
+export { Footer } from './footer';
 // export { HeaderTemp } from './headerTemp';
 export { WebCam, Video, Description } from './exercise';
 export { Summary, Loading } from './common';
