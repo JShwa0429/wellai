@@ -1,27 +1,24 @@
-import { loadGraphModel } from '@tensorflow/tfjs-converter';
-import { Row, Col, DatePicker } from 'antd';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Webcam from 'react-webcam';
-import { drawSkeleton, putText } from './util';
-import { average, argMax } from './setup';
-import { UserApi } from 'api/UserApi';
-import * as tf from '@tensorflow/tfjs-core';
-import '@tensorflow/tfjs-backend-webgl';
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
 import moment from 'moment';
+import Webcam from 'react-webcam';
+import { argMax } from './setup';
+import { UserApi } from 'api/UserApi';
+import '@tensorflow/tfjs-backend-webgl';
+import { loadGraphModel } from '@tensorflow/tfjs-converter';
+import * as poseDetection from '@tensorflow-models/pose-detection';
+import * as tf from '@tensorflow/tfjs-core';
+import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
 import * as constants from './constants';
 
 tfjsWasm.setWasmPaths(`https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`);
 
-//TODO : 백으로부터 운동 값 가져오기
 const url = 'https://raw.githubusercontent.com/yeseulKIM00/test/main/graph/model.json';
 const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_THUNDER,
-}; //SINGLEPOSE_LIGHTNING
+};
 
-const fps = 10;
+const FPS = 10;
 let iterationCounter = 0;
 let errorCounter = 0;
 const LINE_WIDTH = 8;
@@ -64,7 +61,7 @@ export default function TempComp({
     runMovenet().then((result) => {
       interval1 = setInterval(() => {
         detect(result.detector, result.dnn76);
-      }, 1000 / fps);
+      }, 1000 / FPS);
       return;
     });
 
@@ -107,7 +104,7 @@ export default function TempComp({
       if (accuracy >= 0.8) {
         if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
           iterationCounter += 1;
-          if (iterationCounter == fps) {
+          if (iterationCounter == FPS) {
             iterationCounter = 0;
             setTimeCounter((timeCounterRef.current -= 1));
             setTotalTimeCounter((totalTimeCounterRef.current += 1));
