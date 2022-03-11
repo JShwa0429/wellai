@@ -13,12 +13,12 @@ import * as constants from './constants';
 
 tfjsWasm.setWasmPaths(`https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`);
 
-const url = 'https://raw.githubusercontent.com/yeseulKIM00/test/main/graph/model.json';
+const url = 'https://raw.githubusercontent.com/yeseulKIM00/test/main/tuneddnn81v1q/model.json';
 const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_THUNDER,
 };
 
-const FPS = 10;
+const FPS = 20;
 let iterationCounter = 0;
 let errorCounter = 0;
 const LINE_WIDTH = 8;
@@ -55,7 +55,6 @@ export default function TempComp({
     return { detector, dnn76 };
   };
 
-  //30fps 250 frame 평균: 19.507200004000165
   useEffect(() => {
     let interval1;
     runMovenet().then((result) => {
