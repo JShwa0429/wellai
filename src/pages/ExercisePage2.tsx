@@ -1,5 +1,5 @@
 import { WebCam, Video, Description } from 'components';
-import { Row, Col, Button, Progress } from 'antd';
+import { Row, Col, Button, Progress, message } from 'antd';
 import styled from 'styled-components';
 import { TensorCam, Loading } from 'components/exercise';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +21,17 @@ const ExcercisePage = () => {
   //   },
   // };
 
+  const alertUser = (e: any) => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser);
+    return () => {
+      window.removeEventListener('beforeunload', alertUser);
+    };
+  }, []);
   const { id } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exercise>();
@@ -49,7 +60,9 @@ const ExcercisePage = () => {
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
       .catch((err) => console.log(err.response));
-    return () => user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
+    return () => {
+      return user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
+    };
   }, []);
 
   useEffect(() => {
