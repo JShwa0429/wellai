@@ -19,7 +19,6 @@ const CourseDetailPage = () => {
   async function getReview() {
     const course = CourseApi();
     await course.getReview(id as string, pageNumber, ordering).then((res) => {
-      console.log(res.data);
       setReviewData(res.data.results);
     });
   }

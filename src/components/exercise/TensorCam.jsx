@@ -200,7 +200,7 @@ export default function TempComp({
 
       ctx.font = 'bold 30px Arial';
       ctx.fillStyle = 'rgb(255,144,144)';
-      ctx.fillText('화면에 전신이 나오도록 물러서 주세요.', 50, 480 / 2);
+      ctx.fillText('화면에 전신이 나오도록 물러서 주세요', 100, 40);
     }
   };
 

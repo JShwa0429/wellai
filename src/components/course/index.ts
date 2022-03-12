@@ -3,3 +3,4 @@ export { default as ReviewDiv } from './ReviewDiv';
 export { default as CourseExplain } from './CourseExplain';
 export { default as Banner } from './Banner';
 export { default as CourseList } from './CourseList';
+export { default as CourseList2 } from './CourseList2';

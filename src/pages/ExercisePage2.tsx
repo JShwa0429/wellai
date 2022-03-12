@@ -192,7 +192,6 @@ const ExcercisePage = () => {
               <Row justify="center" align="middle">
                 <Col
                   style={{
-                    // border: '1px solid lightgray'
                     padding: '3px 20px',
                   }}
                 >
@@ -221,7 +220,7 @@ const ExcercisePage = () => {
                         </Col>
                       </Row>
                     </Col>
-                    <Col>
+                    <Col style={{ marginRight: '80px' }}>
                       <Row>
                         <Col>
                           <Progress
@@ -237,6 +236,32 @@ const ExcercisePage = () => {
                                 <div>{((EXERCISE_TIME * Number(percent)) / 100).toFixed()}</div>
                               </>
                             )}
+                          />
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Col>
+                          <Progress
+                            strokeColor={{
+                              '0%': '#fabfa8',
+                              '100%': '#ff7273',
+                            }}
+                            type="circle"
+                            percent={(totalTimeCounter / (EXERCISE_TIME * courseListRef.current.length)) * 100}
+                            format={(percent) => (
+                              <>
+                                <div>총운동시간</div>
+                                <div>
+                                  {((Number(percent) / 100) * EXERCISE_TIME * courseListRef.current.length).toFixed()}
+                                </div>
+                              </>
+                            )}
+                            success={{
+                              percent: 0,
+                              strokeColor: '#ff7273',
+                            }}
                           />
                         </Col>
                       </Row>

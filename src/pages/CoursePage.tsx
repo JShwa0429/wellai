@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { CourseList, Banner } from 'components';
+import { CourseList2, Banner } from 'components';
 
 const CoursePage: React.FunctionComponent = () => {
   return (
     <DivCourse>
       <Banner />
-      <CourseList />
+      <CourseList2 />
     </DivCourse>
   );
 };
