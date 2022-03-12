@@ -6,6 +6,7 @@ import { Summary2 } from 'components/common';
 import { useEffect, useState } from 'react';
 import { bookmark } from 'api/common';
 import { CourseApi } from 'api';
+import { MyPageLoading } from 'components';
 
 const MyPageLike = () => {
   const [courseList, setCourseList] = useState<bookmark[]>([]);
@@ -46,7 +47,7 @@ const MyPageLike = () => {
               paddingLeft: '50px',
             }}
           >
-            <Col>
+            <Col span={24}>
               <Row
                 style={{
                   marginBottom: '10px',
@@ -54,25 +55,29 @@ const MyPageLike = () => {
               >
                 <Col style={{ fontSize: '20px' }}>좋아요 보관함</Col>
               </Row>
-              <Row>
-                {courseList
-                  ? courseList.map((course: bookmark, idx: number) => {
-                      return (
-                        // <SummaryDiv key={course.course_id.id}>
-                        //   <Link to={`../course/${course.course_id.id}`}>
-                        //     <Summary {...course.course_id} />
-                        //   </Link>
-                        // </SummaryDiv>
-                        <Col
-                          key={course.course_id.id}
-                          style={{ marginRight: '30px', marginBottom: '30px', width: '250px' }}
-                        >
-                          <Summary2 key={course.course_id.id} {...course.course_id} />
-                        </Col>
-                      );
-                    })
-                  : ``}
-              </Row>
+              {loading ? (
+                <MyPageLoading />
+              ) : (
+                <Row>
+                  {courseList
+                    ? courseList.map((course: bookmark, idx: number) => {
+                        return (
+                          // <SummaryDiv key={course.course_id.id}>
+                          //   <Link to={`../course/${course.course_id.id}`}>
+                          //     <Summary {...course.course_id} />
+                          //   </Link>
+                          // </SummaryDiv>
+                          <Col
+                            key={course.course_id.id}
+                            style={{ marginRight: '30px', marginBottom: '30px', width: '250px' }}
+                          >
+                            <Summary2 key={course.course_id.id} {...course.course_id} />
+                          </Col>
+                        );
+                      })
+                    : ``}
+                </Row>
+              )}
             </Col>
             {!loading && courseList.length < 1 && (
               <Col style={{ width: '80%' }}>

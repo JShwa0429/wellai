@@ -6,7 +6,7 @@ import { MyPageLayout } from 'components';
 import { UserReviewDiv } from 'components/mypage';
 import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
-
+import { MyPageLoading } from 'components';
 const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,11 +57,15 @@ const MyPageComment = () => {
           >
             <Col style={{ fontSize: '20px' }}>내 댓글 보관함</Col>
           </Row>
-          <Row>
-            <Col style={{ width: '800px', marginLeft: '47px' }}>
-              <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
-            </Col>
-          </Row>
+          {loading ? (
+            <MyPageLoading />
+          ) : (
+            <Row>
+              <Col style={{ width: '800px', marginLeft: '47px' }}>
+                <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
+              </Col>
+            </Row>
+          )}
         </Col>
       </Row>
     </Wrapper>
