@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { CourseApi } from 'api';
 import { detailResponse } from 'api/common';
 import Cookies from 'js-cookie';
-import { Button, Tag, Space } from 'antd';
+import { Button, Tag, Space, Tooltip } from 'antd';
 import { PlayCircleOutlined, StarFilled, StarTwoTone } from '@ant-design/icons';
 
 // type Props = {
@@ -61,22 +61,41 @@ const CourseExplain: React.FunctionComponent = () => {
             </div>
           </div>
           <div className="start">
-            <Link to={`/guide/${data?.id}`}>
-              <Button
-                disabled={Cookies.get('refresh') ? false : true}
-                type="primary"
-                shape="round"
-                icon={<PlayCircleOutlined />}
-                style={{
-                  marginTop: '1em',
-                  width: 'max-content',
-                  height: '50px',
-                  fontSize: '20px',
-                }}
-              >
-                수업 시작하기
-              </Button>
-            </Link>
+            {Cookies.get('refresh') ? (
+              <Link to={`/guide/${data?.id}`}>
+                <Button
+                  // disabled={Cookies.get('refresh') ? false : true}
+                  type="primary"
+                  shape="round"
+                  icon={<PlayCircleOutlined />}
+                  style={{
+                    marginTop: '1em',
+                    width: 'max-content',
+                    height: '50px',
+                    fontSize: '20px',
+                  }}
+                >
+                  수업 시작하기
+                </Button>
+              </Link>
+            ) : (
+              <Tooltip title="로그인후 이용해주세요" trigger="hover" placement={'bottom'}>
+                <Button
+                  disabled={true}
+                  type="primary"
+                  shape="round"
+                  icon={<PlayCircleOutlined />}
+                  style={{
+                    marginTop: '1em',
+                    width: 'max-content',
+                    height: '50px',
+                    fontSize: '20px',
+                  }}
+                >
+                  수업 시작하기
+                </Button>
+              </Tooltip>
+            )}
           </div>
         </Explain>
       </DivBanner>

@@ -6,7 +6,7 @@ import { detailResponse } from 'api/common';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Pagination } from 'antd';
+import { Pagination, Tooltip } from 'antd';
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [reviewData, setReviewData] = useState<ReviewType[]>([]);
