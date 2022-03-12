@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { OptionType } from 'type';
 import type * as Api from './common';
+import putInterceptor from '../utils/requestInterceptor';
 
 interface requestApiOptions {
   readonly mypage: AxiosInstance;
@@ -14,6 +15,7 @@ export const MyPageApi = (): requestApiOptions => {
   const mypage = axios.create({
     baseURL: `${process.env.REACT_APP_NEXT_PUBLIC_BASE_URL}/users`,
   });
+  putInterceptor(mypage);
   return {
     mypage,
     getRecordsYear: () => mypage.get(`/records/year`),

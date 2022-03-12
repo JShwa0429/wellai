@@ -30,76 +30,15 @@ import { useAppDispatch } from 'hooks/useStoreHooks';
 function App() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const { token } = useAppSelector((state) => state.myPage, shallowEqual);
-  let isAlreadyFetchingAccessToken = false;
-  axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
-  // axios.defaults.baseURL = 'http://localhost:8000/api';
+
+  // axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
 
   if (Cookies.get('access')) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}`;
   }
 
-  const signout = () => {
-    Cookies.remove('access');
-    Cookies.remove('refresh');
-    navigate('/');
-  };
-
-  // axios.interceptors.request.use(function (config) {
-  //   axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}` || false;
-  //   return config;
-  // });
-  axios.interceptors.response.use(
-    (response) => {
-      isAlreadyFetchingAccessToken = false;
-      return response;
-    },
-    async (error) => {
-      const fromWhere = error.response.config.url;
-
-      const originalRequest = error.config;
-
-      // 리프레시 토큰으로 재요청 보냈는데 리프레시 토큰 마저 만료된경우
-      if (fromWhere === '/users/token/refresh') {
-        signout();
-        return Promise.reject(error);
-      }
-      //무한 루프 방지
-      // 엑세스토큰 만료된 경우
-      if (
-        !isAlreadyFetchingAccessToken &&
-        fromWhere !== '/users/token/refresh'
-        // error.response.data.code === 'token_not_valid'
-      ) {
-        isAlreadyFetchingAccessToken = true;
-        try {
-          const res = await axios.post('/users/token/refresh', {
-            refresh: Cookies.get('refresh'),
-          });
-          const { refresh, access } = res.data;
-
-          Cookies.set('access', access, { path: '/', expires: 1 });
-          Cookies.set('refresh', refresh, { path: '/', expires: 7 });
-          dispatch(myPageAction.tokenChange(access));
-
-          originalRequest.headers['Authorization'] = access;
-          axios.defaults.headers.common['Authorization'] = access;
-
-          return axios(originalRequest);
-        } catch (error) {
-          signout();
-          isAlreadyFetchingAccessToken = false;
-          return Promise.reject(error);
-        }
-      }
-
-      return Promise.reject(error);
-    },
-  );
-
   return (
-    // <BrowserRouter>
     <>
       <GlobalStyle />
       <Routes>
@@ -119,13 +58,10 @@ function App() {
         </Route>
 
         <Route path="/signup" element={<SignUpPage />} />
-        {/* <Route path="/exercise/:id" element={<AuthRoute element={ExercisePage} />} /> */}
 
-        <Route path="/exercise/:id" element={<ExercisePage2 />} />
-        {/* <Route path="/exercise/:id/2" element={<ExercisePage />} /> */}
+        <Route path="/exercise/:id" element={<AuthRoute element={ExercisePage2} />} />
       </Routes>
     </>
-    // </BrowserRouter>
   );
 }
 

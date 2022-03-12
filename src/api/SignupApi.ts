@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
 import type * as Api from './common';
+import putInterceptor from '../utils/requestInterceptor';
 
 interface requestApiOptions {
   readonly signup: AxiosInstance;
@@ -11,6 +12,7 @@ export const SignUpApi = (): requestApiOptions => {
   const signup = axios.create({
     baseURL: `${process.env.REACT_APP_NEXT_PUBLIC_BASE_URL}/users`,
   });
+  putInterceptor(signup);
   return {
     signup,
     checkValidation: (userAccountInfo) =>

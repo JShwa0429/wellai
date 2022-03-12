@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
+import putInterceptor from '../utils/requestInterceptor';
 import type * as Api from './common';
 
 interface requestApiOptions {
@@ -13,6 +14,7 @@ export const UserApi = (): requestApiOptions => {
   const user = axios.create({
     baseURL: `${process.env.REACT_APP_NEXT_PUBLIC_BASE_URL}/users`,
   });
+  putInterceptor(user);
   return {
     user,
     checkValidation: (userAccountInfo) =>
