@@ -20,6 +20,7 @@ const MyPageLike = () => {
       const course = CourseApi();
       await course.getBookmark().then((res) => {
         setCourseList(res.data);
+        console.log(res.data);
         setLoading(false);
       });
     }
@@ -62,8 +63,8 @@ const MyPageLike = () => {
                 {courseList
                   ? courseList.map((course: bookmark, idx: number) => {
                       return (
-                        <SummaryDiv key={idx}>
-                          <Link to={`../course/${course.id}`}>
+                        <SummaryDiv key={course.course_id.id}>
+                          <Link to={`../course/${course.course_id.id}`}>
                             <Summary {...course.course_id} />
                           </Link>
                         </SummaryDiv>

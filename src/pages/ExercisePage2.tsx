@@ -10,7 +10,7 @@ import { exercise } from 'api/common';
 import { ImportOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
-const EXERCISE_TIME = 15;
+const EXERCISE_TIME = 60;
 const TIME_LIMIT = EXERCISE_TIME * 4 + 3;
 
 const ExcercisePage = () => {
@@ -137,7 +137,8 @@ const ExcercisePage = () => {
                   '0%': '#ff7273',
                   '100%': '#FFA07A',
                 }}
-                percent={Number(((totalTimeCounterRef.current / (EXERCISE_TIME * courseList.length)) * 100).toFixed())}
+                // percent={Number(((totalTimeCounterRef.current / (EXERCISE_TIME * courseList.length)) * 100).toFixed())}
+                percent={Number(((userPoseIndexRef.current / courseListRef.current.length) * 100).toFixed())}
               />
             </Col>
           </Row>

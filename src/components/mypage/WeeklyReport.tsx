@@ -116,9 +116,9 @@ const WeeklyReport = () => {
       labels: {
         show: false,
       },
-      tickAmount: !type ? 1 : 50,
-      min: 0,
-      max: !type ? 24 : 500,
+      // tickAmount: !type ? 1 : 50,
+      // min: 0,
+      // max: !type ? 5 : 500,
     },
     colors: ['#ff7273'],
   };
@@ -143,7 +143,7 @@ const WeeklyReport = () => {
         style={{
           backgroundColor: 'rgb(247, 247, 247)',
           padding: '10px 30px',
-          height: '300px',
+          // height: '300px',
         }}
       >
         <Col span={4}>
