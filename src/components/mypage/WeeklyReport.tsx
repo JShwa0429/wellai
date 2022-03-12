@@ -38,8 +38,14 @@ const WeeklyReport = () => {
     async function getRecordsMonth() {
       const mypage = MyPageApi();
       await mypage.getRecordsMonth(date.month, date.year).then((res) => {
-        setMonthlyRecord(res.data[0]);
-        setRecords(res.data[0].records);
+        const data = res.data[0];
+        const revisedData = {
+          ...data,
+          month_exercise_time: data.month_exercise_time / 60,
+          records: data.records.map((item) => ({ ...item, exercise_duration: item.exercise_duration / 60 })),
+        };
+        setMonthlyRecord(revisedData);
+        setRecords(revisedData.records);
       });
     }
     getRecordsMonth();
@@ -110,9 +116,9 @@ const WeeklyReport = () => {
       labels: {
         show: false,
       },
-      tickAmount: !type ? 1 : 50,
-      min: 0,
-      max: !type ? 24 : 500,
+      // tickAmount: !type ? 1 : 50,
+      // min: 0,
+      // max: !type ? 5 : 500,
     },
     colors: ['#ff7273'],
   };
@@ -137,7 +143,7 @@ const WeeklyReport = () => {
         style={{
           backgroundColor: 'rgb(247, 247, 247)',
           padding: '10px 30px',
-          height: '300px',
+          // height: '300px',
         }}
       >
         <Col span={4}>

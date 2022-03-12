@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+
 import { useEffect, useState } from 'react';
-import { Row, Col, Empty } from 'antd';
-import { MyPageLayout, UserReviewDiv } from 'components';
+import { Row, Col } from 'antd';
+import { MyPageLayout } from 'components';
+import { UserReviewDiv } from 'components/mypage';
 import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
-
+import { MyPageLoading } from 'components';
 const MyPageComment = () => {
   const [reviewData, setReviewData] = useState<UserReviewType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,11 +57,15 @@ const MyPageComment = () => {
           >
             <Col style={{ fontSize: '20px' }}>내 댓글 보관함</Col>
           </Row>
-          <Row>
-            <Col style={{ width: '800px', marginLeft: '47px' }}>
-              <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
-            </Col>
-          </Row>
+          {loading ? (
+            <MyPageLoading />
+          ) : (
+            <Row>
+              <Col style={{ width: '800px', marginLeft: '47px' }}>
+                <UserReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
+              </Col>
+            </Row>
+          )}
         </Col>
       </Row>
     </Wrapper>
@@ -70,4 +76,5 @@ export default MyPageComment;
 
 const Wrapper = styled.div`
   width: 100%;
+  height: 100vh;
 `;

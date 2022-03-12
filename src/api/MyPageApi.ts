@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { OptionType } from 'type';
 import type * as Api from './common';
+import putInterceptor from '../utils/requestInterceptor';
 
 interface requestApiOptions {
   readonly mypage: AxiosInstance;
@@ -12,8 +13,9 @@ interface requestApiOptions {
 
 export const MyPageApi = (): requestApiOptions => {
   const mypage = axios.create({
-    baseURL: '/api/users',
+    baseURL: `${process.env.REACT_APP_NEXT_PUBLIC_BASE_URL}/users`,
   });
+  putInterceptor(mypage);
   return {
     mypage,
     getRecordsYear: () => mypage.get(`/records/year`),
@@ -34,8 +36,8 @@ export const MyPageApi = (): requestApiOptions => {
         is_sit: options.is_sit,
         is_balance: options.is_balance,
         is_core: options.is_core,
-        is_leg: options.is_leg,
-        is_back: options.is_back,
+        is_arm: options.is_arm,
+        is_recline: options.is_recline,
       }),
   };
 };

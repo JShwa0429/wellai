@@ -5,6 +5,7 @@ import { CourseApi } from 'api';
 import Summary from 'components/common/Summary';
 import { detailResponse } from 'api/common';
 import { Empty } from 'antd';
+import { Footer } from 'components';
 
 const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
@@ -17,29 +18,32 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
   }, [keyword]);
 
   return (
-    <Div>
-      <h2>검색 결과</h2>
-      <CardDiv>
-        {datas.map((data: detailResponse, idx: number) => {
-          return (
-            <SummaryDiv key={idx}>
-              <Link to={`../course/${data.id}`}>
-                <Summary {...data} />
-              </Link>
-            </SummaryDiv>
-          );
-        })}
-      </CardDiv>
-      {datas.length < 1 && <Empty description={'검색 결과가 없습니다'} />}
-    </Div>
+    <>
+      <Div>
+        <h2>검색 결과</h2>
+        <CardDiv>
+          {datas.map((data: detailResponse, idx: number) => {
+            return (
+              <SummaryDiv key={idx}>
+                <Link to={`../course/${data.id}`}>
+                  <Summary {...data} />
+                </Link>
+              </SummaryDiv>
+            );
+          })}
+        </CardDiv>
+        {datas.length < 1 && <Empty description={'검색 결과가 없습니다'} />}
+      </Div>
+    </>
   );
 };
 
 export default SearchResult;
 
 const Div = styled.div`
+  height: 100vh;
   width: 90%;
-  margin: 0 5vw;
+  margin: 0 0 0 180px;
   font-size: 1.5em;
   h2 {
     color: ${(props) => props.theme.defaultText};
@@ -83,7 +87,7 @@ const SummaryDiv = styled.div`
   .bookmark {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
     width: 30px;
   }
   .explain {

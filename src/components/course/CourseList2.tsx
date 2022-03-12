@@ -1,14 +1,16 @@
 import { detailResponse } from 'api/common';
 import { CourseApi } from 'api';
+import { Row, Col, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Summary from '../common/Summary';
+import Summary2 from '../common/Summary2';
 import { Footer } from 'components';
 
 const CourseList = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
   const [width, setWidth] = useState<number>(window.innerWidth);
+  const [isLoading, setIsLoading] = useState(true);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
@@ -16,8 +18,10 @@ const CourseList = () => {
     window.addEventListener('resize', handleResize);
     async function getCourse() {
       const course = CourseApi();
+      setIsLoading(true);
       await course.getCourse().then((res) => {
         setDatas(res.data.results);
+        setIsLoading(false);
       });
     }
     getCourse();
@@ -30,19 +34,24 @@ const CourseList = () => {
     <>
       <Div>
         <h2>코스 탐색</h2>
-        <CardDiv count={Math.floor(width / 350)}>
-          {datas.map((data: detailResponse, idx: number) => {
-            return (
-              <SummaryDiv key={idx}>
-                <Link to={`../course/${data.id}`}>
-                  <Summary {...data} />
-                </Link>
-              </SummaryDiv>
-            );
-          })}
-        </CardDiv>
+        {isLoading ? (
+          <Row style={{ minHeight: 'calc(100vh - 400px)', marginTop: '100px' }} justify="center">
+            <Col>
+              <Spin size="large" tip="Loading" />
+            </Col>
+          </Row>
+        ) : (
+          <CardDiv count={Math.floor(width / 350)}>
+            {datas.map((data: detailResponse, idx: number) => {
+              return (
+                <Col key={data.id} style={{ marginRight: '30px', marginBottom: '30px', width: '250px' }}>
+                  <Summary2 key={data.id} {...data} />
+                </Col>
+              );
+            })}
+          </CardDiv>
+        )}
       </Div>
-      <Footer />
     </>
   );
 };
@@ -62,6 +71,7 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: max-content;
 `;
 
 const CardDiv = styled.div<{ count: number }>`

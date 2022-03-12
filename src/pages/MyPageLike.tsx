@@ -1,17 +1,14 @@
 import styled from 'styled-components';
 import { Row, Col, Empty } from 'antd';
 import { MyPageLayout } from 'components';
-import { Link } from 'react-router-dom';
-import Summary from 'components/common/Summary';
+
+import { Summary2 } from 'components/common';
 import { useEffect, useState } from 'react';
 import { bookmark } from 'api/common';
 import { CourseApi } from 'api';
+import { MyPageLoading } from 'components';
 
 const MyPageLike = () => {
-  // const [record, setRecord] = useState({ month_exercise_time: 40, month_calories: 20 });
-  // const dispatch = useAppDispatch();
-  // const { value } = useAppSelector((state) => state.test, shallowEqual);
-
   const [courseList, setCourseList] = useState<bookmark[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
@@ -19,6 +16,7 @@ const MyPageLike = () => {
       const course = CourseApi();
       await course.getBookmark().then((res) => {
         setCourseList(res.data);
+
         setLoading(false);
       });
     }
@@ -49,7 +47,7 @@ const MyPageLike = () => {
               paddingLeft: '50px',
             }}
           >
-            <Col>
+            <Col span={24}>
               <Row
                 style={{
                   marginBottom: '10px',
@@ -57,19 +55,29 @@ const MyPageLike = () => {
               >
                 <Col style={{ fontSize: '20px' }}>좋아요 보관함</Col>
               </Row>
-              <CardDiv>
-                {courseList
-                  ? courseList.map((course: bookmark, idx: number) => {
-                      return (
-                        <SummaryDiv key={idx}>
-                          <Link to={`../course/${course.id}`}>
-                            <Summary {...course.course_id} />
-                          </Link>
-                        </SummaryDiv>
-                      );
-                    })
-                  : ``}
-              </CardDiv>
+              {loading ? (
+                <MyPageLoading />
+              ) : (
+                <Row>
+                  {courseList
+                    ? courseList.map((course: bookmark, idx: number) => {
+                        return (
+                          // <SummaryDiv key={course.course_id.id}>
+                          //   <Link to={`../course/${course.course_id.id}`}>
+                          //     <Summary {...course.course_id} />
+                          //   </Link>
+                          // </SummaryDiv>
+                          <Col
+                            key={course.course_id.id}
+                            style={{ marginRight: '30px', marginBottom: '30px', width: '250px' }}
+                          >
+                            <Summary2 key={course.course_id.id} {...course.course_id} />
+                          </Col>
+                        );
+                      })
+                    : ``}
+                </Row>
+              )}
             </Col>
             {!loading && courseList.length < 1 && (
               <Col style={{ width: '80%' }}>
@@ -87,6 +95,7 @@ export default MyPageLike;
 
 const Wrapper = styled.div`
   width: 100%;
+  height: 100vh;
 `;
 const CardDiv = styled.div`
   display: grid;

@@ -1,6 +1,71 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import ReactApexChart from 'react-apexcharts';
+import { Footer } from 'components';
+
 const MainRenderPageTemp = () => {
+  const options = {
+    chart: {
+      id: 'basic-bar',
+      toolbar: {
+        show: false,
+      },
+    },
+    tooltip: {
+      enabled: false,
+    },
+    states: {
+      hover: {
+        filter: {
+          type: 'none',
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        show: true,
+        style: {
+          colors: [],
+          fontSize: '12px',
+          fontFamily: 'Noto Sans KR',
+          fontWeight: 'bold',
+          cssClass: 'apexcharts-xaxis-label',
+        },
+      },
+      axisBorder: {
+        show: false,
+      },
+    },
+    grid: {
+      borderColor: 'transparent',
+
+      lines: {
+        show: false,
+      },
+    },
+    yaxis: {
+      labels: {
+        show: false,
+      },
+      tickAmount: 1,
+      min: 0,
+      max: 15,
+    },
+    colors: ['#ff7273'],
+  };
+  const series = [
+    {
+      name: '운동시간',
+      data: [5, 0, 10, 3, 4, 7, 8, 9, 15, 20, 10, 5],
+    },
+  ];
   return (
     <Div>
       <SectionOne>
@@ -9,7 +74,7 @@ const MainRenderPageTemp = () => {
             집에서도 지키는
             <br /> 나만의 건강
           </h1>
-          <p style={{ color: '#4e5968' }}>
+          <p style={{ color: '#444' }}>
             언제 어디서나 당신의 건강을 책임지는 AI홈트 서비스,
             <br />
             웰라이
@@ -24,8 +89,8 @@ const MainRenderPageTemp = () => {
       </SectionOne>
       <SectionTwo>
         <div className="introduce">
-          <h1>당신의 퍼스널 AI트레이너</h1>
-          <p>
+          <h1 style={{ color: '#444' }}>당신의 퍼스널 AI트레이너</h1>
+          <p style={{ color: '#444' }}>
             AI트레이너의 실시간 운동자세 피드백,
             <br />
             혼자서 하는 운동도 이젠 두렵지 않아!
@@ -38,12 +103,12 @@ const MainRenderPageTemp = () => {
       <SectionThree>
         <div className="introduce">
           <div className="contents">
-            <h1>
+            <h1 style={{ color: '#444' }}>
               한 눈에 보는
               <br />
               스마트한 건강 관리
             </h1>
-            <p>
+            <p style={{ color: '#444' }}>
               당신의 노력을 한 눈에 보기 쉽게.
               <br />
               마이 리포트로 주간/월간 운동 기록을 체크해보세요.
@@ -57,15 +122,19 @@ const MainRenderPageTemp = () => {
         <div className="image">
           <div>
             <h2>
-              &quot;차차&quot;님의
-              <br />
-              <small>위클리포트</small>
+              &quot;웰라이&quot;님의 <br /> 연간 리포트
             </h2>
-            <div style={{ width: '60%', margin: '1em auto 1em 0', display: 'flex', justifyContent: 'space-between' }}>
-              <button className="enable">운동 시간</button>
-              <button className="disable">칼로리</button>
+            <div style={{ width: '50%', margin: '1em auto 1em 6em', display: 'flex', justifyContent: 'space-between' }}>
+              <button className="enable" disabled>
+                운동 시간
+              </button>
+              <button className="disable" disabled>
+                칼로리
+              </button>
             </div>
-            <img src="image/weeklyChart.png" alt="주간차트" />
+            <div className="main-chart">
+              <ReactApexChart options={options} series={series} type="bar" width={500} height={200} />
+            </div>
           </div>
         </div>
       </SectionThree>
@@ -161,6 +230,7 @@ const SectionTwo = styled.section`
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     text-align: center;
+    color: '#444';
     h1 {
       font-size: 65px;
       font-weight: 800;
@@ -172,7 +242,7 @@ const SectionTwo = styled.section`
       font-color: ${(props) => props.theme.defaultText};
       font-size: 20px;
       font-weight: 100;
-      line-height: 110%;
+      line-height: 140%;
       margin: 1em 0;
     }
     margin-bottom: 2em;
@@ -184,10 +254,10 @@ const SectionThree = styled.section`
   display: flex;
   flex-direction: row;
   min-width: 1200px;
-
+  color: '#444';
   .introduce {
     position: relative;
-    width: 60%;
+    width: 50%;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -204,7 +274,7 @@ const SectionThree = styled.section`
         font-family: 'Noto Sans KR';
         font-weight: 100;
         font-size: 20px;
-        line-height: 110%;
+        line-height: 140%;
       }
     }
     img {
@@ -231,18 +301,18 @@ const SectionThree = styled.section`
     flex-direction: column;
     justify-content: center;
     h2 {
-      line-height: 100%;
+      line-height: 140%;
       margin-right: auto;
       color: ${(props) => props.theme.defaultText};
     }
-    img {
+    .main-chart {
       width: 100%;
       max-width: 25vw;
     }
   }
 
   button {
-    width: 10em;
+    width: 7em;
     height: 3em;
     border-radius: 8px;
   }

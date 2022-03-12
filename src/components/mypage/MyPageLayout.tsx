@@ -47,7 +47,7 @@ const MyPageLayout = () => {
         style={{
           height: '100px',
           fontSize: '24px',
-          color: '#574240',
+          color: '#444',
           fontWeight: 'bold',
           borderRight: '1px solid #f0f0f0',
           borderLeft: '1px solid #f0f0f0',

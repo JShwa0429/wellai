@@ -92,7 +92,7 @@ const TextArea = styled.textarea`
   outline-color: #888;
 `;
 const Button = styled.button`
-  width: 10%;
+  width: 13%;
   color: white;
   background-color: ${(props) => props.theme.main};
 

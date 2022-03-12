@@ -6,7 +6,7 @@ import { detailResponse } from 'api/common';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Pagination } from 'antd';
+import { Pagination, Tooltip } from 'antd';
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [reviewData, setReviewData] = useState<ReviewType[]>([]);
@@ -19,7 +19,6 @@ const CourseDetailPage = () => {
   async function getReview() {
     const course = CourseApi();
     await course.getReview(id as string, pageNumber, ordering).then((res) => {
-      console.log(res.data);
       setReviewData(res.data.results);
     });
   }
@@ -75,7 +74,7 @@ const CourseDetailPage = () => {
               const title = line.split(':')[0];
               const content = line.split(':')[1];
               return (
-                <>
+                <div key={i}>
                   <h3 key={'h - ' + { i }}>
                     <SmileTwoTone twoToneColor="#eb2f96" />
                     &nbsp;
@@ -86,7 +85,7 @@ const CourseDetailPage = () => {
                     <br />
                     <br />
                   </span>
-                </>
+                </div>
               );
             })}
           </div>
@@ -136,6 +135,7 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10em;
   .explain-below {
     display: flex;
     flex-direction: row;

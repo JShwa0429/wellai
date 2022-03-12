@@ -5,7 +5,7 @@ const theme: StyledComponent.DefaultTheme = {
   main: '#FF7272',
   sub: 'white',
   text: '#888888',
-  defaultText: '#574240 ',
+  defaultText: '#444 ',
   buttonText: '#FFEAEE',
   border: '#C4C4C4',
   light: '#ffcece',

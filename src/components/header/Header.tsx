@@ -181,18 +181,12 @@ const Wrapper = styled.div<WrapperProps>`
   width: 100vw;
   min-width: 1000px;
   height: 80px;
-  color: #574240;
+  color: #444;
   border-bottom: ${({ scrollLocation }) => (scrollLocation > 1 ? '1px solid lightgray' : '')};
   position: fixed;
   background-color: ${({ scrollLocation }) => (scrollLocation > 1 ? 'white' : 'transparent')};
   transition: background 0.5s, border 0.5s;
   z-index: 999;
-  // background: #2d2926;
-  // // background: #fce77d;
-  // // background: #ffb259;
-  // // background: #ffcf98;
-  // // background: #4a171e;
-  // // background: #8aaae5;
 `;
 
 export default Header;
