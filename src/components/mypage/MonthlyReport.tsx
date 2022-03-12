@@ -29,7 +29,7 @@ const MonthlyReport = () => {
           year_exercise_duration: data[0].year_exercise_duration / 60,
           months_exercise_duration: data[0].months_exercise_duration.map((item) => ({
             ...item,
-            total: item.total / 60,
+            total: Math.floor(item.total / 60),
           })),
         });
       });
