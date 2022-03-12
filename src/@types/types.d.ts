@@ -4,8 +4,8 @@ declare module 'type' {
     height: number;
     weight: number;
     is_core: boolean;
-    is_leg: boolean;
-    is_back: boolean;
+    is_arm: boolean;
+    is_recline: boolean;
     is_sit: boolean;
     is_stand: boolean;
     is_balance: boolean;

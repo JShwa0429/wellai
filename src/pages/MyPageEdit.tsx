@@ -16,8 +16,8 @@ const MyPageEdit = () => {
     height: 0,
     weight: 0,
     is_core: false,
-    is_leg: false,
-    is_back: false,
+    is_arm: false,
+    is_recline: false,
     is_stand: false,
     is_sit: false,
     is_balance: false,
@@ -35,8 +35,8 @@ const MyPageEdit = () => {
           height: options.height ?? 0,
           weight: options.weight ?? 0,
           is_core: options.is_core,
-          is_leg: options.is_leg,
-          is_back: options.is_back,
+          is_arm: options.is_arm,
+          is_recline: options.is_recline,
           is_stand: options.is_stand,
           is_sit: options.is_sit,
           is_balance: options.is_balance,
@@ -49,8 +49,8 @@ const MyPageEdit = () => {
   const disabled = useMemo(() => {
     let count = 0;
     if (options.is_core) count += 1;
-    if (options.is_leg) count += 1;
-    if (options.is_back) count += 1;
+    if (options.is_arm) count += 1;
+    if (options.is_recline) count += 1;
     if (options.is_stand) count += 1;
     if (options.is_sit) count += 1;
     if (options.is_balance) count += 1;
@@ -279,33 +279,33 @@ const MyPageEdit = () => {
                     <Col>
                       <Button
                         size="large"
-                        disabled={options.is_leg ? false : disabled}
-                        onClick={() => setOptions({ ...options, is_leg: !options.is_leg })}
+                        disabled={options.is_arm ? false : disabled}
+                        onClick={() => setOptions({ ...options, is_arm: !options.is_arm })}
                         style={{
-                          backgroundColor: `${options.is_leg === true ? '#ff7273' : 'white'}`,
-                          color: `${options.is_leg === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${options.is_leg === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_arm === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_arm === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_arm === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
                       >
-                        다리
+                        팔
                       </Button>
                     </Col>
                     <Col>
                       <Button
                         size="large"
-                        disabled={options.is_back ? false : disabled}
-                        onClick={() => setOptions({ ...options, is_back: !options.is_back })}
+                        disabled={options.is_recline ? false : disabled}
+                        onClick={() => setOptions({ ...options, is_recline: !options.is_recline })}
                         style={{
-                          backgroundColor: `${options.is_back === true ? '#ff7273' : 'white'}`,
-                          color: `${options.is_back === true ? 'white' : 'lightgray'}`,
-                          borderColor: `${options.is_back === true ? '#ff7273' : 'lightgray'}`,
+                          backgroundColor: `${options.is_recline === true ? '#ff7273' : 'white'}`,
+                          color: `${options.is_recline === true ? 'white' : 'lightgray'}`,
+                          borderColor: `${options.is_recline === true ? '#ff7273' : 'lightgray'}`,
                           width: '82px',
                           borderRadius: '5px',
                         }}
                       >
-                        등
+                        누워서
                       </Button>
                     </Col>
                   </Row>

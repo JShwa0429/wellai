@@ -25,8 +25,8 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber }) => {
   const [height, setHeight] = useState<number>(0);
   const [preferenceList, setPreferenceList] = useState<Preference[]>([
     { id: '0', text: '코어', checked: false },
-    { id: '1', text: '다리', checked: false },
-    { id: '2', text: '등', checked: false },
+    { id: '1', text: '팔', checked: false },
+    { id: '2', text: '누워서', checked: false },
     { id: '3', text: '서서', checked: false },
     { id: '4', text: '앉아서', checked: false },
     { id: '5', text: '밸런스', checked: false },
@@ -80,8 +80,8 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber }) => {
       weight: Number(weight.toFixed()),
       height: Number(height.toFixed()),
       is_core: preferenceList[0].checked,
-      is_leg: preferenceList[1].checked,
-      is_back: preferenceList[2].checked,
+      is_arm: preferenceList[1].checked,
+      is_recline: preferenceList[2].checked,
       is_stand: preferenceList[3].checked,
       is_sit: preferenceList[4].checked,
       is_balance: preferenceList[5].checked,
