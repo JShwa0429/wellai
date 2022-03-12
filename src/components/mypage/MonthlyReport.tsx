@@ -26,7 +26,7 @@ const MonthlyReport = () => {
         const data = res.data;
         setYearlyRecord({
           ...data[0],
-          year_exercise_duration: data[0].year_exercise_duration / 60,
+          year_exercise_duration: Math.floor(data[0].year_exercise_duration / 60),
           months_exercise_duration: data[0].months_exercise_duration.map((item) => ({
             ...item,
             total: Math.floor(item.total / 60),
