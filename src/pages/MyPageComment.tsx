@@ -14,6 +14,7 @@ const MyPageComment = () => {
     async function getUserReview() {
       const course = CourseApi();
       await course.getUserReview().then((res) => {
+        console.log(res.data);
         setReviewData(res.data);
         setLoading(false);
       });

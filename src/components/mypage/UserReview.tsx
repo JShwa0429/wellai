@@ -7,7 +7,7 @@ import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
 import { CloseOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
+import moment from 'moment';
 export type EditReviewProps = {
   onRemove: (id: string) => void;
 };
@@ -18,6 +18,7 @@ const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
   rating,
   content,
   onRemove,
+  created_at,
 }) => {
   const navigate = useNavigate();
   const removeReview = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,12 +33,18 @@ const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
   return (
     <Row style={{ width: '100%' }}>
       <Col span={24}>
-        <Card hoverable style={{ marginBottom: '20px', width: '100%' }} onClick={() => navigate(`/course/${id}`)}>
+        <Card
+          hoverable
+          style={{ marginBottom: '20px', width: '100%' }}
+          onClick={() => navigate(`/course/${course_id.id}`)}
+        >
           <Row justify="space-between">
             <Col>
               <Rating value={rating} disabled />
             </Col>
+
             <Col>
+              <span style={{ marginRight: '30px' }}>{moment(created_at).format('YYYY년 MM월 DD일 HH:mm:ss')}</span>
               <Button
                 onClick={removeReview}
                 style={{ zIndex: 999 }}
@@ -52,9 +59,9 @@ const Review: React.FunctionComponent<UserReviewType & EditReviewProps> = ({
             </button> */}
             </Col>
           </Row>
-          <Row>
+          <Row style={{ marginTop: '5px' }}>
             <Col>
-              <b>{course_id.course_name}</b>
+              <b style={{ marginRight: '30px', color: '#ff7273', fontSize: '20px' }}>{course_id.course_name}</b>
               {content}
             </Col>
           </Row>

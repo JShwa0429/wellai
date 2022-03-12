@@ -105,6 +105,7 @@ const DivIntroduce = styled.div`
   z-index: 90;
   display: flex;
   align-items: center;
+  width: 100%;
   h1 {
     margin: 0;
     color: white;
