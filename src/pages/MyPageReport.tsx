@@ -37,7 +37,7 @@ const MyPageReport = () => {
 
               <Row
                 style={{
-                  backgroundColor: '#fff3c3',
+                  backgroundColor: '#fff7d8',
                   marginTop: '30px',
                   padding: '20px 25px',
                   borderRadius: '10px',
@@ -52,13 +52,15 @@ const MyPageReport = () => {
                       display: 'flex',
                       alignItems: 'center',
                     }}
+                    align="middle"
                   >
-                    💡 주의 사항
+                    <Col>💡 주의 사항</Col>
                   </Row>
                   <Row>
                     <Col
                       style={{
                         fontWeight: 'bold',
+                        paddingLeft: '17px',
                       }}
                     >
                       <u>내 정보 변경</u>에서 체형을 정확하게 입력해주셔야 <u>칼로리 계산</u>이 가능합니다
