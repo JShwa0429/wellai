@@ -38,8 +38,14 @@ const WeeklyReport = () => {
     async function getRecordsMonth() {
       const mypage = MyPageApi();
       await mypage.getRecordsMonth(date.month, date.year).then((res) => {
-        setMonthlyRecord(res.data[0]);
-        setRecords(res.data[0].records);
+        const data = res.data[0];
+        const revisedData = {
+          ...data,
+          month_exercise_time: data.month_exercise_time / 60,
+          records: data.records.map((item) => ({ ...item, exercise_duration: item.exercise_duration / 60 })),
+        };
+        setMonthlyRecord(revisedData);
+        setRecords(revisedData.records);
       });
     }
     getRecordsMonth();

@@ -75,7 +75,7 @@ const CourseDetailPage = () => {
               const title = line.split(':')[0];
               const content = line.split(':')[1];
               return (
-                <>
+                <div key={i}>
                   <h3 key={'h - ' + { i }}>
                     <SmileTwoTone twoToneColor="#eb2f96" />
                     &nbsp;
@@ -86,7 +86,7 @@ const CourseDetailPage = () => {
                     <br />
                     <br />
                   </span>
-                </>
+                </div>
               );
             })}
           </div>

@@ -10,8 +10,8 @@ import { exercise } from 'api/common';
 import { ImportOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
-const EXERCISE_TIME = 60;
-const TIME_LIMIT = EXERCISE_TIME * 4;
+const EXERCISE_TIME = 15;
+const TIME_LIMIT = EXERCISE_TIME * 4 + 3;
 
 const ExcercisePage = () => {
   // const opts = {
@@ -51,6 +51,8 @@ const ExcercisePage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [countDown, setCountDown] = useState(3);
+
   useEffect(() => {
     course
       .getDetailInformation(id as string)
@@ -66,13 +68,15 @@ const ExcercisePage = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 3000);
+    setCountDown(3);
+    const loadingTimeout = setTimeout(() => setIsLoading(false), 3000);
     if (userPoseIndexRef.current !== -1) {
       course
         .getExercise(courseListRef.current[userPoseIndexRef.current as number])
         .then((res) => setExerciseData(res.data))
         .catch((err) => console.log(err.response));
     }
+    return () => clearTimeout(loadingTimeout);
   }, [userPoseIndex]);
 
   const handleNextExercise = () => {
@@ -91,11 +95,12 @@ const ExcercisePage = () => {
       );
     }
   };
-  if (isLoading) {
-    return <Loading isLoading={isLoading} />;
-  }
+  // if (isLoading) {
+  //   return <Loading isLoading={isLoading} />;
+  // }
   return (
     <Wrapper>
+      <Loading isLoading={isLoading} countDown={countDown} setCountDown={setCountDown} />
       <Row justify="space-between" style={{ padding: '15px 15px' }}>
         <Col span={12}>
           <Row>

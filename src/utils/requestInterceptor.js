@@ -28,7 +28,7 @@ export default function putInterceptor(axios) {
         fromWhere !== '/users/token/refresh' &&
         fromWhere !== '/users/login' &&
         error.response.status === 401 &&
-        !Cookies.get('access')
+        Cookies.get('refresh')
       ) {
         isAlreadyFetchingAccessToken = true;
         try {
@@ -42,14 +42,12 @@ export default function putInterceptor(axios) {
 
           originalRequest.headers['Authorization'] = access;
           axios.defaults.headers.common['Authorization'] = access;
-
+          window.location.reload();
           return axios(originalRequest);
         } catch (error) {
           signout();
           isAlreadyFetchingAccessToken = false;
           return Promise.reject(error);
-        } finally {
-          window.location.reload();
         }
       }
 
