@@ -43,6 +43,7 @@ const MyPageReport = () => {
                   marginTop: '30px',
                   padding: '20px 25px',
                   borderRadius: '10px',
+                  marginBottom: '100px',
                 }}
               >
                 <Col>
@@ -89,46 +90,6 @@ export default MyPageReport;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: max-content;
+  min-height: calc(100vh - 80px);
 `;
-
-<Row
-  // justify={'space-between'}
-  style={{
-    backgroundColor: '#FBE89A',
-    padding: '16px 20px',
-    marginBottom: '20px',
-  }}
->
-  <Col>
-    <Row
-      style={{
-        color: '#6f6e6f',
-        fontSize: '15px',
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <ExclamationCircleFilled
-        style={{
-          marginRight: '5px',
-          color: 'red',
-        }}
-      />{' '}
-      주의 사항
-    </Row>
-    <Row>
-      <Col
-        style={{
-          fontWeight: 800,
-        }}
-      >
-        <u>환급은 기입하신 계좌번호를 통해 이루어집니다.</u> 정확하게 기입해주세요!
-        <br />
-        또한, 예약 신청 후 30분 안에 예약금을 입금하지 않으면 <u>예약이 취소</u>됩니다.
-        <br />
-        예약 관련 문제 발생시 010-4398-7759로 문의 부탁드립니다.
-      </Col>
-    </Row>
-  </Col>
-</Row>;
