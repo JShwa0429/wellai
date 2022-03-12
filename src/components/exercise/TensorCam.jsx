@@ -70,9 +70,6 @@ export default function TempComp({
     // setTimeLimit(timeLimit - 1);
     const interval2 = setInterval(() => {
       setTimeLimit((timeLimitRef.current -= 1));
-      if (timeLimitRef.current < 0) {
-        setTimeLimit((timeLimitRef.current = 5));
-      }
     }, 1000);
     return () => clearInterval(interval2);
   }, []);

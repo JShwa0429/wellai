@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { UserReviewType } from 'type';
 import type * as Api from './common';
+import putInterceptor from '../utils/requestInterceptor';
 
 interface requestApiOptions {
   readonly course: AxiosInstance;
@@ -24,6 +25,7 @@ export const CourseApi = (): requestApiOptions => {
   const course = axios.create({
     baseURL: `${process.env.REACT_APP_NEXT_PUBLIC_BASE_URL}/course`,
   });
+  putInterceptor(course);
   return {
     course,
     getCourse: () => course.get(`/list`),
@@ -32,7 +34,7 @@ export const CourseApi = (): requestApiOptions => {
       course.get(`/list`, {
         params: { search: search },
       }),
-    getDetailInformation: (id) => axios.get(`/course/${id}`),
+    getDetailInformation: (id) => course.get(`/${id}`),
     getReview: (id, pageNumber, ordering) =>
       course.get(`/${id}/review`, {
         params: {

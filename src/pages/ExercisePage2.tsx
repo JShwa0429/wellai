@@ -1,5 +1,5 @@
 import { WebCam, Video, Description } from 'components';
-import { Row, Col, Button, Progress } from 'antd';
+import { Row, Col, Button, Progress, message } from 'antd';
 import styled from 'styled-components';
 import { TensorCam, Loading } from 'components/exercise';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +21,17 @@ const ExcercisePage = () => {
   //   },
   // };
 
+  const alertUser = (e: any) => {
+    e.preventDefault();
+    e.returnValue = '';
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser);
+    return () => {
+      window.removeEventListener('beforeunload', alertUser);
+    };
+  }, []);
   const { id } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exercise>();
@@ -49,7 +60,9 @@ const ExcercisePage = () => {
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
       .catch((err) => console.log(err.response));
-    return () => user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
+    return () => {
+      return user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
+    };
   }, []);
 
   useEffect(() => {
@@ -83,10 +96,10 @@ const ExcercisePage = () => {
   }
   return (
     <Wrapper>
-      <Row justify="space-between" style={{ padding: '30px 30px' }}>
+      <Row justify="space-between" style={{ padding: '15px 15px' }}>
         <Col span={12}>
           <Row>
-            <Col style={{ marginRight: '30px' }}>
+            <Col style={{ marginRight: '20px' }}>
               <Button
                 style={{ borderRadius: '5px' }}
                 type="primary"
@@ -98,7 +111,13 @@ const ExcercisePage = () => {
               </Button>
             </Col>
             <Col>
-              <Button style={{ borderRadius: '5px' }} type="primary" size="large" onClick={handleNextExercise}>
+              <Button
+                disabled={userPoseIndex === courseList.length - 1 ? true : false}
+                style={{ borderRadius: '5px' }}
+                type="primary"
+                size="large"
+                onClick={handleNextExercise}
+              >
                 다음 운동으로
               </Button>
             </Col>
@@ -106,7 +125,7 @@ const ExcercisePage = () => {
         </Col>
         <Col span={12}>
           <Row justify="center" align="middle">
-            <Col style={{ marginRight: '20px', fontSize: '25px' }}>코스진행</Col>
+            <Col style={{ marginRight: '20px', fontSize: '20px' }}>코스진행</Col>
             <Col span={15}>
               <Progress
                 strokeColor={{
@@ -122,16 +141,44 @@ const ExcercisePage = () => {
       <Row justify="space-around">
         <Col span={24}>
           <Row justify="center" align="middle">
-            <Col span={12}>
+            <Col span={12} style={{ paddingLeft: '30px' }}>
               <Row justify="center" align="middle" style={{ marginBottom: '20px' }}>
                 <Col
                   style={{
-                    fontSize: '36px',
+                    fontSize: '30px',
                     color: '#ff7273',
                     fontWeight: 'bold',
                   }}
                 >
                   {exerciseData?.exercise_name}
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  padding: '10px 10px',
+                  fontSize: '17px',
+                  // border: '1px solid lightgray',
+                  borderRadius: '20px',
+                }}
+              >
+                <Col>
+                  <Row>
+                    <Col>
+                      1. <b>전신이 카메라에 담길 수 있는 거리</b>에서 운동을 시작해 주세요.
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      2. 정확한 자세로 운동을 하실 때는 카메라 화면 속 운동 자세가{' '}
+                      <b style={{ color: '#00C9A7' }}>초록색</b>
+                      으로 보이게 됩니다.
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      3. 각 자세 별로 <b>순 운동시간 1분</b>을 채워 주세요. (정확한 자세 수행 시운동 시간 카운트 시작)
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>
@@ -234,10 +281,7 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   min-width: 100%;
-  .ant-progress-inner {
-    /* height: 25px; */
-  }
-  .ant-progress-bg {
-    /* height: 25px !important; */
+  b {
+    color: ${(props) => props.theme.main};
   }
 `;
