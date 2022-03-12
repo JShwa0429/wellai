@@ -134,7 +134,7 @@ export default function TempComp({
     if (userPoseIndexRef.current >= courseListRef.current.length) {
       alert('운동 끝났습니다');
       navigate(`../course/${id}`);
-      user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
+      // user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
     }
     return userPoseIndex, totalTimeCounter;
   }
@@ -164,7 +164,7 @@ export default function TempComp({
     return [y, x];
   }
   function setColor(index, accuracy) {
-    return index === courseList[userPoseIndex] - 1
+    return index === courseListRef.current[userPoseIndexRef.current] - 1
       ? accuracy >= 0.9
         ? 'rgb(119,198,110)'
         : 'rgb(128,128,128)'

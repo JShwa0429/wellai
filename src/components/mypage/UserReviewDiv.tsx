@@ -18,9 +18,10 @@ const ReviewDiv: React.FunctionComponent<{
         return (
           pageNumber * cut > idx &&
           idx > (pageNumber - 1) * cut - 1 && (
-            <Link to={`../../course/${data.course_id.id}`}>
-              <UserReview {...data} onRemove={onRemove} key={idx} />
-            </Link>
+            // <Link to={`../../course/${data.course_id.id}`}>
+            //   <UserReview {...data} onRemove={onRemove} key={idx} />
+            // </Link>
+            <UserReview {...data} onRemove={onRemove} key={idx} />
           )
         );
       })}

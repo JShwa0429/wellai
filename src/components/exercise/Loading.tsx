@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { Row, Col, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -14,12 +14,19 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 export type LoadingProps = {
   isLoading: boolean;
+  countDown: number;
+  setCountDown: Dispatch<SetStateAction<number>>;
 };
 
-const Review: React.FunctionComponent<LoadingProps> = ({ isLoading }) => {
-  const [countDown, setCountDown] = useState(3);
+const Review: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, setCountDown }) => {
+  // const [countDown, setCountDown] = useState(3);
   useEffect(() => {
-    if (countDown > 0) setTimeout(() => setCountDown((current) => current - 1), 1000);
+    const timeCount = setTimeout(() => {
+      if (countDown > 0) {
+        setCountDown(countDown - 1);
+      }
+    }, 1000);
+    return () => clearTimeout(timeCount);
   }, [countDown]);
   return (
     <Wrapper isLoading={isLoading}>

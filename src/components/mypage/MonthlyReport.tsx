@@ -24,7 +24,14 @@ const MonthlyReport = () => {
       const mypage = MyPageApi();
       await mypage.getRecordsYear().then((res) => {
         const data = res.data;
-        setYearlyRecord(data[0]);
+        setYearlyRecord({
+          ...data[0],
+          year_exercise_duration: data[0].year_exercise_duration / 60,
+          months_exercise_duration: data[0].months_exercise_duration.map((item) => ({
+            ...item,
+            total: item.total / 60,
+          })),
+        });
       });
     }
     getRecordsYear();
@@ -152,6 +159,7 @@ const MonthlyReport = () => {
             <Statistic
               title="운동시간(분)"
               value={yearlyRecord?.year_exercise_duration}
+              // value={yearlyRecord.year_exercise_duration ? 0 : yearlyRecord?.year_exercise_duration / 60}
               prefix={<ClockCircleOutlined />}
             />
           </Col>

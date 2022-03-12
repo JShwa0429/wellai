@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+
 import { useEffect, useState } from 'react';
 import { Row, Col, Empty } from 'antd';
-import { MyPageLayout, UserReviewDiv } from 'components';
+import { MyPageLayout } from 'components';
+import { UserReviewDiv } from 'components/mypage';
 import { CourseApi } from 'api';
 import { UserReviewType } from 'type';
 

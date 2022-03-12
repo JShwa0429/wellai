@@ -3,6 +3,7 @@ import { Row, Col, Empty } from 'antd';
 import { MyPageLayout } from 'components';
 import { Link } from 'react-router-dom';
 import Summary from 'components/common/Summary';
+import { Summary2 } from 'components/common';
 import { useEffect, useState } from 'react';
 import { bookmark } from 'api/common';
 import { CourseApi } from 'api';
