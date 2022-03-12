@@ -209,7 +209,9 @@ const ExcercisePage = () => {
                             format={(percent) => (
                               <>
                                 <div>제한시간</div>
-                                <div>{((TIME_LIMIT * Number(percent)) / 100).toFixed()}</div>
+                                <div style={{ fontSize: '40px' }}>
+                                  {((TIME_LIMIT * Number(percent)) / 100).toFixed()}
+                                </div>
                               </>
                             )}
                             success={{
@@ -233,7 +235,9 @@ const ExcercisePage = () => {
                             format={(percent) => (
                               <>
                                 <div>운동시간</div>
-                                <div>{((EXERCISE_TIME * Number(percent)) / 100).toFixed()}</div>
+                                <div style={{ fontSize: '40px' }}>
+                                  {((EXERCISE_TIME * Number(percent)) / 100).toFixed()}
+                                </div>
                               </>
                             )}
                           />
@@ -253,7 +257,7 @@ const ExcercisePage = () => {
                             format={(percent) => (
                               <>
                                 <div>총운동시간</div>
-                                <div>
+                                <div style={{ fontSize: '40px' }}>
                                   {((Number(percent) / 100) * EXERCISE_TIME * courseListRef.current.length).toFixed()}
                                 </div>
                               </>

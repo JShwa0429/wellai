@@ -166,9 +166,9 @@ export default function TempComp({
   function setColor(index, accuracy) {
     return index === courseListRef.current[userPoseIndexRef.current] - 1
       ? accuracy >= 0.9
-        ? 'rgb(119,198,110)'
-        : 'rgb(128,128,128)'
-      : 'rgb(128,128,128)';
+        ? 'rgb(119,198,110,0.7)'
+        : 'rgb(128,128,128,0.7)'
+      : 'rgb(128,128,128,0.7)';
   }
 
   const drawCanvas = (pose, poseIndex, accuracy, video, videoWidth, videoHeight, canvas) => {
@@ -187,19 +187,32 @@ export default function TempComp({
         const [by, bx] = toTuple(pose[0]['keypoints'][line[1]]);
         ctx.beginPath();
         ctx.moveTo(ax * 1, ay * 1);
+        ctx.lineCap = 'round';
         ctx.lineTo(bx * 1, by * 1);
+        ctx.lineCap = 'round';
         ctx.lineWidth = LINE_WIDTH;
         ctx.strokeStyle = setColor(poseIndex, accuracy);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(ax, ay, 7, 0, 2 * Math.PI);
+        ctx.lineWidth = 7;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(bx, by, 7, 0, 2 * Math.PI);
+        ctx.lineWidth = 7;
         ctx.stroke();
       }
     });
     if (noKeypoints <= 10) {
       ctx.beginPath();
       ctx.fillStyle = 'rgba(1, 1, 1, 0.5)';
-      ctx.rect(10, 20, 150, 100);
+      ctx.rect(10, 15, 150, 100);
 
       ctx.font = 'bold 30px Arial';
       ctx.fillStyle = 'rgb(255,144,144)';
+
       ctx.fillText('화면에 전신이 나오도록 물러서 주세요', 100, 40);
     }
   };
