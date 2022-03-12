@@ -77,8 +77,8 @@ const SignUpOption: React.FunctionComponent<Props> = ({ pageNumber }) => {
     event.preventDefault();
     const options: OptionType = {
       gender: gender,
-      weight: weight,
-      height: height,
+      weight: Number(weight.toFixed()),
+      height: Number(height.toFixed()),
       is_core: preferenceList[0].checked,
       is_leg: preferenceList[1].checked,
       is_back: preferenceList[2].checked,

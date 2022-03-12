@@ -26,6 +26,7 @@ export default function putInterceptor(axios) {
       if (
         !isAlreadyFetchingAccessToken &&
         fromWhere !== '/users/token/refresh' &&
+        fromWhere !== '/users/login' &&
         error.response.status === 401 &&
         !Cookies.get('access')
       ) {
