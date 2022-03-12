@@ -233,7 +233,7 @@ const InputDiv = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-  margin-top: auto;
+  margin-top: 30px;
   width: 100%;
   heigt: 100%;
   display: flex;

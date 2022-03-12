@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { useEffect, useState } from 'react';
-import { Row, Col, Empty } from 'antd';
+import { Row, Col } from 'antd';
 import { MyPageLayout } from 'components';
 import { UserReviewDiv } from 'components/mypage';
 import { CourseApi } from 'api';
@@ -14,7 +14,6 @@ const MyPageComment = () => {
     async function getUserReview() {
       const course = CourseApi();
       await course.getUserReview().then((res) => {
-        console.log(res.data);
         setReviewData(res.data);
         setLoading(false);
       });

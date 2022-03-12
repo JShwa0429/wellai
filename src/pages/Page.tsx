@@ -27,6 +27,7 @@ const Div = styled.div`
     padding-top: 80px;
     display: flex;
     justify-content: center;
+    height: max-content;
   }
 `;
 export default Page;
