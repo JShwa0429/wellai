@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
+import { Row, Col, Spin } from 'antd';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CourseApi } from 'api';
-import Summary from 'components/common/Summary';
+import Summary2 from '../common/Summary2';
 import { detailResponse } from 'api/common';
 import { Empty } from 'antd';
 import { Footer } from 'components';
 
 const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword }) => {
   const [datas, setDatas] = useState<detailResponse[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function searchCourse() {
+      setIsLoading(true);
       const course = CourseApi();
       await course.searchCourse(keyword).then((res) => setDatas(res.data.results));
+      setIsLoading(false);
     }
     searchCourse();
   }, [keyword]);
@@ -21,17 +25,23 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
     <>
       <Div>
         <h2>검색 결과</h2>
-        <CardDiv>
-          {datas.map((data: detailResponse, idx: number) => {
-            return (
-              <SummaryDiv key={idx}>
-                <Link to={`../course/${data.id}`}>
-                  <Summary {...data} />
-                </Link>
-              </SummaryDiv>
-            );
-          })}
-        </CardDiv>
+        {isLoading ? (
+          <Row style={{ minHeight: 'calc(100vh - 400px)', marginTop: '100px' }} justify="center">
+            <Col>
+              <Spin size="large" tip="Loading" />
+            </Col>
+          </Row>
+        ) : (
+          <CardDiv>
+            {datas.map((data: detailResponse, idx: number) => {
+              return (
+                <Col key={data.id} style={{ marginRight: '30px', marginBottom: '30px', width: '250px' }}>
+                  <Summary2 key={data.id} {...data} />
+                </Col>
+              );
+            })}
+          </CardDiv>
+        )}
         {datas.length < 1 && <Empty description={'검색 결과가 없습니다'} />}
       </Div>
     </>
@@ -41,14 +51,12 @@ const SearchResult: React.FunctionComponent<{ keyword: string }> = ({ keyword })
 export default SearchResult;
 
 const Div = styled.div`
-  height: 100vh;
-  width: 90%;
-  margin: 0 0 0 180px;
+  height: max-content;
+  width: 70%;
   font-size: 1.5em;
   h2 {
     color: ${(props) => props.theme.defaultText};
     width: 100%;
-    //border-bottom: 1px solid #888;
     padding-top: 25px;
     margin-top: 25px;
     font-size: 1.2em;
@@ -63,55 +71,4 @@ const CardDiv = styled.div`
   margin: auto;
   align-items: center;
   justify-content: left;
-`;
-
-const SummaryDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  border: 1px solid #bdbdbd;
-  overflow: hidden;
-  margin: 4%;
-  font-size: 1rem;
-  font-weight: bold;
-  a {
-    text-decoration: none;
-  }
-  .image {
-    background-color: #f5f5f5;
-    img {
-      width: 100%;
-      object-fit: cover;
-    }
-  }
-  .bookmark {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 30px;
-  }
-  .explain {
-    display: flex;
-    flex-direction: column;
-    padding: 5%;
-    padding-left: 3%;
-    text-align: left;
-    background-color: white;
-    div {
-      margin: 0.5%;
-    }
-    float: bottom;
-  }
-
-  font-weight: bold;
-  .title {
-    color: ${(props) => props.theme.defaultText};
-  }
-  .duration {
-    color: ${(props) => props.theme.main};
-  }
-
-  .hashTag {
-    color: #988d8d;
-  }
 `;

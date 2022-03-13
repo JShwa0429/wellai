@@ -15,7 +15,8 @@ export default SearchPage;
 
 const Div = styled.div`
   width: 100%;
-  height: 100%;
+  height: max-content;
+  min-height: calc(100vh - 80px - 50px);
   min-width: 1000px;
   display: flex;
   flex-direction: column;
