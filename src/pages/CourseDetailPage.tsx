@@ -164,17 +164,6 @@ const Div = styled.div`
         margin-bottom: 0;
       }
     }
-    //   .hr-sect::before,
-    //   .hr-sect::after {
-    //     content: '';
-    //     flex-grow: 1;
-    //     background: rgba(0, 0, 0, 0.35);
-    //     height: 1px;
-    //     font-size: 0px;
-    //     line-height: 0px;
-    //     margin: 0px 16px;
-    //   }
-    // }
   }
 `;
 const DivOrdering = styled.div`
