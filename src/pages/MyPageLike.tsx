@@ -90,4 +90,5 @@ export default MyPageLike;
 const Wrapper = styled.div`
   width: 100%;
   height: max-content;
+  min-height: calc(100vh - 80px);
 `;
