@@ -67,6 +67,18 @@ const Header = () => {
             >
               <Link to={'/course'}>{'코스탐색'}</Link>
             </Col>
+            <Col
+              style={{
+                fontSize: '15px',
+                fontWeight: 'bold',
+                marginRight: '40px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Link to={'/qna'}>{'QnA'}</Link>
+            </Col>
             {access ? (
               <Col
                 style={{
