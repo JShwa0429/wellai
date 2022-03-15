@@ -51,7 +51,7 @@ const QnA: React.FunctionComponent<QnAProps> = ({ id, question, answer, img }) =
 
       <ContentsWrapper className="answer" ref={parentRef}>
         <Contents ref={childRef}>
-          <p dangerouslySetInnerHTML={{ __html: answer ?? '' }}></p>
+          <h5 dangerouslySetInnerHTML={{ __html: answer ?? '' }}></h5>
           {img && <img src={img} alt="이미지" />}
         </Contents>
       </ContentsWrapper>
@@ -62,6 +62,7 @@ const QnA: React.FunctionComponent<QnAProps> = ({ id, question, answer, img }) =
 export default React.memo(QnA);
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
   position: relative;
   font-size: 1.5em;
@@ -88,6 +89,9 @@ const Contents = styled.div`
   padding: 3% 5%;
   background-color: rgba(229, 229, 229, 0.4);
 
+  p {
+    font-size: ;
+  }
   img {
     object-fit: contain;
   }
