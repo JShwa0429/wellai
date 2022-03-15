@@ -81,13 +81,13 @@ const Div = styled.div`
   .image {
     position: fixed;
     z-index: -2;
-    left: 10%;
-    height: 100%;
+    left: 7.5%;
+    height: 80%;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 80px);
+    height: calc(95vh - 80px);
     min-width: 15em;
-    width: 20%;
+    width: 30%;
     margin-right: 10%;
     align-items: center;
     justify-content: center;
@@ -98,7 +98,9 @@ const Div = styled.div`
   }
 
   .qna {
+    margin-top: 3em;
     margin-left: 30%;
+    margin-bottom: 30px;
     width: 50%;
     height: 100%;
     display: flex;

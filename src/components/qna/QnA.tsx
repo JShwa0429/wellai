@@ -12,8 +12,6 @@ const QnA: React.FunctionComponent<QnAProps> = ({ id, question, answer, img }) =
   const parentRef = useRef<HTMLDivElement>(null);
   const childRef = useRef<HTMLDivElement>(null);
 
-  const parentRefHeight = parentRef.current?.style.height ?? '0px';
-
   const [isCollapse, setIsCollpase] = useState(false);
   const handleButtonClick = useCallback(
     (event) => {
@@ -51,8 +49,8 @@ const QnA: React.FunctionComponent<QnAProps> = ({ id, question, answer, img }) =
 
       <ContentsWrapper className="answer" ref={parentRef}>
         <Contents ref={childRef}>
-          <h5 dangerouslySetInnerHTML={{ __html: answer ?? '' }}></h5>
-          {img && <img src={img} alt="이미지" />}
+          <p dangerouslySetInnerHTML={{ __html: answer ?? '' }}></p>
+          {img && <img style={{ width: '100%', objectFit: 'contain' }} src={img} alt="이미지" />}
         </Contents>
       </ContentsWrapper>
     </Container>
@@ -74,6 +72,7 @@ const Container = styled.div`
     top: 0.3em;
     right: 0;
   }
+  margin-top: 1em;
 `;
 
 const ContentsWrapper = styled.div`
@@ -88,9 +87,8 @@ const ContentsWrapper = styled.div`
 const Contents = styled.div`
   padding: 3% 5%;
   background-color: rgba(229, 229, 229, 0.4);
-
-  img {
-    width: 100%;
-    object-fit: contain;
+  p {
+    font-weight: 400;
+    font-size: 1rem;
   }
 `;
