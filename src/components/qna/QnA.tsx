@@ -37,12 +37,12 @@ const QnA: React.FunctionComponent<QnAProps> = ({ id, question, answer, img }) =
         <h4>
           Q{id}.{question}
         </h4>
-        {!isCollapse && (
+        {isCollapse && (
           <button onClick={handleButtonClick}>
             <VscFoldUp />
           </button>
         )}
-        {isCollapse && (
+        {!isCollapse && (
           <button onClick={handleButtonClick}>
             <VscFoldDown size={'1em'} />
           </button>
