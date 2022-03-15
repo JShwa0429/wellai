@@ -90,6 +90,7 @@ const Contents = styled.div`
   background-color: rgba(229, 229, 229, 0.4);
 
   img {
+    width: 100%;
     object-fit: contain;
   }
 `;
