@@ -41,8 +41,12 @@ export default function TempComp({
   courseListRef,
   setIsLoading,
   isLoading,
+  isTestFinish,
+  isTestFinishRef,
+  setIsTestFinish,
   TIME_LIMIT,
   EXERCISE_TIME,
+  TEST_TIME_LIMIT,
 }) {
   const navigate = useNavigate();
   const user = UserApi();
@@ -87,26 +91,26 @@ export default function TempComp({
       webcamRef.current.video.height = videoHeight;
       const pose = await detector.estimatePoses(video);
       const result = await classifyPose(dnn76, pose);
-      drawCanvas(pose, result[0], result[1], video, videoWidth, videoHeight, canvasRef);
+      if (result !== undefined) {
+        drawCanvas(pose, result[0], result[1], video, videoWidth, videoHeight, canvasRef);
+        calWorkouttime2(result[0], result[1]);
+      }
       // putText(result[0], canvasRef, 50, 30);
-      calWorkouttime2(result[0], result[1]);
     }
   };
 
   function calWorkouttime2(poseIndex, accuracy) {
-    if (timeCounterRef.current <= 0 || timeLimitRef.current <= 0) {
-      nextPose();
-    } else {
+    if (userPoseIndexRef.current === 0 && isTestFinishRef.current < TEST_TIME_LIMIT) {
       if (accuracy >= 0.8) {
         if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
           iterationCounter += 1;
           if (iterationCounter == FPS) {
             iterationCounter = 0;
-            setTimeCounter((timeCounterRef.current -= 1));
-            setTotalTimeCounter((totalTimeCounterRef.current += 1));
+            setIsTestFinish((isTestFinishRef.current += 1));
           }
-          if (timeCounterRef.current == 0) {
-            nextPose();
+          if (isTestFinishRef.current === TEST_TIME_LIMIT) {
+            setTimeout(() => nextPose(), 3000);
+            // setIsTestFinish((isTestFinishRef.current = 0));
           }
         }
       } else {
@@ -114,6 +118,30 @@ export default function TempComp({
         if (errorCounter >= 6) {
           iterationCounter -= errorCounter;
           errorCounter = 0;
+        }
+      }
+    } else if (userPoseIndexRef.current !== 0) {
+      if (timeCounterRef.current <= 0 || timeLimitRef.current <= 0) {
+        nextPose();
+      } else {
+        if (accuracy >= 0.8) {
+          if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
+            iterationCounter += 1;
+            if (iterationCounter == FPS) {
+              iterationCounter = 0;
+              setTimeCounter((timeCounterRef.current -= 1));
+              setTotalTimeCounter((totalTimeCounterRef.current += 1));
+            }
+            if (timeCounterRef.current == 0) {
+              nextPose();
+            }
+          }
+        } else {
+          errorCounter = errorCounter + 1;
+          if (errorCounter >= 6) {
+            iterationCounter -= errorCounter;
+            errorCounter = 0;
+          }
         }
       }
     }
