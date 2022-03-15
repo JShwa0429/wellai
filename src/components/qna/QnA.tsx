@@ -89,9 +89,6 @@ const Contents = styled.div`
   padding: 3% 5%;
   background-color: rgba(229, 229, 229, 0.4);
 
-  p {
-    font-size: ;
-  }
   img {
     object-fit: contain;
   }
