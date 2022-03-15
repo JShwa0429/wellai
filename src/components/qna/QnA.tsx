@@ -49,7 +49,7 @@ const QnA: React.FunctionComponent<QnAProps> = ({ id, question, answer, img }) =
 
       <ContentsWrapper className="answer" ref={parentRef}>
         <Contents ref={childRef}>
-          <p dangerouslySetInnerHTML={{ __html: answer ?? '' }}></p>
+          <div dangerouslySetInnerHTML={{ __html: answer ?? '' }}></div>
           {img && <img style={{ width: '100%', objectFit: 'contain' }} src={img} alt="이미지" />}
         </Contents>
       </ContentsWrapper>
@@ -88,7 +88,15 @@ const Contents = styled.div`
   padding: 3% 5%;
   background-color: rgba(229, 229, 229, 0.4);
   p {
-    font-weight: 400;
+    font-weight: normal;
     font-size: 1rem;
+  }
+
+  strong {
+    color: ${(props) => props.theme.main};
+  }
+
+  b {
+    color: #00c9a7;
   }
 `;
