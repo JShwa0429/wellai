@@ -90,6 +90,7 @@ const Contents = styled.div`
   p {
     font-weight: normal;
     font-size: 1rem;
+    font-family: 'Noto Sans KR Light';
   }
 
   strong {
