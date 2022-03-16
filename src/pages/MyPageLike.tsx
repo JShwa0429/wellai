@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Row, Col, Empty } from 'antd';
 import { MyPageLayout } from 'components';
-
 import { Summary2 } from 'components/common';
 import { useEffect, useState } from 'react';
 import { bookmark } from 'api/common';
@@ -60,13 +59,8 @@ const MyPageLike = () => {
               ) : (
                 <Row>
                   {courseList
-                    ? courseList.map((course: bookmark, idx: number) => {
+                    ? courseList.map((course: bookmark) => {
                         return (
-                          // <SummaryDiv key={course.course_id.id}>
-                          //   <Link to={`../course/${course.course_id.id}`}>
-                          //     <Summary {...course.course_id} />
-                          //   </Link>
-                          // </SummaryDiv>
                           <Col
                             key={course.course_id.id}
                             style={{ marginRight: '30px', marginBottom: '30px', width: '250px' }}
@@ -95,65 +89,6 @@ export default MyPageLike;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
-`;
-const CardDiv = styled.div`
-  display: grid;
-  margin: 1em 0;
-  grid-template-columns: repeat(3, 250px);
-  gap: 2%;
-  margin: auto;
-  align-items: center;
-  justify-content: left;
-`;
-
-const SummaryDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  border: 1px solid #bdbdbd;
-  overflow: hidden;
-  margin: 4%;
-  font-size: 1rem;
-  font-weight: bold;
-  a {
-    text-decoration: none;
-  }
-  .image {
-    background-color: #f5f5f5;
-    img {
-      width: 100%;
-      object-fit: cover;
-    }
-  }
-  .bookmark {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 30px;
-  }
-  .explain {
-    display: flex;
-    flex-direction: column;
-    padding: 5%;
-    padding-left: 3%;
-    text-align: left;
-    background-color: white;
-    div {
-      margin: 0.5%;
-    }
-    float: bottom;
-  }
-
-  font-weight: bold;
-  .title {
-    color: ${(props) => props.theme.defaultText};
-  }
-  .duration {
-    color: ${(props) => props.theme.main};
-  }
-
-  .hashTag {
-    color: #988d8d;
-  }
+  height: max-content;
+  min-height: calc(100vh - 80px);
 `;

@@ -1,12 +1,10 @@
 import { detailResponse } from 'api/common';
 import { CourseApi } from 'api';
-import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { message, Card, Row, Col, Tag, Divider } from 'antd';
+import { message, Card, Row, Col, Tag, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
-const COLOR_LIST = ['magenta', 'green', 'cyan', 'geekblue', 'red', 'volcano', 'orange', 'gold', 'lime', 'purple'];
+const { Text } = Typography;
 const COLOR_OBJ: any = {
   발목강화: 'magenta',
   탄탄한허벅지: 'green',
@@ -79,7 +77,9 @@ const Summary: React.FunctionComponent<detailResponse> = ({ id, course_name, img
         <Row style={{ padding: '10px 20px' }}>
           <Col>
             <Row style={{ marginBottom: '10px' }}>
-              <Col style={{ fontSize: '18px', fontWeight: 'bold' }}>{course_name}</Col>
+              <Text ellipsis={true} style={{ fontSize: '18px', fontWeight: 'bold' }}>
+                {course_name}
+              </Text>
             </Row>
 
             <Row>
@@ -99,6 +99,7 @@ const Summary: React.FunctionComponent<detailResponse> = ({ id, course_name, img
             position: 'absolute',
             bottom: 5,
             right: 5,
+            transition: 'display 2s',
           }}
           className="bookmark"
           onClick={handleBookmark}

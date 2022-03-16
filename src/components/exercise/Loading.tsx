@@ -16,10 +16,10 @@ export type LoadingProps = {
   isLoading: boolean;
   countDown: number;
   setCountDown: Dispatch<SetStateAction<number>>;
+  userPoseIndex: number;
 };
 
-const Review: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, setCountDown }) => {
-  // const [countDown, setCountDown] = useState(3);
+const Loading: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, setCountDown, userPoseIndex }) => {
   useEffect(() => {
     const timeCount = setTimeout(() => {
       if (countDown > 0) {
@@ -38,7 +38,13 @@ const Review: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, s
             </Col>
           </Row>
           <Row>
-            <Col style={{ fontSize: '30px', marginTop: '50px' }}>{countDown}초 뒤에 운동이 시작됩니다 !</Col>
+            {userPoseIndex === 0 ? (
+              <Col style={{ fontSize: '30px', marginTop: '50px' }}>
+                {countDown}초 뒤에 카메라 테스트를 시작하겠습니다
+              </Col>
+            ) : (
+              <Col style={{ fontSize: '30px', marginTop: '50px' }}>{countDown}초 뒤에 운동이 시작됩니다 !</Col>
+            )}
           </Row>
         </Col>
       </Row>
@@ -46,7 +52,7 @@ const Review: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, s
   );
 };
 
-export default Review;
+export default Loading;
 interface Wrapper {
   isLoading: boolean;
 }

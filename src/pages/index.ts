@@ -13,3 +13,4 @@ export { default as CoursePage } from './CoursePage';
 export { default as CourseDetailPage } from './CourseDetailPage';
 export { default as MainRenderPage } from './MainRenderPage';
 export { default as GuidePage } from './GuidePage';
+export { default as QnAPage } from './QnAPage';

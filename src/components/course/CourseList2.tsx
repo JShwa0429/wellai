@@ -2,10 +2,8 @@ import { detailResponse } from 'api/common';
 import { CourseApi } from 'api';
 import { Row, Col, Spin } from 'antd';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Summary2 from '../common/Summary2';
-import { Footer } from 'components';
 
 const CourseList = () => {
   const [datas, setDatas] = useState<detailResponse[]>([]);

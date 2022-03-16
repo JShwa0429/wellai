@@ -107,8 +107,6 @@ export default CourseExplain;
 
 const DivCourseDetail = styled.div`
   width: 100%;
-  // background: linear-gradient(to right, rgba(255, 114, 114, 0.3), rgba(255, 114, 114, 0.1));
-
   background: #fbeaeb;
   display: flex;
   flex-direction: column;
@@ -121,6 +119,7 @@ const DivBanner = styled.div`
   margin: 2em 0;
   display: flex;
   width: 100vw;
+  min-width: 1000px;
   .image {
     width: 50%;
     display: flex;
@@ -135,7 +134,7 @@ const DivBanner = styled.div`
   }
 `;
 const Explain = styled.div`
-  width: 30%;
+  min-width: 400px;
   margin: 0 0 1em 20px;
   display: flex;
   flex-direction: column;
@@ -156,21 +155,3 @@ const Explain = styled.div`
     }
   }
 `;
-
-// const Button = styled.button`
-//   border-radius: 64px;
-//   width: 10em;
-//   height: 3em;
-//   font-size: 1.5em;
-//   color: white;
-//   background-color: ${(props) => props.theme.main};
-//   margin-top: auto;
-//   margin-bottom: 1em;
-//   a {
-//     color: white;
-//   }
-
-//   :disabled {
-//     background-color: ${(props) => props.theme.border};
-//   }
-// `;
