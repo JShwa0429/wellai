@@ -41,7 +41,7 @@ const ExerciseResultModal = ({
               <Col>{moment().format('YYYY년 MM월 DD일')}</Col>
             </Row>
             <Row justify="center">
-              <Col style={{ fontStyle: 'italic' }}>헬스 레포트</Col>
+              <Col>운동 결과</Col>
             </Row>
           </Col>
           <Col style={{ marginRight: '20px' }}>
@@ -58,8 +58,8 @@ const ExerciseResultModal = ({
                   percent={Number(((totalTimeCounter / totalTimeLimit) * 100).toFixed())}
                   format={(percent) => (
                     <>
-                      <div style={{ fontSize: '13px', marginBottom: '3px' }}>코스완주</div>
-                      <div style={{ fontSize: '13px' }}>{percent}%</div>
+                      <div style={{ fontSize: '15px', marginBottom: '3px' }}>코스완주</div>
+                      <div style={{ fontSize: '15px' }}>{percent}%</div>
                     </>
                   )}
                   success={{
@@ -78,12 +78,12 @@ const ExerciseResultModal = ({
             <Col span={24}>
               <Card hoverable style={{}}>
                 <Row justify="space-between" align="middle">
-                  <Col style={{ fontSize: '20px' }}>{item.name}</Col>
+                  <Col style={{ fontSize: '18px' }}>{item.name}</Col>
                   <Col>
                     <Row>
                       <Col>
                         <Progress
-                          // strokeColor="#ff7273"
+                          strokeColor="#ff7273"
                           percent={Number(((item.time / EXERCISE_TIME) * 100).toFixed())}
                           steps={10}
                         />
@@ -116,12 +116,21 @@ const ExerciseResultModal = ({
             </Col>
           </Row>
         ))}
-        <Row justify="center" style={{ margin: '30px 0', fontSize: '20px', color: '#ff7273' }}>
+        {/* <Row justify="center" style={{ margin: '30px 0', fontSize: '20px', color: '#ff7273' }}>
           <Col>🧘‍♀️ 오늘 하루도 열심히 운동한 당신을 응원합니다 🏃</Col>
-        </Row>
-        <Divider />
-        <Row justify="space-between" align="middle">
-          <Col style={{ marginLeft: '20px' }}>TOTAL {totalTimeCounter}</Col>
+        </Row> */}
+        <Row justify="space-between" align="middle" style={{ marginTop: '20px' }}>
+          <Col style={{ marginLeft: '20px', fontSize: '20px' }}>
+            TOTAL{' '}
+            {moment([
+              2020,
+              1,
+              1,
+              0,
+              totalTimeCounter >= 60 ? totalTimeCounter / 60 : 0,
+              totalTimeCounter >= 60 ? totalTimeCounter % 60 : totalTimeCounter,
+            ]).format('mm:ss')}
+          </Col>
 
           <Col>
             <Button size="large" type="primary" onClick={onCancel}>
