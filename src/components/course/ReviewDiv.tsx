@@ -1,19 +1,22 @@
-import { Empty } from 'antd';
+import { Empty, Row, Col, Spin } from 'antd';
 import styled from 'styled-components';
 import Review from './Review';
 import { ReviewType } from 'type';
 
 const ReviewDiv: React.FunctionComponent<{
-  loading: boolean;
+  isReviewLoading: boolean;
   reviewData: ReviewType[];
   onRemove: (id: string) => void;
-}> = ({ reviewData, onRemove, loading }) => {
+}> = ({ reviewData, onRemove, isReviewLoading }) => {
   return (
     <Div>
-      {reviewData.map((data: ReviewType, idx: number) => {
-        return <Review {...data} onRemove={onRemove} key={idx} />;
-      })}
-      {!loading && reviewData.length < 1 && (
+      {isReviewLoading ? (
+        <Row style={{ marginTop: '20px' }}>
+          <Col>
+            <Spin size="large" tip="Loading" />
+          </Col>
+        </Row>
+      ) : reviewData.length < 1 ? (
         <>
           <Empty style={{ marginTop: '20px' }} description={``} />
           <p style={{ textAlign: 'center' }}>
@@ -21,6 +24,10 @@ const ReviewDiv: React.FunctionComponent<{
             <br /> 첫 리뷰를 남겨주세요
           </p>
         </>
+      ) : (
+        reviewData.map((data: ReviewType, idx: number) => {
+          return <Review {...data} onRemove={onRemove} key={idx} />;
+        })
       )}
     </Div>
   );
