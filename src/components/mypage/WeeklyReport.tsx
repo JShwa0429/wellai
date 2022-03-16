@@ -41,8 +41,11 @@ const WeeklyReport = () => {
         const data = res.data[0];
         const revisedData = {
           ...data,
-          month_exercise_time: data.month_exercise_time / 60,
-          records: data.records.map((item) => ({ ...item, exercise_duration: item.exercise_duration / 60 })),
+          month_exercise_time: Number((data.month_exercise_time / 60).toFixed(2)),
+          records: data.records.map((item) => ({
+            ...item,
+            exercise_duration: Number((item.exercise_duration / 60).toFixed(2)),
+          })),
         };
         setMonthlyRecord(revisedData);
         setRecords(revisedData.records);

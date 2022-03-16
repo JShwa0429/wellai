@@ -26,10 +26,10 @@ const MonthlyReport = () => {
         const data = res.data;
         setYearlyRecord({
           ...data[0],
-          year_exercise_duration: data[0].year_exercise_duration / 60,
+          year_exercise_duration: Number((data[0].year_exercise_duration / 60).toFixed(2)),
           months_exercise_duration: data[0].months_exercise_duration.map((item) => ({
             ...item,
-            total: Math.floor(item.total / 60),
+            total: Number(Math.floor(item.total / 60).toFixed(2)),
           })),
         });
       });

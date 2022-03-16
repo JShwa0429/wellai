@@ -1,5 +1,5 @@
-import { WebCam, Video, Description } from 'components';
-import { Row, Col, Button, Progress, message } from 'antd';
+import { WebCam, Video, Description, ExerciseResultModal } from 'components';
+import { Row, Col, Button, Progress, message, Tooltip } from 'antd';
 import styled from 'styled-components';
 import { TensorCam, Loading } from 'components/exercise';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
@@ -7,20 +7,17 @@ import { useEffect, useState, useRef } from 'react';
 import { CourseApi } from 'api/CourseApi';
 import { UserApi } from 'api/UserApi';
 import { exercise } from 'api/common';
-import { ImportOutlined } from '@ant-design/icons';
+import { ImportOutlined, CheckCircleFilled } from '@ant-design/icons';
 import moment from 'moment';
 
 const EXERCISE_TIME = 60;
 const TIME_LIMIT = EXERCISE_TIME * 4 + 3;
-
+const TEST_TIME_LIMIT = 3;
+type exerciseTimeType = {
+  name: string;
+  time: number;
+};
 const ExcercisePage = () => {
-  // const opts = {
-  //   playerVars: {
-  //     // https://developers.google.com/youtube/player_parameters
-  //     autoplay: 1,
-  //   },
-  // };
-
   const alertUser = (e: any) => {
     e.preventDefault();
     e.returnValue = '';
@@ -35,6 +32,7 @@ const ExcercisePage = () => {
   const { id } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exercise>();
+  const exerciseDataRef = useRef<exercise>();
   const navigate = useNavigate();
   const course = CourseApi();
   const user = UserApi();
@@ -48,16 +46,25 @@ const ExcercisePage = () => {
   const totalTimeCounterRef = useRef(0);
   const [courseList, setCourseList] = useState(['57', '57']);
   const courseListRef = useRef(['58']);
+  const [isTestFinish, setIsTestFinish] = useState(0);
+  const isTestFinishRef = useRef(0);
+  const [isResultModalVisible, setIsResultModalVisible] = useState(false);
+  const isResultModalVisibleRef = useRef(false);
+  const [exerciseResultMap, setExerciseResultMap] = useState<exerciseTimeType[]>([]);
+  const exerciseResultMapRef = useRef<exerciseTimeType[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [countDown, setCountDown] = useState(3);
-
+  // console.log(exerciseResultMap);
   useEffect(() => {
     course
       .getDetailInformation(id as string)
       .then((res) => {
-        setCourseList((courseListRef.current = res.data.exercises));
+        setCourseList((courseListRef.current = ['58', ...res.data.exercises]));
+        const exerciseList = res.data.description.split('/n').map((item) => item.split(':')[0].trim());
+
+        setExerciseResultMap((exerciseResultMapRef.current = exerciseList.map((item) => ({ name: item, time: 0 }))));
         // setCourseList((courseListRef.current = ['58', '58', '58']));
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
@@ -73,51 +80,70 @@ const ExcercisePage = () => {
     if (userPoseIndexRef.current !== -1) {
       course
         .getExercise(courseListRef.current[userPoseIndexRef.current as number])
-        .then((res) => setExerciseData(res.data))
+        .then((res) => {
+          return setExerciseData((exerciseDataRef.current = res.data));
+        })
         .catch((err) => console.log(err.response));
     }
     return () => clearTimeout(loadingTimeout);
   }, [userPoseIndex]);
 
   const handleNextExercise = () => {
-    if (userPoseIndex === courseList.length - 1) {
-      navigate(`../course/${id}`);
-    } else {
-      setIsLoading(true);
-      setUserPoseIndex((userPoseIndexRef.current += 1));
-      setTimeCounter(
-        userPoseIndexRef.current === 0
-          ? (timeCounterRef.current = EXERCISE_TIME)
-          : (timeCounterRef.current = EXERCISE_TIME),
-      );
-      setTimeLimit(
-        userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
-      );
-    }
+    setIsLoading(true);
+    setUserPoseIndex((userPoseIndexRef.current += 1));
+    setTimeCounter(
+      userPoseIndexRef.current === 0
+        ? (timeCounterRef.current = EXERCISE_TIME)
+        : (timeCounterRef.current = EXERCISE_TIME),
+    );
+    setTimeLimit(
+      userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
+    );
+    // if (userPoseIndexRef.current > 1) {
+    //   const temp_name = exerciseData?.exercise_name;
+    //   console.log(
+    //     exerciseResultMapRef.current.map((item) => {
+    //       if (item.name == temp_name) {
+    //         return { ...item, time: totalTimeCounterRef.current };
+    //       } else {
+    //         return { ...item };
+    //       }
+    //     }),
+    //   );
+    // setExerciseResultMap(
+    //   (exerciseResultMapRef.current = exerciseResultMapRef.current.map((item) =>
+    //     item.name == temp_name ? { ...item, time: totalTimeCounterRef.current } : { ...item },
+    //   )),
+    // );
+    // }
   };
-  // if (isLoading) {
-  //   return <Loading isLoading={isLoading} />;
-  // }
+  const handleExitExercisePage = () => {
+    setIsResultModalVisible((isResultModalVisibleRef.current = true));
+    return;
+  };
   return (
     <Wrapper>
-      <Loading isLoading={isLoading} countDown={countDown} setCountDown={setCountDown} />
+      <ExerciseResultModal
+        isResultModalVisible={isResultModalVisible}
+        setIsResultModalVisible={setIsResultModalVisible}
+        exerciseResultMap={exerciseResultMap}
+        totalTimeCounter={totalTimeCounter}
+        totalTimeLimit={EXERCISE_TIME * (courseList.length - 1)}
+        EXERCISE_TIME={EXERCISE_TIME}
+      />
+      <Loading isLoading={isLoading} countDown={countDown} setCountDown={setCountDown} userPoseIndex={userPoseIndex} />
       <Row justify="space-between" style={{ padding: '15px 15px' }}>
         <Col span={12}>
           <Row>
             <Col style={{ marginRight: '20px' }}>
-              <Button
-                style={{ borderRadius: '5px' }}
-                type="primary"
-                size="large"
-                onClick={() => navigate(`/course/${id}`)}
-              >
+              <Button style={{ borderRadius: '5px' }} type="primary" size="large" onClick={handleExitExercisePage}>
                 <ImportOutlined />
                 강의실 나가기
               </Button>
             </Col>
             <Col>
               <Button
-                disabled={userPoseIndex === courseList.length - 1 ? true : false}
+                disabled={userPoseIndex === courseList.length - 1 || userPoseIndex == 0 ? true : false}
                 style={{ borderRadius: '5px' }}
                 type="primary"
                 size="large"
@@ -156,15 +182,13 @@ const ExcercisePage = () => {
                     fontWeight: 'bold',
                   }}
                 >
-                  {exerciseData?.exercise_name}
+                  {userPoseIndex == 0 ? `테스트 동작` : exerciseData?.exercise_name}
                 </Col>
               </Row>
               <Row
                 style={{
                   padding: '10px 10px',
                   fontSize: '17px',
-                  // border: '1px solid lightgray',
-                  borderRadius: '20px',
                 }}
               >
                 <Col>
@@ -175,8 +199,8 @@ const ExcercisePage = () => {
                   </Row>
                   <Row>
                     <Col>
-                      2. 정확한 자세로 운동을 하실 때는 카메라 화면 속 운동 자세가{' '}
-                      <b style={{ color: '#00C9A7' }}>초록색</b>
+                      2. 정확한 자세로 운동을 하실 때는 카메라 화면 속 운동 자세가
+                      <b style={{ color: '#00C9A7' }}> 초록색</b>
                       으로 보이게 됩니다.
                     </Col>
                   </Row>
@@ -188,100 +212,173 @@ const ExcercisePage = () => {
                 </Col>
               </Row>
             </Col>
-            <Col span={12}>
-              <Row justify="center" align="middle">
-                <Col
+            {userPoseIndex === 0 ? (
+              <Col span={12}>
+                <Row
+                  justify="center"
                   style={{
-                    padding: '3px 20px',
+                    fontSize: '22px',
                   }}
                 >
-                  <Row>
-                    <Col style={{ marginRight: '80px' }}>
-                      <Row>
-                        <Col>
-                          <Progress
-                            strokeColor={{
-                              '0%': '#fabfa8',
-                              '100%': '#ff7273',
-                            }}
-                            type="circle"
-                            percent={(timeLimitRef.current / TIME_LIMIT) * 100}
-                            format={(percent) => (
-                              <>
-                                <div>제한시간</div>
-                                <div style={{ fontSize: '40px' }}>
-                                  {((TIME_LIMIT * Number(percent)) / 100).toFixed()}
-                                </div>
-                              </>
-                            )}
-                            success={{
-                              percent: 0,
-                              strokeColor: '#ff7273',
-                            }}
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col style={{ marginRight: '80px' }}>
-                      <Row>
-                        <Col>
-                          <Progress
-                            strokeColor={{
-                              '0%': '#fabfa8',
-                              '100%': '#ff7273',
-                            }}
-                            type="circle"
-                            percent={((EXERCISE_TIME - timeCounter) / EXERCISE_TIME) * 100}
-                            format={(percent) => (
-                              <>
-                                <div>운동시간</div>
-                                <div style={{ fontSize: '40px' }}>
-                                  {((EXERCISE_TIME * Number(percent)) / 100).toFixed()}
-                                </div>
-                              </>
-                            )}
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col>
-                      <Row>
-                        <Col>
-                          <Progress
-                            strokeColor={{
-                              '0%': '#fabfa8',
-                              '100%': '#ff7273',
-                            }}
-                            type="circle"
-                            percent={(totalTimeCounter / (EXERCISE_TIME * courseListRef.current.length)) * 100}
-                            format={(percent) => (
-                              <>
-                                <div>총운동시간</div>
-                                <div style={{ fontSize: '40px' }}>
-                                  {((Number(percent) / 100) * EXERCISE_TIME * courseListRef.current.length).toFixed()}
-                                </div>
-                              </>
-                            )}
-                            success={{
-                              percent: 0,
-                              strokeColor: '#ff7273',
-                            }}
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
+                  <Col>
+                    {isTestFinishRef.current >= TEST_TIME_LIMIT ? (
+                      <>
+                        <b>3초 </b>뒤에 코스가 <b>자동으로 </b> 시작됩니다
+                      </>
+                    ) : (
+                      <>
+                        <b>전신이 카메라에 담길 수 있는 거리</b>에서 테스트 동작을 <b>{TEST_TIME_LIMIT}초</b>간
+                        유지해주세요.
+                      </>
+                    )}
+                  </Col>
+                </Row>
+                <Row justify="center" align="middle" style={{ marginTop: '10px', marginBottom: '10px' }}>
+                  <Col span={10} style={{ fontSize: '20px' }}>
+                    <Progress
+                      percent={Number(((isTestFinish / TEST_TIME_LIMIT) * 100).toFixed())}
+                      size="small"
+                      format={(percent) => {
+                        if (percent !== undefined && percent < 100) {
+                          return <Col style={{ fontSize: '20px' }}>{(3 * (Number(percent) / 100)).toFixed()}초</Col>;
+                        } else if (percent !== undefined && percent >= 100) {
+                          return <CheckCircleFilled style={{ fontSize: '20px' }} />;
+                        }
+                      }}
+                    />
+                  </Col>
+                </Row>
+                <Row justify="center">
+                  <Col>
+                    <Tooltip
+                      title="카메라 테스트를 생략하고 바로 운동을 시작합니다"
+                      placement="bottom"
+                      overlayInnerStyle={{ width: '310px', borderRadius: '10px' }}
+                    >
+                      <Button size="large" type="primary" style={{ borderRadius: '5px' }} onClick={handleNextExercise}>
+                        테스트 생략하기
+                      </Button>
+                    </Tooltip>
+                  </Col>
+                </Row>
+              </Col>
+            ) : (
+              <Col span={12}>
+                <Row justify="center" align="middle">
+                  <Col
+                    style={{
+                      padding: '3px 20px',
+                    }}
+                  >
+                    <Row>
+                      <Col style={{ marginRight: '80px' }}>
+                        <Row>
+                          <Col>
+                            <Progress
+                              strokeColor={{
+                                '0%': '#fabfa8',
+                                '100%': '#ff7273',
+                              }}
+                              type="circle"
+                              percent={(timeLimitRef.current / TIME_LIMIT) * 100}
+                              format={(percent) => (
+                                <>
+                                  <div>제한시간</div>
+                                  <div style={{ fontSize: '40px' }}>
+                                    {((TIME_LIMIT * Number(percent)) / 100).toFixed()}
+                                  </div>
+                                </>
+                              )}
+                              success={{
+                                percent: 0,
+                                strokeColor: '#ff7273',
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col style={{ marginRight: '80px' }}>
+                        <Row>
+                          <Col>
+                            <Progress
+                              strokeColor={{
+                                '0%': '#fabfa8',
+                                '100%': '#ff7273',
+                              }}
+                              type="circle"
+                              percent={((EXERCISE_TIME - timeCounter) / EXERCISE_TIME) * 100}
+                              format={(percent) => (
+                                <>
+                                  <div>운동시간</div>
+                                  <div style={{ fontSize: '40px' }}>
+                                    {((EXERCISE_TIME * Number(percent)) / 100).toFixed()}
+                                  </div>
+                                </>
+                              )}
+                              success={{
+                                percent: 0,
+                                strokeColor: '#ff7273',
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col>
+                        <Row>
+                          <Col>
+                            <Progress
+                              strokeColor={{
+                                '0%': '#fabfa8',
+                                '100%': '#ff7273',
+                              }}
+                              type="circle"
+                              percent={(totalTimeCounter / (EXERCISE_TIME * (courseListRef.current.length - 1))) * 100}
+                              format={(percent) => (
+                                <>
+                                  <div>총운동시간</div>
+                                  <div style={{ fontSize: '40px' }}>
+                                    {(
+                                      (Number(percent) / 100) *
+                                      EXERCISE_TIME *
+                                      (courseListRef.current.length - 1)
+                                    ).toFixed()}
+                                  </div>
+                                </>
+                              )}
+                              success={{
+                                percent: 0,
+                                strokeColor: '#ff7273',
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+            )}
           </Row>
         </Col>
       </Row>
       <Row style={{ height: '65vh', marginTop: '30px', backgroundColor: 'black' }} align="middle">
-        <Col span={12} style={{ height: '100%' }}>
-          {exerciseData?.youtube_key ? <Video url={exerciseData?.youtube_key as string} /> : null}
-          {/* <Video url={exerciseData?.youtube_key as string} /> */}
-        </Col>
+        {userPoseIndexRef.current === 0 ? (
+          <Col span={12} style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+            <img
+              src="/image/sitting.jpeg"
+              alt=""
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </Col>
+        ) : (
+          <Col span={12} style={{ height: '100%' }}>
+            {exerciseData?.youtube_key ? <Video url={exerciseData?.youtube_key as string} /> : null}
+            {/* <Video url={exerciseData?.youtube_key as string} /> */}
+          </Col>
+        )}
+
         <Col span={12} style={{ height: '100%' }}>
           <TensorCam
             timeLimit={timeLimit}
@@ -294,6 +391,7 @@ const ExcercisePage = () => {
             setTotalTimeCounter={setTotalTimeCounter}
             courseList={courseList}
             setCourseList={setCourseList}
+            exerciseDataRef={exerciseDataRef}
             id={id}
             timeLimitRef={timeLimitRef}
             userPoseIndexRef={userPoseIndexRef}
@@ -302,8 +400,16 @@ const ExcercisePage = () => {
             courseListRef={courseListRef}
             setIsLoading={setIsLoading}
             isLoading={isLoading}
+            isTestFinishRef={isTestFinishRef}
+            isTestFinish={isTestFinish}
+            setIsTestFinish={setIsTestFinish}
             EXERCISE_TIME={EXERCISE_TIME}
             TIME_LIMIT={TIME_LIMIT}
+            TEST_TIME_LIMIT={TEST_TIME_LIMIT}
+            isResultModalVisibleRef={isResultModalVisibleRef}
+            setIsResultModalVisible={setIsResultModalVisible}
+            exerciseResultMapRef={exerciseResultMapRef}
+            setExerciseResultMap={setExerciseResultMap}
           />
         </Col>
       </Row>
