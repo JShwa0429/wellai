@@ -14,6 +14,7 @@ type Props = {
   exerciseResultMap: { name: string; time: number }[];
   totalTimeCounter: number;
   totalTimeLimit: number;
+  courseDetailId: string | undefined;
   EXERCISE_TIME: number;
 };
 
@@ -24,13 +25,12 @@ const ExerciseResultModal = ({
   totalTimeCounter,
   totalTimeLimit,
   EXERCISE_TIME,
+  courseDetailId,
 }: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log(exerciseResultMap);
-  // const onFinish = ({ email, password }: LoginForm) => {};
   const onCancel = () => {
-    navigate('/');
+    navigate(`/course/${courseDetailId}`);
   };
   return (
     <Modal width="500px" visible={isResultModalVisible} onCancel={onCancel} footer={null}>

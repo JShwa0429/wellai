@@ -65,7 +65,6 @@ const ExcercisePage = () => {
         const exerciseList = res.data.description.split('/n').map((item) => item.split(':')[0].trim());
 
         setExerciseResultMap((exerciseResultMapRef.current = exerciseList.map((item) => ({ name: item, time: 0 }))));
-        // setCourseList((courseListRef.current = ['58', '58', '58']));
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
       .catch((err) => console.log(err.response));
@@ -99,23 +98,6 @@ const ExcercisePage = () => {
     setTimeLimit(
       userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
     );
-    // if (userPoseIndexRef.current > 1) {
-    //   const temp_name = exerciseData?.exercise_name;
-    //   console.log(
-    //     exerciseResultMapRef.current.map((item) => {
-    //       if (item.name == temp_name) {
-    //         return { ...item, time: totalTimeCounterRef.current };
-    //       } else {
-    //         return { ...item };
-    //       }
-    //     }),
-    //   );
-    // setExerciseResultMap(
-    //   (exerciseResultMapRef.current = exerciseResultMapRef.current.map((item) =>
-    //     item.name == temp_name ? { ...item, time: totalTimeCounterRef.current } : { ...item },
-    //   )),
-    // );
-    // }
   };
   const handleExitExercisePage = () => {
     setIsResultModalVisible((isResultModalVisibleRef.current = true));
@@ -128,6 +110,7 @@ const ExcercisePage = () => {
         setIsResultModalVisible={setIsResultModalVisible}
         exerciseResultMap={exerciseResultMap}
         totalTimeCounter={totalTimeCounter}
+        courseDetailId={id}
         totalTimeLimit={EXERCISE_TIME * (courseList.length - 1)}
         EXERCISE_TIME={EXERCISE_TIME}
       />
