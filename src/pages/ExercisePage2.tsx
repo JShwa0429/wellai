@@ -1,4 +1,4 @@
-import { WebCam, Video, Description } from 'components';
+import { WebCam, Video, Description, ExerciseResultModal } from 'components';
 import { Row, Col, Button, Progress, message, Tooltip } from 'antd';
 import styled from 'styled-components';
 import { TensorCam, Loading } from 'components/exercise';
@@ -13,15 +13,11 @@ import moment from 'moment';
 const EXERCISE_TIME = 60;
 const TIME_LIMIT = EXERCISE_TIME * 4 + 3;
 const TEST_TIME_LIMIT = 3;
-
+type exerciseTimeType = {
+  name: string;
+  time: number;
+};
 const ExcercisePage = () => {
-  // const opts = {
-  //   playerVars: {
-  //     // https://developers.google.com/youtube/player_parameters
-  //     autoplay: 1,
-  //   },
-  // };
-
   const alertUser = (e: any) => {
     e.preventDefault();
     e.returnValue = '';
@@ -36,6 +32,7 @@ const ExcercisePage = () => {
   const { id } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exercise>();
+  const exerciseDataRef = useRef<exercise>();
   const navigate = useNavigate();
   const course = CourseApi();
   const user = UserApi();
@@ -51,16 +48,23 @@ const ExcercisePage = () => {
   const courseListRef = useRef(['58']);
   const [isTestFinish, setIsTestFinish] = useState(0);
   const isTestFinishRef = useRef(0);
+  const [isResultModalVisible, setIsResultModalVisible] = useState(false);
+  const isResultModalVisibleRef = useRef(false);
+  const [exerciseResultMap, setExerciseResultMap] = useState<exerciseTimeType[]>([]);
+  const exerciseResultMapRef = useRef<exerciseTimeType[]>([]);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [countDown, setCountDown] = useState(3);
-
+  // console.log(exerciseResultMap);
   useEffect(() => {
     course
       .getDetailInformation(id as string)
       .then((res) => {
         setCourseList((courseListRef.current = ['58', ...res.data.exercises]));
+        const exerciseList = res.data.description.split('/n').map((item) => item.split(':')[0].trim());
+
+        setExerciseResultMap((exerciseResultMapRef.current = exerciseList.map((item) => ({ name: item, time: 0 }))));
         // setCourseList((courseListRef.current = ['58', '58', '58']));
         setUserPoseIndex((userPoseIndexRef.current = 0));
       })
@@ -76,41 +80,63 @@ const ExcercisePage = () => {
     if (userPoseIndexRef.current !== -1) {
       course
         .getExercise(courseListRef.current[userPoseIndexRef.current as number])
-        .then((res) => setExerciseData(res.data))
+        .then((res) => {
+          return setExerciseData((exerciseDataRef.current = res.data));
+        })
         .catch((err) => console.log(err.response));
     }
     return () => clearTimeout(loadingTimeout);
   }, [userPoseIndex]);
 
   const handleNextExercise = () => {
-    if (userPoseIndex === courseList.length - 1) {
-      navigate(`../course/${id}`);
-    } else {
-      setIsLoading(true);
-      setUserPoseIndex((userPoseIndexRef.current += 1));
-      setTimeCounter(
-        userPoseIndexRef.current === 0
-          ? (timeCounterRef.current = EXERCISE_TIME)
-          : (timeCounterRef.current = EXERCISE_TIME),
-      );
-      setTimeLimit(
-        userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
-      );
-    }
+    setIsLoading(true);
+    setUserPoseIndex((userPoseIndexRef.current += 1));
+    setTimeCounter(
+      userPoseIndexRef.current === 0
+        ? (timeCounterRef.current = EXERCISE_TIME)
+        : (timeCounterRef.current = EXERCISE_TIME),
+    );
+    setTimeLimit(
+      userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
+    );
+    // if (userPoseIndexRef.current > 1) {
+    //   const temp_name = exerciseData?.exercise_name;
+    //   console.log(
+    //     exerciseResultMapRef.current.map((item) => {
+    //       if (item.name == temp_name) {
+    //         return { ...item, time: totalTimeCounterRef.current };
+    //       } else {
+    //         return { ...item };
+    //       }
+    //     }),
+    //   );
+    // setExerciseResultMap(
+    //   (exerciseResultMapRef.current = exerciseResultMapRef.current.map((item) =>
+    //     item.name == temp_name ? { ...item, time: totalTimeCounterRef.current } : { ...item },
+    //   )),
+    // );
+    // }
+  };
+  const handleExitExercisePage = () => {
+    setIsResultModalVisible((isResultModalVisibleRef.current = true));
+    return;
   };
   return (
     <Wrapper>
+      <ExerciseResultModal
+        isResultModalVisible={isResultModalVisible}
+        setIsResultModalVisible={setIsResultModalVisible}
+        exerciseResultMap={exerciseResultMap}
+        totalTimeCounter={totalTimeCounter}
+        totalTimeLimit={EXERCISE_TIME * (courseList.length - 1)}
+        EXERCISE_TIME={EXERCISE_TIME}
+      />
       <Loading isLoading={isLoading} countDown={countDown} setCountDown={setCountDown} userPoseIndex={userPoseIndex} />
       <Row justify="space-between" style={{ padding: '15px 15px' }}>
         <Col span={12}>
           <Row>
             <Col style={{ marginRight: '20px' }}>
-              <Button
-                style={{ borderRadius: '5px' }}
-                type="primary"
-                size="large"
-                onClick={() => navigate(`/course/${id}`)}
-              >
+              <Button style={{ borderRadius: '5px' }} type="primary" size="large" onClick={handleExitExercisePage}>
                 <ImportOutlined />
                 강의실 나가기
               </Button>
@@ -289,6 +315,10 @@ const ExcercisePage = () => {
                                   </div>
                                 </>
                               )}
+                              success={{
+                                percent: 0,
+                                strokeColor: '#ff7273',
+                              }}
                             />
                           </Col>
                         </Row>
@@ -302,12 +332,16 @@ const ExcercisePage = () => {
                                 '100%': '#ff7273',
                               }}
                               type="circle"
-                              percent={(totalTimeCounter / (EXERCISE_TIME * courseListRef.current.length)) * 100}
+                              percent={(totalTimeCounter / (EXERCISE_TIME * (courseListRef.current.length - 1))) * 100}
                               format={(percent) => (
                                 <>
                                   <div>총운동시간</div>
                                   <div style={{ fontSize: '40px' }}>
-                                    {((Number(percent) / 100) * EXERCISE_TIME * courseListRef.current.length).toFixed()}
+                                    {(
+                                      (Number(percent) / 100) *
+                                      EXERCISE_TIME *
+                                      (courseListRef.current.length - 1)
+                                    ).toFixed()}
                                   </div>
                                 </>
                               )}
@@ -357,6 +391,7 @@ const ExcercisePage = () => {
             setTotalTimeCounter={setTotalTimeCounter}
             courseList={courseList}
             setCourseList={setCourseList}
+            exerciseDataRef={exerciseDataRef}
             id={id}
             timeLimitRef={timeLimitRef}
             userPoseIndexRef={userPoseIndexRef}
@@ -371,6 +406,10 @@ const ExcercisePage = () => {
             EXERCISE_TIME={EXERCISE_TIME}
             TIME_LIMIT={TIME_LIMIT}
             TEST_TIME_LIMIT={TEST_TIME_LIMIT}
+            isResultModalVisibleRef={isResultModalVisibleRef}
+            setIsResultModalVisible={setIsResultModalVisible}
+            exerciseResultMapRef={exerciseResultMapRef}
+            setExerciseResultMap={setExerciseResultMap}
           />
         </Col>
       </Row>
