@@ -10,7 +10,7 @@ import { exercise } from 'api/common';
 import { ImportOutlined, CheckCircleFilled } from '@ant-design/icons';
 import moment from 'moment';
 
-const EXERCISE_TIME = 5;
+const EXERCISE_TIME = 60;
 const TIME_LIMIT = EXERCISE_TIME * 4 + 3;
 const TEST_TIME_LIMIT = 3;
 type exerciseTimeType = {
