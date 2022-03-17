@@ -5,6 +5,9 @@ const signout = () => {
   window.location.reaload();
 };
 export default function putInterceptor(axios) {
+  if (Cookies.get('access')) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookies.get('access')}`;
+  }
   axios.defaults.withCredentials = true;
   let isAlreadyFetchingAccessToken = false;
   axios.interceptors.response.use(
