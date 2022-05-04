@@ -99,6 +99,7 @@ const Summary: React.FunctionComponent<detailResponse> = ({ id, course_name, img
             position: 'absolute',
             bottom: 5,
             right: 5,
+            transition: 'display 2s',
           }}
           className="bookmark"
           onClick={handleBookmark}

@@ -41,6 +41,7 @@ const WeeklyReport = () => {
         const data = res.data[0];
         const revisedData = {
           ...data,
+
           month_exercise_time: Math.floor(data.month_exercise_time / 60),
           records: data.records.map((item) => ({
             ...item,

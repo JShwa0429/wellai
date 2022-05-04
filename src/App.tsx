@@ -1,11 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 import {
   Page,
-  AuthPage,
-  TestPage,
-  ExercisePage,
+  QnAPage,
   ExercisePage2,
   SearchPage,
   CoursePage,
@@ -22,15 +19,10 @@ import {
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import GlobalStyle from 'styles/global-styles';
-import { AuthRoute, PublicRoute } from './routes';
-import * as myPageAction from 'features/myPageSlice';
+import { AuthRoute } from './routes';
 import './styles/antd.css';
-import { useAppDispatch } from 'hooks/useStoreHooks';
 
 function App() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
   // axios.defaults.baseURL = process.env.REACT_APP_NEXT_PUBLIC_BASE_URL;
   axios.defaults.withCredentials = true;
 
@@ -46,7 +38,7 @@ function App() {
           <Route path="" element={<MainRenderPage />} />
           <Route path="/course" element={<CoursePage />} />
           <Route path="/course/:id" element={<CourseDetailPage />} />
-
+          <Route path="/qna" element={<QnAPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/guide/:id" element={<AuthRoute element={GuidePage} />} />
           <Route path="/mypage" element={<Navigate to="/mypage/report" />} />
@@ -58,7 +50,6 @@ function App() {
         </Route>
 
         <Route path="/signup" element={<SignUpPage />} />
-
         <Route path="/exercise/:id" element={<AuthRoute element={ExercisePage2} />} />
       </Routes>
     </>

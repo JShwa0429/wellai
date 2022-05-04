@@ -6,20 +6,23 @@ import { detailResponse } from 'api/common';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Pagination, Tooltip } from 'antd';
+import { Pagination, Row, Col, Spin } from 'antd';
 const CourseDetailPage = () => {
   const { id } = useParams();
   const [reviewData, setReviewData] = useState<ReviewType[]>([]);
   const [data, setData] = useState<detailResponse | null>(null);
   const [ordering, setOrdering] = useState<string>('-created_at');
-  const [loading, setLoading] = useState(true);
+  const [isDetailInfoLoading, setIsDetailInfoLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [isReviewLoading, setIsReviewLoading] = useState(true);
   const cut = 5;
 
   async function getReview() {
     const course = CourseApi();
+    setIsReviewLoading(true);
     await course.getReview(id as string, pageNumber, ordering).then((res) => {
       setReviewData(res.data.results);
+      setIsReviewLoading(false);
     });
   }
 
@@ -30,9 +33,10 @@ const CourseDetailPage = () => {
   useEffect(() => {
     async function getDetailInformation() {
       const course = CourseApi();
+      setIsDetailInfoLoading(true);
       await course.getDetailInformation(id).then((res) => {
         setData(res.data);
-        setLoading(false);
+        setIsDetailInfoLoading(false);
       });
     }
     getDetailInformation();
@@ -63,67 +67,77 @@ const CourseDetailPage = () => {
 
   return (
     <Div>
-      <CourseExplain />
-      <div className="explain-below">
-        <div className="explain">
-          <div className="hr-exp">
-            <h1>커리큘럼</h1>
+      {isDetailInfoLoading ? (
+        <Row style={{ width: '100vw', height: 'calc(100vh - 80px)' }} justify="center" align="middle">
+          <Col>
+            <Spin size="large" tip="Loading" />
+          </Col>
+        </Row>
+      ) : (
+        <>
+          <CourseExplain />
+          <div className="explain-below">
+            <div className="explain">
+              <div className="hr-exp">
+                <h1>커리큘럼</h1>
+              </div>
+              <div className="content-exp">
+                {data?.description.split('/n').map((line, i) => {
+                  const title = line.split(':')[0];
+                  const content = line.split(':')[1];
+                  return (
+                    <div key={i}>
+                      <h3 key={'h - ' + { i }}>
+                        <SmileTwoTone twoToneColor="#eb2f96" />
+                        &nbsp;
+                        {title}
+                      </h3>
+                      <span key={'k - ' + { i }}>
+                        {content}
+                        <br />
+                        <br />
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="review-sect">
+              <div className="hr-sect">
+                <h1>한줄평</h1>
+              </div>
+              <Comment onAdd={handleAddReview} />
+              <DivOrdering>
+                <button id="-rating" onClick={handleReviewOrdering}>
+                  평점 높은 순
+                </button>
+                <button id="rating" onClick={handleReviewOrdering}>
+                  평점 낮은 순
+                </button>
+                <button id="-created_at" onClick={handleReviewOrdering}>
+                  최신 순
+                </button>
+                <button id="created_at" onClick={handleReviewOrdering}>
+                  오래된 순
+                </button>
+              </DivOrdering>
+              <ReviewDiv reviewData={reviewData} isReviewLoading={isReviewLoading} onRemove={handleRemoveReview} />
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {reviewData.length > 0 && (
+                  <Pagination
+                    current={pageNumber}
+                    onChange={(page) => setPageNumber(page)}
+                    defaultCurrent={1}
+                    total={data?.count_review}
+                    pageSize={cut}
+                    style={{ margin: '2em 0' }}
+                  />
+                )}
+              </div>
+            </div>
           </div>
-          <div className="content-exp">
-            {data?.description.split('/n').map((line, i) => {
-              const title = line.split(':')[0];
-              const content = line.split(':')[1];
-              return (
-                <div key={i}>
-                  <h3 key={'h - ' + { i }}>
-                    <SmileTwoTone twoToneColor="#eb2f96" />
-                    &nbsp;
-                    {title}
-                  </h3>
-                  <span key={'k - ' + { i }}>
-                    {content}
-                    <br />
-                    <br />
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="review-sect">
-          <div className="hr-sect">
-            <h1>한줄평</h1>
-          </div>
-          <Comment onAdd={handleAddReview} />
-          <DivOrdering>
-            <button id="-rating" onClick={handleReviewOrdering}>
-              평점 높은 순
-            </button>
-            <button id="rating" onClick={handleReviewOrdering}>
-              평점 낮은 순
-            </button>
-            <button id="-created_at" onClick={handleReviewOrdering}>
-              최신 순
-            </button>
-            <button id="created_at" onClick={handleReviewOrdering}>
-              오래된 순
-            </button>
-          </DivOrdering>
-          <ReviewDiv reviewData={reviewData} loading={loading} onRemove={handleRemoveReview} />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {reviewData.length > 0 && (
-              <Pagination
-                current={pageNumber}
-                onChange={(page) => setPageNumber(page)}
-                defaultCurrent={1}
-                total={data?.count_review}
-                pageSize={cut}
-                style={{ margin: '2em 0' }}
-              />
-            )}
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </Div>
   );
 };

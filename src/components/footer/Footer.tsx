@@ -1,6 +1,4 @@
-import React from 'react';
-import { Row, Col, Button, Input, message } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
 const Footer = () => {
@@ -16,6 +14,7 @@ const Footer = () => {
           borderTop: '0.5px solid lightgrey',
           textAlign: 'center',
           fontSize: '0.8em',
+          marginTop: 'auto',
         }}
       >
         <Col>©SIPGANJI. ALL RIGHTS RESERVED</Col>

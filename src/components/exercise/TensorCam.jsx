@@ -41,8 +41,17 @@ export default function TempComp({
   courseListRef,
   setIsLoading,
   isLoading,
+  isTestFinish,
+  isTestFinishRef,
+  setIsTestFinish,
   TIME_LIMIT,
   EXERCISE_TIME,
+  TEST_TIME_LIMIT,
+  setIsResultModalVisible,
+  isResultModalVisibleRef,
+  exerciseDataRef,
+  setExerciseResultMap,
+  exerciseResultMapRef,
 }) {
   const navigate = useNavigate();
   const user = UserApi();
@@ -59,7 +68,9 @@ export default function TempComp({
     let interval1;
     runMovenet().then((result) => {
       interval1 = setInterval(() => {
-        detect(result.detector, result.dnn76);
+        if (isResultModalVisibleRef.current === false) {
+          detect(result.detector, result.dnn76);
+        }
       }, 1000 / FPS);
       return;
     });
@@ -69,7 +80,9 @@ export default function TempComp({
   useEffect(() => {
     // setTimeLimit(timeLimit - 1);
     const interval2 = setInterval(() => {
-      setTimeLimit((timeLimitRef.current -= 1));
+      if (timeLimitRef.current > -1 && isResultModalVisibleRef.current === false) {
+        setTimeLimit((timeLimitRef.current -= 1));
+      }
     }, 1000);
     return () => clearInterval(interval2);
   }, []);
@@ -87,26 +100,26 @@ export default function TempComp({
       webcamRef.current.video.height = videoHeight;
       const pose = await detector.estimatePoses(video);
       const result = await classifyPose(dnn76, pose);
-      drawCanvas(pose, result[0], result[1], video, videoWidth, videoHeight, canvasRef);
+      if (result !== undefined) {
+        drawCanvas(pose, result[0], result[1], video, videoWidth, videoHeight, canvasRef);
+        calWorkouttime2(result[0], result[1]);
+      }
       // putText(result[0], canvasRef, 50, 30);
-      calWorkouttime2(result[0], result[1]);
     }
   };
 
   function calWorkouttime2(poseIndex, accuracy) {
-    if (timeCounterRef.current <= 0 || timeLimitRef.current <= 0) {
-      nextPose();
-    } else {
+    if (userPoseIndexRef.current === 0 && isTestFinishRef.current < TEST_TIME_LIMIT) {
       if (accuracy >= 0.8) {
         if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
           iterationCounter += 1;
           if (iterationCounter == FPS) {
             iterationCounter = 0;
-            setTimeCounter((timeCounterRef.current -= 1));
-            setTotalTimeCounter((totalTimeCounterRef.current += 1));
+            setIsTestFinish((isTestFinishRef.current += 1));
           }
-          if (timeCounterRef.current == 0) {
-            nextPose();
+          if (isTestFinishRef.current === TEST_TIME_LIMIT) {
+            setTimeout(() => nextPose(), 3000);
+            // setIsTestFinish((isTestFinishRef.current = 0));
           }
         }
       } else {
@@ -116,9 +129,46 @@ export default function TempComp({
           errorCounter = 0;
         }
       }
+    } else if (userPoseIndexRef.current !== 0) {
+      if (timeCounterRef.current <= 0 || timeLimitRef.current <= 0) {
+        nextPose();
+      } else {
+        if (accuracy >= 0.8) {
+          if (poseIndex === Number(courseListRef.current[userPoseIndexRef.current]) - 1) {
+            iterationCounter += 1;
+            if (iterationCounter == FPS) {
+              iterationCounter = 0;
+              setTimeCounter((timeCounterRef.current -= 1));
+              setTotalTimeCounter((totalTimeCounterRef.current += 1));
+              const temp_name = exerciseDataRef.current.exercise_name;
+
+              setExerciseResultMap(
+                (exerciseResultMapRef.current = exerciseResultMapRef.current.map((item) =>
+                  item.name == temp_name ? { ...item, time: item.time + 1 } : { ...item },
+                )),
+              );
+            }
+            if (timeCounterRef.current == 0) {
+              nextPose();
+            }
+          }
+        } else {
+          errorCounter = errorCounter + 1;
+          if (errorCounter >= 6) {
+            iterationCounter -= errorCounter;
+            errorCounter = 0;
+          }
+        }
+      }
     }
   }
+
   function nextPose() {
+    if (userPoseIndexRef.current + 1 >= courseListRef.current.length) {
+      setIsResultModalVisible((isResultModalVisibleRef.current = true));
+      // user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
+      return;
+    }
     iterationCounter = 0;
     errorCounter = 0;
     setIsLoading(true);
@@ -131,11 +181,7 @@ export default function TempComp({
     setTimeLimit(
       userPoseIndexRef.current === 0 ? (timeLimitRef.current = TIME_LIMIT) : (timeLimitRef.current = TIME_LIMIT),
     );
-    if (userPoseIndexRef.current >= courseListRef.current.length) {
-      alert('운동 끝났습니다');
-      navigate(`../course/${id}`);
-      // user.recordExerciseTime(moment().format('YYYY-MM-DD'), String(totalTimeCounterRef.current));
-    }
+
     return userPoseIndex, totalTimeCounter;
   }
 

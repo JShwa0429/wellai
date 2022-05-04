@@ -16,20 +16,20 @@ export type LoadingProps = {
   isLoading: boolean;
   countDown: number;
   setCountDown: Dispatch<SetStateAction<number>>;
-  userPoseIndex: number;
 };
 
-const Loading: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, setCountDown, userPoseIndex }) => {
-  useEffect(() => {
-    const timeCount = setTimeout(() => {
-      if (countDown > 0) {
-        setCountDown(countDown - 1);
-      }
-    }, 1000);
-    return () => clearTimeout(timeCount);
-  }, [countDown]);
+const Review: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, setCountDown }) => {
+  // const [countDown, setCountDown] = useState(3);
+  // useEffect(() => {
+  //   const timeCount = setTimeout(() => {
+  //     if (countDown > 0) {
+  //       setCountDown(countDown - 1);
+  //     }
+  //   }, 1000);
+  //   return () => clearTimeout(timeCount);
+  // }, [countDown]);
   return (
-    <Wrapper isLoading={isLoading}>
+    <Wrapper>
       <Row style={{ height: '100vh' }} justify="center" align="middle">
         <Col>
           <Row justify="center">
@@ -38,13 +38,7 @@ const Loading: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, 
             </Col>
           </Row>
           <Row>
-            {userPoseIndex === 0 ? (
-              <Col style={{ fontSize: '30px', marginTop: '50px' }}>
-                {countDown}초 뒤에 카메라 테스트를 시작하겠습니다
-              </Col>
-            ) : (
-              <Col style={{ fontSize: '30px', marginTop: '50px' }}>{countDown}초 뒤에 운동이 시작됩니다 !</Col>
-            )}
+            <Col style={{ fontSize: '30px', marginTop: '50px' }}>{countDown}초 뒤에 운동이 시작됩니다 !</Col>
           </Row>
         </Col>
       </Row>
@@ -52,14 +46,9 @@ const Loading: React.FunctionComponent<LoadingProps> = ({ isLoading, countDown, 
   );
 };
 
-export default Loading;
-interface Wrapper {
-  isLoading: boolean;
-}
-const Wrapper = styled.div<Wrapper>`
-  display: ${(props) => {
-    return props.isLoading ? 'block' : 'none';
-  }};
+export default Review;
+
+const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   position: absolute;
